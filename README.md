@@ -26,3 +26,15 @@ L'algoritmo di Dijkstra è un algoritmo utilizzato per cercare i cammini minimi 
 [Algoritmo di Dijkstra](https://it.wikipedia.org/wiki/Algoritmo_di_Dijkstra)
 
 ## Note di sviluppo
+La prova d'esame richiede la progettazione e lo sviluppo della traccia proposta. Lo studente può scegliere di sviluppare il progetto nelle due modalità: **Applicazione Web** o **Programma standalone con supporto grafico**.
+
+Il progetto deve essere sviluppato secondo le seguenti linee:
+* usare almeno **due pattern** (almeno **uno** per chi sceglie la **modalità web application**) tra i design pattern noti;
+* attenersi ai principi della programmazione **SOLID**;
+* usare il linguaggio **Java**;
+* inserire sufficienti **commenti (anche per Javadoc)** e ** annotazioni;
+* gestione delle **eccezioni**;
+* usare i **file** o **database**;
+
+
+Lo studente deve presentare una relazione sintetica
