@@ -22,3 +22,5 @@ Si vuole sviluppare un'**applicazione per la gestione di Taxi**. Si suppone di a
 Implementare l'applicazione garantendo le **opportune interfacce grafiche.**
 
 ## **Algoritmo di Dijkstra**
+L'algoritmo di Dijkstra è un algoritmo utilizzato per cercare i cammini minimi (o Shortest Paths) in un grafo con o senza ordinamento, ciclico e con pesi non negativi sugli archi. Per ulteriori dettagli sull'implementazione vedere:
+[Algoritmo di Dijkstra!](https://it.wikipedia.org/wiki/Algoritmo_di_Dijkstra)
