@@ -1,4 +1,5 @@
 # TaxiFinder
+![logo](https://github.com/robertove93/TaxiFinder/blob/Readme/transport.png)
 
 ## Corso di Programmazione 3
 ### Progetto Esame
