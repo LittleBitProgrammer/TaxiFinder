@@ -37,4 +37,15 @@ Il progetto deve essere sviluppato secondo le seguenti linee:
 * usare i **file** o **database**;
 
 
-Lo studente deve presentare una relazione sintetica
+Lo studente deve presentare una relazione sintetica (per chi usa latex è possibile scaricare un template dalla piattaforma e-learning). La relazione deve contenere:
+
+* una breve descrizione dei **requisiti** del progetto;
+* il **diagramma UML** delle classi;
+* altri diagrammi se opportuni;
+* parti rilevanti del codice sviluppato.
+
+## Consegna del progetto
+La relazione e il codice del progetto devono essere messi a disposizione secondo le modalità ritenute opportune (DropBox, Google Drive, Piattaforma Sebeto, Pendrive, Cd, ...) ** entro la scadenza della prenotazione on-line dell'esame.
+
+## Modalità di esame
+La prima parte della prova di esame verterà sulla discussione del progetto. Lo studente deve preparare una **presentazione sintetica** (slide) per descrivere il progetto svolto. La seconda parte della prova verterà sulla discussione degli argomenti affrontati a lezione.
