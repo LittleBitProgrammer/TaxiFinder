@@ -1,4 +1,4 @@
-package sample;
+package com.robertovecchio.view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
