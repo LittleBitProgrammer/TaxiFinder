@@ -1,5 +1,8 @@
 module:TaxiFinder
 com.robertovecchio.controller
+com.robertovecchio.model.graph
+com.robertovecchio.model.graph.node
 com.robertovecchio.model.user
 com.robertovecchio.model.veichle
+com.robertovecchio.model.veichle.builderTaxi
 com.robertovecchio.view

@@ -1,4 +1,4 @@
-package com.robertovecchio.model.node;
+package com.robertovecchio.model.graph.node;
 
 // import
 import java.util.Objects;
@@ -36,6 +36,10 @@ public class Coordinates {
         this(0,0);
     }
 
+    //==================================================
+    //                      Setter
+    //==================================================
+
     /**
      * Setter della latitudine
      * @param latitude Latitudine
@@ -52,6 +56,10 @@ public class Coordinates {
         this.longitude = longitude;
     }
 
+    //==================================================
+    //                      Getter
+    //==================================================
+
     /**
      * getter della Latitudine
      * @return Latitudine
@@ -67,6 +75,10 @@ public class Coordinates {
     public double getLongitude(){
         return this.longitude;
     }
+
+    //==================================================
+    //                Metodi Sovrascritti
+    //==================================================
 
     /**
      * Override del metodo toString atto a generare una stringa dato un oggetto del tipo Coordinates
