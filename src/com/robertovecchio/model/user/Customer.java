@@ -71,6 +71,10 @@ public class Customer extends UserAccount{
         return this.phoneNumber;
     }
 
+    //==================================================
+    //                Metodi Sovrascritti
+    //==================================================
+
     @Override
     public String toString() {
         return super.toString() + "\nCustomer{" +

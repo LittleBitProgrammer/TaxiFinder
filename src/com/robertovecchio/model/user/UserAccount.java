@@ -198,6 +198,10 @@ public abstract class UserAccount {
         return this.password;
     }
 
+    //==================================================
+    //                Metodi Sovrascritti
+    //==================================================
+
     /**
      * Override del metodo to String atto a creare una stringa dato un oggetto di tipo UserAccount
      * @return Stringa dell'oggetto di tipo UserAccount

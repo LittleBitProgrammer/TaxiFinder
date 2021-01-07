@@ -68,6 +68,10 @@ public class TaxiDriver extends UserAccount{
         return this.licenseNumber;
     }
 
+    //==================================================
+    //                Metodi Sovrascritti
+    //==================================================
+
     @Override
     public String toString() {
         return super.toString() + "\nTaxiDriver{" +
