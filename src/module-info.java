@@ -8,6 +8,7 @@ module TaxiFinder {
     requires javafx.fxml;
 
     // Dichiaro un'apertura qualificata dei seguenti package
+    opens com.robertovecchio.model.user;
     opens com.robertovecchio.controller;
     opens com.robertovecchio.view;
 }
