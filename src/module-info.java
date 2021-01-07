@@ -13,6 +13,7 @@ module TaxiFinder {
     opens com.robertovecchio.model.graph;
     opens com.robertovecchio.model.graph.node;
     opens com.robertovecchio.model.user;
+    opens com.robertovecchio.model;
     opens com.robertovecchio.controller;
     opens com.robertovecchio.view;
 }
