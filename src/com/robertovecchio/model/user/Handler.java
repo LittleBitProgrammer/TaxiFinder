@@ -1,6 +1,8 @@
 package com.robertovecchio.model.user;
 
 //Import
+import com.robertovecchio.model.veichle.BrandType;
+import com.robertovecchio.model.veichle.FuelType;
 import com.robertovecchio.model.veichle.builderTaxi.TaxiBuilder;
 
 import java.time.LocalDate;
@@ -89,8 +91,29 @@ public class Handler extends UserAccount{
     //==================================================
     //                      Metodi
     //==================================================
-    //TODO:// JAVADOC
-    public void buildTaxi(){
-        //TODO:// iserire la build del taxi
+    /**
+     * Metodo atto a costruire un oggetto complesso di tipo Taxi
+     * @param licensePlate Targa del Taxi
+     * @param brandType Nome brand del Taxi
+     * @param modelName Nome del modello del Taxi
+     * @param capacity Capacità del Taxi in termini di persone trasportabili
+     * @param fuelType tipo di carburante del Taxi
+     * @param taxiDriver Tassista
+     * @see BrandType
+     * @see FuelType
+     * @see TaxiDriver
+     * */
+    public void buildTaxi(String licensePlate, BrandType brandType,
+                          String modelName, int capacity,
+                          FuelType fuelType, TaxiDriver taxiDriver){
+
+        // Build delle variabili d'istanza
+       taxiBuilder.buildLicensePlate(licensePlate);
+       taxiBuilder.buildBrandName(brandType);
+       taxiBuilder.buildModelName(modelName);
+       taxiBuilder.buildCapacity(capacity);
+       taxiBuilder.buildFuelType(fuelType);
+       taxiBuilder.buildTaxiDriver(taxiDriver);
+
     }
 }
