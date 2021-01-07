@@ -1,7 +1,9 @@
-package com.robertovecchio.model.veichle;
+package com.robertovecchio.model.veichle.builderTaxi;
 
+//Import
 import com.robertovecchio.model.user.TaxiDriver;
-
+import com.robertovecchio.model.veichle.BrandType;
+import com.robertovecchio.model.veichle.FuelType;
 import java.util.Objects;
 
 /**
@@ -15,11 +17,11 @@ public class Taxi {
     //               Variabili d'istanza
     //==================================================
     private String licensePlate; // Targa del taxi
-    /**@see BrandType*/
+    /**@see BrandType */
     private BrandType brandType; // Brand del Taxi
     private String modelName;    // Modello del Taxi
     private int capacity;        // Capcità del Taxi in termini di persone trasportabili
-    /**@see FuelType*/
+    /**@see FuelType */
     private FuelType fuelType;   // Tipo di carburante del Taxi
     /**@see TaxiDriver*/
     private TaxiDriver taxiDriver; // Tassista associato al taxi

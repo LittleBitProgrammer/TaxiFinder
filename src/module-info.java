@@ -9,6 +9,7 @@ module TaxiFinder {
 
     // Dichiaro un'apertura qualificata dei seguenti package
     opens com.robertovecchio.model.veichle;
+    opens com.robertovecchio.model.veichle.builderTaxi;
     opens com.robertovecchio.model.user;
     opens com.robertovecchio.controller;
     opens com.robertovecchio.view;
