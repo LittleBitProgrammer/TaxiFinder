@@ -1,21 +1,18 @@
 package com.robertovecchio.model.user;
 
-//Import
 import java.time.LocalDate;
 
 /**
  * Questa classe rappresenta uno degli attori del sistema software Taxi finder e si occupa di astrarre il concetto
- * di cliente
+ * di TaxiDriver
  * @author robertovecchio
  * @version 1.0
- * @since 7/01/2021
- * */
-public class Customer extends UserAccount{
-
+ * @since 7/01/2021*/
+public class TaxiDriver extends UserAccount{
     //==================================================
     //               Variabili d'istanza
     //==================================================
-    private String phoneNumber; // Numero telefonico utente
+    private String licenseNumber; // Numero di licenza utente
 
     //==================================================
     //                   Costruttori
@@ -31,21 +28,21 @@ public class Customer extends UserAccount{
      * @param email email utente
      * @param username username utente
      * @param password password utente
-     * @param phoneNumber numero telefonico utente
+     * @param licenseNumber numero di licenza taxi
      * @see LocalDate
      * @see GenderType
      * */
-    public Customer(String fiscalCode, String firstName,
+    public TaxiDriver(String fiscalCode, String firstName,
                     String lastName, LocalDate dateOfBirth,
                     GenderType genderType, String email,
                     String username, String password,
-                    String phoneNumber){
+                    String licenseNumber){
 
         // Richiamo il costruttore della classe astratta UserAccount
         super(fiscalCode, firstName, lastName, dateOfBirth, genderType, email, username, password);
 
         // inizializzazione delle variabili d'istanza
-        this.phoneNumber = phoneNumber;
+        this.licenseNumber = licenseNumber;
     }
 
     //==================================================
@@ -53,21 +50,21 @@ public class Customer extends UserAccount{
     //==================================================
 
     /**
-     * Setter password utente
-     * @param phoneNumber Password utente
+     * Setter numero di licenza taxi utente
+     * @param licenseNumber Numero di licenza taxi
      * */
-    public void setPhoneNumber(String phoneNumber){
-        this.phoneNumber = phoneNumber;
+    public void setLicenseNumber(String licenseNumber){
+        this.licenseNumber = licenseNumber;
     }
 
     //==================================================
     //                      Getter
     //==================================================
     /**
-     * Getter numero di telefono
-     * @return Numero di telefono utente
+     * Getter numero di licenza taxi
+     * @return Numero di licenza taxi
      * */
-    public String getPhoneNumber(){
-        return this.phoneNumber;
+    public String getLicenseNumber(){
+        return this.licenseNumber;
     }
 }
