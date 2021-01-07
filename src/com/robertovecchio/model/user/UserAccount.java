@@ -1,6 +1,8 @@
-package com.robertovecchio.model;
+package com.robertovecchio.model.user;
 
 //Import
+import com.robertovecchio.model.user.GenderType;
+
 import java.time.LocalDate;
 
 /**
@@ -19,7 +21,7 @@ public abstract class UserAccount {
     private String lastName;       // Cognome
     /**@see java.time.LocalDate*/
     private LocalDate dateOfBirth; // Data di nascita
-    /**@see GenderType*/
+    /**@see GenderType */
     private GenderType genderType; // Genere sessuale
     private String email;          // Email utente
     private String username;       // Username utente
@@ -64,7 +66,6 @@ public abstract class UserAccount {
     /**
      * Setter del codice fiscale
      * @param fiscalCode Codice fiscale utente
-     * @return Questo metodo non ritorna nulla
      * */
     public void setFiscalCode(String fiscalCode){
         this.fiscalCode = fiscalCode;
@@ -73,7 +74,6 @@ public abstract class UserAccount {
     /**
      * Setter del nome utente
      * @param firstName Nome utente
-     * @return Questo metodo non ritorna nulla
      * */
     public void setFirstName(String firstName){
         this.firstName = firstName;
@@ -82,7 +82,6 @@ public abstract class UserAccount {
     /**
      * Setter del cognome utente
      * @param lastName Cognome utente
-     * @return Questo metodo non ritorna nulla
      * */
     public void setLastName(String lastName){
         this.lastName = lastName;
@@ -92,7 +91,6 @@ public abstract class UserAccount {
      * Setter data di nascita utente
      * @see LocalDate
      * @param dateOfBirth Data di nascita utente
-     * @return Questo metodo non ritorna nulla
      * */
     public void setDateOfBirth(LocalDate dateOfBirth){
         this.dateOfBirth = dateOfBirth;
@@ -102,7 +100,6 @@ public abstract class UserAccount {
      * Setter genere sessuale utente
      * @see GenderType
      * @param genderType Genere sessuale utente
-     * @return Questo metodo non ritorna nulla
      * */
     public void setGenderType(GenderType genderType){
         this.genderType = genderType;
@@ -111,7 +108,6 @@ public abstract class UserAccount {
     /**
      * Setter email utente
      * @param email Email utente
-     * @return Questo metodo non ritorna nulla
      * */
     public void setEmail(String email){
         this.email = email;
@@ -120,7 +116,7 @@ public abstract class UserAccount {
     /**
      * Setter username utente
      * @param username Username utente
-     * @return Questo metodo non ritorna nulla*/
+     * */
     public void setUsername(String username){
         this.username = username;
     }
@@ -128,7 +124,6 @@ public abstract class UserAccount {
     /**
      * Setter password utente
      * @param password Password utente
-     * @return Questo metodo non ritorna nulla
      * */
     public void setPassword(String password){
         this.password = password;
