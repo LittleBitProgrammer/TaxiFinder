@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"com.robertovecchio.controller","l":"Controller"},{"p":"com.robertovecchio.view","l":"Main"},{"p":"com.robertovecchio.model","l":"UserAccount"}];updateSearchResults();

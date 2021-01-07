@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"TaxiFinder","l":"com.robertovecchio.controller"},{"m":"TaxiFinder","l":"com.robertovecchio.model"},{"m":"TaxiFinder","l":"com.robertovecchio.view"}];updateSearchResults();
