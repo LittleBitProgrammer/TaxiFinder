@@ -1,8 +1,6 @@
 package com.robertovecchio.model.user;
 
 //Import
-import com.robertovecchio.model.user.GenderType;
-
 import java.time.LocalDate;
 
 /**
