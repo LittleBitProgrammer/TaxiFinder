@@ -1,4 +1,5 @@
 module:TaxiFinder
 com.robertovecchio.controller
 com.robertovecchio.model.user
+com.robertovecchio.model.veichle
 com.robertovecchio.view

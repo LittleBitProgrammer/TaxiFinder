@@ -222,7 +222,8 @@ public abstract class UserAccount {
 
     /**
      * Override del metodo equals atto a constatare l'uguaglianza di due oggetti di tipo UserAccount
-     * @return se i due oggetti sono uguali ritorna true, altrimenti false*/
+     * @return se i due oggetti sono uguali ritorna true, altrimenti false
+     * */
     @Override
     public boolean equals(Object o) {
         // se hanno la stessa reference ritorna true
@@ -238,7 +239,8 @@ public abstract class UserAccount {
 
     /**
      * Override del metodo hascode
-     * @return il valore intero rappresentato dall'oggetto*/
+     * @return il valore intero rappresentato dall'oggetto
+     * */
     @Override
     public int hashCode() {
         return Objects.hash(fiscalCode);

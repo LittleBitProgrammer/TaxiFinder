@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"TaxiFinder","l":"com.robertovecchio.controller"},{"m":"TaxiFinder","l":"com.robertovecchio.model.user"},{"m":"TaxiFinder","l":"com.robertovecchio.view"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"TaxiFinder","l":"com.robertovecchio.controller"},{"m":"TaxiFinder","l":"com.robertovecchio.model.user"},{"m":"TaxiFinder","l":"com.robertovecchio.model.veichle"},{"m":"TaxiFinder","l":"com.robertovecchio.view"}];updateSearchResults();
