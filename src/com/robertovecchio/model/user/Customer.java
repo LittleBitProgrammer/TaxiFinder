@@ -70,4 +70,11 @@ public class Customer extends UserAccount{
     public String getPhoneNumber(){
         return this.phoneNumber;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nCustomer{" +
+                "phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
 }

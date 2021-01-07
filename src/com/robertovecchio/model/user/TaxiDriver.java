@@ -67,4 +67,11 @@ public class TaxiDriver extends UserAccount{
     public String getLicenseNumber(){
         return this.licenseNumber;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nTaxiDriver{" +
+                "licenseNumber='" + licenseNumber + '\'' +
+                '}';
+    }
 }

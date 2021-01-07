@@ -2,6 +2,7 @@ package com.robertovecchio.model.user;
 
 //Import
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Questa classe ha la responsabilità di astrarre un utente generico, quindi astratto, il quale non potrà essere
@@ -195,5 +196,47 @@ public abstract class UserAccount {
      * */
     public String getPassword(){
         return this.password;
+    }
+
+    /**
+     * Override del metodo to String atto a creare una stringa dato un oggetto di tipo UserAccount
+     * @return Stringa dell'oggetto di tipo UserAccount
+     * */
+    @Override
+    public String toString() {
+        return "UserAccount{" +
+                "fiscalCode='" + fiscalCode + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", genderType=" + genderType +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
+    /**
+     * Override del metodo equals atto a constatare l'uguaglianza di due oggetti di tipo UserAccount
+     * @return se i due oggetti sono uguali ritorna true, altrimenti false*/
+    @Override
+    public boolean equals(Object o) {
+        // se hanno la stessa reference ritorna true
+        if (this == o) return true;
+
+        // se l'oggetto inserito non è istanza di userAccount ritorna false
+        if (!(o instanceof UserAccount)) return false;
+
+        // dichiaro un tipo UserAccount castandolo opportunamente e confronto le stringhe codice fiscale
+        UserAccount that = (UserAccount) o;
+        return fiscalCode.equals(that.fiscalCode);
+    }
+
+    /**
+     * Override del metodo hascode
+     * @return il valore intero rappresentato dall'oggetto*/
+    @Override
+    public int hashCode() {
+        return Objects.hash(fiscalCode);
     }
 }
