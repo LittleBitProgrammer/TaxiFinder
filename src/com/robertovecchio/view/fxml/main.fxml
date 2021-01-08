@@ -1,0 +1,19 @@
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<GridPane fx:controller="com.robertovecchio.controller.Controller"
+          fx:id="gridRoot"
+          xmlns:fx="http://javafx.com/fxml"
+          alignment="CENTER"
+          hgap="70"
+          vgap="20">
+
+    <VBox GridPane.rowIndex="2" GridPane.columnIndex="0">
+        <Button fx:id="companyButton"/>
+    </VBox>
+
+    <!-- Colonna di destra -->
+    <VBox GridPane.rowIndex="2" GridPane.columnIndex="1">
+        <Button fx:id="userButton"/>
+    </VBox>
+</GridPane>

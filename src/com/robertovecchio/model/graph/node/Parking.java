@@ -149,5 +149,4 @@ public class Parking extends WaitingStation{
     public boolean isEmpty(){
         return this.getFreeParkingSpaces() == this.parkingCapacity;
     }
-
 }

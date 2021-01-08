@@ -7,6 +7,8 @@ import javafx.scene.Parent; // Nodo Primario
 import javafx.scene.Scene; // Astrae il concetto di View
 import javafx.stage.Stage; // Astrae il concetto di finestra desktop
 
+import java.io.FileInputStream;
+
 /**
  * La classe Main ha la responsabilità di lanciare l'applizione in modalità finestra, gestendo alcune responsabilità
  * come il comportamento che questa deve avere, quando viene:
@@ -23,6 +25,8 @@ import javafx.stage.Stage; // Astrae il concetto di finestra desktop
  */
 public class Main extends Application {
 
+    private static final String rootFilename = "src/com/robertovecchio/view/fxml/main.fxml";
+
     /**
      * @param primaryStage stage primario da renderizzare
      * @exception Exception il metodo start può lanciare un'eccezione
@@ -31,14 +35,21 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         /* Parent è il nodo padre ottenuto attraverso il valore di ritorno del metodo statico load, sfruttando
         *  la classe FXML loader */
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        Parent root = loader.load(new FileInputStream(rootFilename));
 
         // Impostiamo il nome della finestra
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Taxi Finder");
+
+        // Impostiamo lo schermo a full screen
+        primaryStage.setMaximized(true);
+
+        // Impostiamo lo stile a caspian
+        setUserAgentStylesheet(STYLESHEET_CASPIAN);
 
         /* impostiamo una nuova View passandogli come parametri di input del costruttore il nodo padre e la relativa
          * risoluzione in termini di pixel */
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setScene(new Scene(root, 800, 600));
 
         // mostriamo a schermo la finestra appena impostata
         primaryStage.show();
