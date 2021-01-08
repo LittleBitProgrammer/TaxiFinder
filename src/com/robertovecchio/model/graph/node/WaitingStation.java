@@ -1,4 +1,5 @@
 package com.robertovecchio.model.graph.node;
+
 /**
  * Questa classe astrae il concetto di postazione di attesa, ovvero il luogo dove ad un cliente è permesso di attendere
  * un Taxi, ad esso associato (quello più vicino). Questa classe è intesa come nodo così da poter essere utile all'
