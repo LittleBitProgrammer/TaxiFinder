@@ -6,7 +6,8 @@ open module TaxiFinder {
     requires javafx.controls;
     // Dichiaro una dipendenza con javafx.fxml, necessario per poter utilizzare file fxml
     requires javafx.fxml;
+    // Dichiaro una dipendenza con javafx.graphics, necessario per poter utilizzare immagini
     requires javafx.graphics;
+    // Dichiaro una dipendenza con jlfgr, necessario per poter caricare alcune icone di default
     requires jlfgr;
-
 }

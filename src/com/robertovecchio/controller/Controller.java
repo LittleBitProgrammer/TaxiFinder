@@ -8,7 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -37,6 +36,8 @@ public class Controller {
     private final static Color darkGrayFontColor = Color.web("#494949");
     private final static Color darkYellowFontColor = Color.web("#F3D833");
     private final static String logoFilePath = "Assets/logo.png";
+    private final static String companyAreaFile = "src/com/robertovecchio/view/fxml/companyArea.fxml";
+    private final static String userFile = "src/com/robertovecchio/view/fxml/customerLogin.fxml";
 
     //==================================================
     //               Inizializzazione
@@ -107,9 +108,15 @@ public class Controller {
         userButton.setText("Area Clienti");
 
         // impostiamo l'azione al click del bottone che porta all'area aziendale
-        companyButton.setOnAction(actionEvent -> System.out.println("azienda premuto"));
+        companyButton.setOnAction(actionEvent -> {
+            UtilityController.navigateTo(companyAreaFile,"Area Azienda",
+                                   "File interfaccia azienda non trovato", companyButton);
+        });
 
         // impostiamo l'azione al click del bottone che porta all'area cliente
-        userButton.setOnAction(actionEvent -> System.out.println("Cliente premuto"));
+        userButton.setOnAction(actionEvent -> {
+           UtilityController.navigateTo(userFile,"Area Cliente",
+                                  "File interfaccia cliente non trovato", userButton);
+        });
     }
 }
