@@ -1,6 +1,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <GridPane fx:controller="com.robertovecchio.controller.Controller"
           fx:id="gridRoot"
           xmlns:fx="http://javafx.com/fxml"
@@ -9,11 +11,23 @@
           vgap="20">
 
     <VBox GridPane.rowIndex="2" GridPane.columnIndex="0">
-        <Button fx:id="companyButton"/>
+        <Button fx:id="companyButton">
+            <graphic>
+                <ImageView>
+                    <Image url="@/toolbarButtonGraphics/navigation/Home24.gif"/>
+                </ImageView>
+            </graphic>
+        </Button>
     </VBox>
 
     <!-- Colonna di destra -->
     <VBox GridPane.rowIndex="2" GridPane.columnIndex="1">
-        <Button fx:id="userButton"/>
+        <Button fx:id="userButton">
+            <graphic>
+                <ImageView>
+                    <Image url="@/toolbarButtonGraphics/general/About24.gif"/>
+                </ImageView>
+            </graphic>
+        </Button>
     </VBox>
 </GridPane>

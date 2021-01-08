@@ -7,15 +7,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
+import javafx.scene.text.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-/**Controller della view principale*/
+/**Controller della view principale
+ * @author robertovecchio
+ * @version 1.0
+ * @since 08/01/2021
+ * */
 public class Controller {
     //==================================================
     //               Variabili FXML
@@ -84,6 +85,9 @@ public class Controller {
                                       headerTextSecondPart,
                                       headerTextThirdPart,
                                       headerTextFourthPart);
+
+        // allineiamo il texflow al centro
+        textFlow.setTextAlignment(TextAlignment.CENTER);
 
         // aggiungiamo logo e textflow al gridPane secondo la seguente sintassi:
         // 1 - indice di colonna
