@@ -3,7 +3,11 @@ package com.robertovecchio.controller;
 import com.robertovecchio.model.user.GenderType;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 /**
  * Classe che gestisce la view della registrazione del cliente
@@ -19,7 +23,7 @@ public class CustomerRegistrationController {
     @FXML
     Button backButton;
     @FXML
-    ImageView userImageField;
+    ImageView userImage;
     @FXML
     TextField fiscalCodeField;
     @FXML
@@ -46,6 +50,7 @@ public class CustomerRegistrationController {
     //==================================================
 
     private final static String loginController = "src/com/robertovecchio/view/fxml/customerLogin.fxml";
+    private final static String userLogo = "Assets/user.png";
 
     //==================================================
     //               Inizializzazione
@@ -56,7 +61,16 @@ public class CustomerRegistrationController {
      * */
     @FXML
     public void initialize(){
-
+        try {
+            // Inizializziamo il logo utente
+            Image logo = new Image(new FileInputStream(userLogo));
+            userImage.setImage(logo); // impostiamo l'immagine all'imageview
+            userImage.setFitHeight(70); // impostiamo altezza
+            userImage.setPreserveRatio(true); // impostiamo la conservazione delle proporzioni originali
+        }catch (FileNotFoundException e){
+            // catchiamo l'errore
+            System.out.println("File Non trovato");
+        }
     }
 
     //==================================================

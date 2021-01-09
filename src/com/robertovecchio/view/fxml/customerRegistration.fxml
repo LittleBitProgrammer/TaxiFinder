@@ -11,6 +11,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.robertovecchio.controller.CustomerRegistrationController">
@@ -38,14 +39,28 @@
                 <ColumnConstraints percentWidth="50"/>
             </columnConstraints>
 
-            <ImageView fx:id="userImageField"
-                       GridPane.rowIndex="0"
+            <GridPane GridPane.rowIndex="0"
+                      GridPane.columnIndex="0"
+                      GridPane.columnSpan="2"
+                      alignment="CENTER"
+                      vgap="10">
+                <ImageView fx:id="userImage"
+                           GridPane.rowIndex="0"
+                           GridPane.columnIndex="0"
+                           GridPane.halignment="CENTER"/>
+
+                <Label text="Registrazione"
+                       GridPane.rowIndex="1"
                        GridPane.columnIndex="0"
-                       GridPane.columnSpan="2"
-                       GridPane.halignment="CENTER"/>
+                       textFill="#494949">
+                    <font>
+                        <Font name="helvetica bold" size="30"/>
+                    </font>
+                </Label>
+            </GridPane>
 
             <GridPane alignment="CENTER_RIGHT"
-                  GridPane.rowIndex="0"
+                  GridPane.rowIndex="1"
                   GridPane.columnIndex="0" hgap="10" vgap="20">
 
                 <Label text="Codice Fiscale: "
@@ -87,7 +102,7 @@
             </GridPane>
 
             <GridPane alignment="CENTER_LEFT"
-                  GridPane.rowIndex="0"
+                  GridPane.rowIndex="1"
                   GridPane.columnIndex="1" hgap="10" vgap="20">
 
                 <Label text="Nome: "
@@ -129,7 +144,7 @@
             </GridPane>
 
             <HBox alignment="CENTER"
-                  GridPane.rowIndex="1"
+                  GridPane.rowIndex="2"
                   GridPane.columnIndex="0"
                   GridPane.columnSpan="2">
                 <Label text="Numero di Telefono: ">
@@ -144,7 +159,7 @@
             </HBox>
 
             <Button text="Registrati"
-                    GridPane.rowIndex="2"
+                    GridPane.rowIndex="3"
                     GridPane.columnIndex="0"
                     GridPane.columnSpan="2"
                     GridPane.halignment="CENTER"
