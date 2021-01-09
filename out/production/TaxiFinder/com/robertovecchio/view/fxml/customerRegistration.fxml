@@ -161,7 +161,6 @@
                           GridPane.halignment="RIGHT"
                           prefHeight="25"
                           fx:id="informationField"/>
-
             </GridPane>
 
             <Button text="Registrati"

@@ -8,6 +8,10 @@ import javafx.scene.image.ImageView;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Classe che gestisce la view della registrazione del cliente
@@ -73,6 +77,10 @@ public class CustomerRegistrationController {
             // catchiamo l'errore
             System.out.println("File Non trovato");
         }
+
+        // inizializziamo la comboBox con tutti i possibili enum
+        Set<GenderType> genders = EnumSet.of(GenderType.MALE, GenderType.FEMALE, GenderType.OTHER);
+        genreField.getItems().addAll(genders);
     }
 
     //==================================================
@@ -93,7 +101,7 @@ public class CustomerRegistrationController {
      */
     @FXML
     private void handleRegistration(){
-
+        System.out.println("Registrati premuto");
     }
 
 }
