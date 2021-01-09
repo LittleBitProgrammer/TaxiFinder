@@ -10,13 +10,44 @@ public enum GenderType {
     /**
      * Caso UOMO
      * */
-    MALE,
+    MALE("UOMO"),
     /**
      * Caso DONNA
      * */
-    FEMALE,
+    FEMALE("DONNA"),
     /**
      * Caso ALTRO
      * */
-    OTHER
+    OTHER("ALTRO");
+
+    private String translation; // stringa tradotta dell'enum
+
+    /**
+     * Metodo costruttore che accetta dei valori default per impostare la stringa dell'enum nella lingua preferita
+     * @param translation traduzione sotto forma di stringa dell'enum
+     * */
+    GenderType(String translation){
+        this.translation = translation;
+    }
+
+    /**
+     * Metodo costruttore di "Default"
+     * */
+    GenderType(){}
+
+    /**
+     * Metodo Setter della traduzione
+     * @param translation traduzione sotto forma di stringa dell'enum
+     * */
+    public void setTranslation(String translation){
+        this.translation = translation;
+    }
+
+    /**
+     * Metodo Getter della traduzione
+     * @return traduzione sotto forma di stringa dell'enum
+     * */
+    public String getTranslation(){
+        return this.translation;
+    }
 }
