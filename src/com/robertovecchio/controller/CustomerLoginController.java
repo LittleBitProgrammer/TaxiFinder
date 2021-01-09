@@ -35,6 +35,7 @@ public class CustomerLoginController {
     //==================================================
 
     private final static String controllerFile = "src/com/robertovecchio/view/fxml/main.fxml";
+    private final static String registrationFile = "src/com/robertovecchio/view/fxml/customerRegistration.fxml";
     private final static String userLogo = "Assets/user.png";
     private final static String fontFamily = "Helvetica";
     private final static double fontSize = 15D;
@@ -86,7 +87,7 @@ public class CustomerLoginController {
         vboxUser.getChildren().add(textFlow);
 
         registrationTextSecondPart.setOnMouseClicked(mouseEvent -> {
-            System.out.println("Cliccato!");
+            handleRegistrationButton();
         });
 
         registrationTextSecondPart.setOnMouseEntered(mouseEvent -> {
@@ -108,6 +109,7 @@ public class CustomerLoginController {
     //                     Metodi
     //==================================================
     private void handleRegistrationButton(){
-
+        UtilityController.navigateTo(registrationFile,"Registra Cliente",
+                               "Interfaccia di registrazione di un cliente non trovata", backButton);
     }
 }
