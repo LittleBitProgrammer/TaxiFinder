@@ -3,9 +3,9 @@ package com.robertovecchio.controller;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -65,5 +65,20 @@ public class UtilityController {
         }catch (IOException e){
             System.out.println(error);
         }
+    }
+
+    /**
+     * Metodo atto a constatare la validità di una email inserita sfruttando le api ufficiali di java
+     * @param email Email da verificare
+     * */
+    public static boolean isValidEmailAddress(String email) {
+        boolean result = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+        }
+        return result;
     }
 }
