@@ -10,6 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.geometry.Insets?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.robertovecchio.controller.CompanyAreaController">
@@ -30,91 +31,132 @@
         </ToolBar>
     </top>
     <center>
-        <GridPane hgap="40">
-            <columnConstraints>
-                <ColumnConstraints percentWidth="50"/>
-                <ColumnConstraints percentWidth="50"/>
-            </columnConstraints>
+        <VBox>
+            <HBox alignment="CENTER">
+                <Label text="Area Riservata"
+                       textAlignment="CENTER"
+                       fx:id="advice">
+                    <padding>
+                        <Insets top="50"/>
+                    </padding>
+                </Label>
+            </HBox>
+            <HBox alignment="CENTER">
+                <Label text="Scegli con quale utente effettuare l'accesso"
+                       textAlignment="CENTER"
+                       fx:id="header"/>
+            </HBox>
 
-            <VBox alignment="CENTER_RIGHT"
-                  GridPane.rowIndex="0"
-                  GridPane.columnIndex="0">
-                <GridPane alignment="CENTER" vgap="15" hgap="10">
+            <GridPane  alignment="CENTER" vgap="100">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50"/>
+                    <ColumnConstraints percentWidth="50"/>
+                </columnConstraints>
 
-                    <ImageView fx:id="adminImage"
-                               GridPane.rowIndex="0"
+                <VBox alignment="CENTER_RIGHT"
+                      GridPane.rowIndex="1"
+                      GridPane.columnIndex="0">
+                    <GridPane alignment="CENTER" vgap="15" hgap="10">
+
+                        <ImageView fx:id="adminImage"
+                                   GridPane.rowIndex="0"
+                                   GridPane.columnIndex="0"
+                                   GridPane.columnSpan="2"
+                                   GridPane.halignment="CENTER"/>
+
+                        <Label text="Login Gestore"
+                               GridPane.rowIndex="1"
                                GridPane.columnIndex="0"
                                GridPane.columnSpan="2"
-                               GridPane.halignment="CENTER"/>
+                               GridPane.halignment="CENTER" textFill="#494949">
+                            <font>
+                                <Font name="Helvetica Bold" size="20"/>
+                            </font>
+                        </Label>
 
-                    <Label text="Login Utente"
-                           GridPane.rowIndex="1"
-                           GridPane.columnIndex="0"
-                           GridPane.columnSpan="2"
-                           GridPane.halignment="CENTER" textFill="#494949">
-                        <font>
-                            <Font name="Helvetica Bold" size="20"/>
-                        </font>
-                    </Label>
-
-                    <Label text="Username:"
-                           GridPane.rowIndex="2"
-                           GridPane.columnIndex="0"/>
-
-                    <TextField promptText="es. Roberto"
+                        <Label text="Username:"
                                GridPane.rowIndex="2"
-                               GridPane.columnIndex="1"/>
+                               GridPane.columnIndex="0"/>
 
-                    <Label text="Password:"
-                           GridPane.rowIndex="3"
-                           GridPane.columnIndex="0"/>
-
-                    <PasswordField promptText="es. 123"
-                                   GridPane.rowIndex="3"
+                        <TextField promptText="es. Roberto"
+                                   GridPane.rowIndex="2"
                                    GridPane.columnIndex="1"/>
 
-                </GridPane>
-            </VBox>
+                        <Label text="Password:"
+                               GridPane.rowIndex="3"
+                               GridPane.columnIndex="0"/>
 
-            <VBox alignment="CENTER_LEFT"
-                  GridPane.rowIndex="0"
-                  GridPane.columnIndex="1">
-                <GridPane alignment="CENTER" vgap="15" hgap="10">
+                        <PasswordField promptText="es. 123"
+                                       GridPane.rowIndex="3"
+                                       GridPane.columnIndex="1"/>
 
-                    <ImageView fx:id="driverImage"
-                               GridPane.rowIndex="0"
+                        <Button text="Login"
+                                GridPane.rowIndex="4"
+                                GridPane.columnIndex="0"
+                                GridPane.columnSpan="2"
+                                GridPane.halignment="CENTER" prefWidth="240">
+                            <graphic>
+                                <ImageView>
+                                    <Image url="@/toolbarButtonGraphics/general/Open24.gif"/>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+
+                    </GridPane>
+                </VBox>
+
+                <VBox alignment="CENTER_LEFT"
+                      GridPane.rowIndex="1"
+                      GridPane.columnIndex="1">
+                    <GridPane alignment="CENTER" vgap="15" hgap="10">
+
+                        <ImageView fx:id="driverImage"
+                                   GridPane.rowIndex="0"
+                                   GridPane.columnIndex="0"
+                                   GridPane.columnSpan="2"
+                                   GridPane.halignment="CENTER"/>
+
+                        <Label text="Login Tassista"
+                               GridPane.rowIndex="1"
                                GridPane.columnIndex="0"
                                GridPane.columnSpan="2"
-                               GridPane.halignment="CENTER"/>
+                               GridPane.halignment="CENTER" textFill="#494949">
+                            <font>
+                                <Font name="Helvetica Bold" size="20"/>
+                            </font>
+                        </Label>
 
-                    <Label text="Login Utente"
-                           GridPane.rowIndex="1"
-                           GridPane.columnIndex="0"
-                           GridPane.columnSpan="2"
-                           GridPane.halignment="CENTER" textFill="#494949">
-                        <font>
-                            <Font name="Helvetica Bold" size="20"/>
-                        </font>
-                    </Label>
-
-                    <Label text="Username:"
-                           GridPane.rowIndex="2"
-                           GridPane.columnIndex="0"/>
-
-                    <TextField promptText="es. Roberto"
+                        <Label text="Username:"
                                GridPane.rowIndex="2"
-                               GridPane.columnIndex="1"/>
+                               GridPane.columnIndex="0"/>
 
-                    <Label text="Password:"
-                           GridPane.rowIndex="3"
-                           GridPane.columnIndex="0"/>
-
-                    <PasswordField promptText="es. 123"
-                                   GridPane.rowIndex="3"
+                        <TextField promptText="es. Roberto"
+                                   GridPane.rowIndex="2"
                                    GridPane.columnIndex="1"/>
 
-                </GridPane>
-            </VBox>
-        </GridPane>
+                        <Label text="Password:"
+                               GridPane.rowIndex="3"
+                               GridPane.columnIndex="0"/>
+
+                        <PasswordField promptText="es. 123"
+                                       GridPane.rowIndex="3"
+                                       GridPane.columnIndex="1"/>
+
+                        <Button text="Login"
+                                GridPane.rowIndex="4"
+                                GridPane.columnIndex="0"
+                                GridPane.columnSpan="2"
+                                GridPane.halignment="CENTER" prefWidth="240">
+                            <graphic>
+                                <ImageView>
+                                    <Image url="@/toolbarButtonGraphics/general/Open24.gif"/>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+
+                    </GridPane>
+                </VBox>
+            </GridPane>
+        </VBox>
     </center>
 </BorderPane>

@@ -86,12 +86,9 @@ public class CustomerLoginController {
         // aggiungiamo al vbox il textflow
         vboxUser.getChildren().add(textFlow);
 
+        // aggiungiamo un'azione da compiere quando l'utente clicca sul tasto di registrazione
         registrationTextSecondPart.setOnMouseClicked(mouseEvent -> {
             handleRegistrationButton();
-        });
-
-        registrationTextSecondPart.setOnMouseEntered(mouseEvent -> {
-            System.out.println("Entrato");
         });
     }
 

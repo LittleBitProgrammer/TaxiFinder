@@ -65,6 +65,18 @@
                                GridPane.rowIndex="3"
                                GridPane.columnIndex="1"/>
 
+                <Button text="Login"
+                        GridPane.rowIndex="4"
+                        GridPane.columnIndex="0"
+                        GridPane.columnSpan="2"
+                        GridPane.halignment="CENTER" prefWidth="240">
+                    <graphic>
+                        <ImageView>
+                            <Image url="@/toolbarButtonGraphics/general/Open24.gif"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
             </GridPane>
         </VBox>
     </center>

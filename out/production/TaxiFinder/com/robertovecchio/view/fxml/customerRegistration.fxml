@@ -7,6 +7,8 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.DatePicker?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.robertovecchio.controller.CustomerRegistrationController">
@@ -27,28 +29,56 @@
         </ToolBar>
     </top>
     <center>
-        <GridPane hgap="40">
+        <GridPane hgap="40" alignment="CENTER">
 
             <columnConstraints>
                 <ColumnConstraints percentWidth="50"/>
                 <ColumnConstraints percentWidth="50"/>
             </columnConstraints>
 
-            <VBox alignment="CENTER_RIGHT"
+            <GridPane alignment="CENTER_RIGHT"
                   GridPane.rowIndex="0"
-                  GridPane.columnIndex="0">
+                  GridPane.columnIndex="0" hgap="10" vgap="10">
 
-                <Label text="ciao"/>
+                <Label text="Codice Fiscale: "
+                       GridPane.rowIndex="0"
+                       GridPane.columnIndex="0"/>
 
-            </VBox>
+                <TextField promptText="es VCCRRT..."
+                           GridPane.rowIndex="0"
+                           GridPane.columnIndex="1"/>
 
-            <VBox alignment="CENTER_LEFT"
+                <Label text="Cognome: "
+                       GridPane.rowIndex="1"
+                       GridPane.columnIndex="0"/>
+
+                <TextField promptText="es Vecchio"
+                           GridPane.rowIndex="1"
+                           GridPane.columnIndex="1"/>
+
+            </GridPane>
+
+            <GridPane alignment="CENTER_LEFT"
                   GridPane.rowIndex="0"
-                  GridPane.columnIndex="1">
+                  GridPane.columnIndex="1" hgap="10" vgap="10">
 
-                <Label text="ciao"/>
+                <Label text="Nome: "
+                       GridPane.rowIndex="0"
+                       GridPane.columnIndex="0"/>
 
-            </VBox>
+                <TextField promptText="es Roberto"
+                           GridPane.rowIndex="0"
+                           GridPane.columnIndex="1"/>
+
+                <Label text="Data di nascita: "
+                       GridPane.rowIndex="1"
+                       GridPane.columnIndex="0"/>
+
+                <DatePicker promptText="es 01/01/1993"
+                           GridPane.rowIndex="1"
+                           GridPane.columnIndex="1"/>
+
+            </GridPane>
 
         </GridPane>
     </center>
