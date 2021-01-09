@@ -1,17 +1,25 @@
 package com.robertovecchio.controller;
 
 import com.robertovecchio.model.user.GenderType;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanExpression;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.*;
 import javafx.util.StringConverter;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.EnumSet;
-import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -51,13 +59,18 @@ public class CustomerRegistrationController {
     TextField phoneField;
     @FXML
     CheckBox informationField;
+    @FXML
+    GridPane gridContainer;
 
     //==================================================
     //               Variabili Statiche
     //==================================================
 
     private final static String loginController = "src/com/robertovecchio/view/fxml/customerLogin.fxml";
+    private final static String dialogController = "src/com/robertovecchio/view/fxml/dialog/termsAndConditions.fxml";
     private final static String userLogo = "Assets/user.png";
+    private final static String fontFamily = "Helvetica";
+    private final static double fontSize = 15D;
 
     //==================================================
     //               Inizializzazione
@@ -99,6 +112,67 @@ public class CustomerRegistrationController {
                 return null;
             }
         });
+
+        // Inizializziamo un Texflow
+        TextFlow textFlow = new TextFlow();
+
+        // Creiamo la prima parte della label "termini e condizioni"
+        Text termsAndConditionFirst = new Text("Qui puoi visualizzare ");
+        termsAndConditionFirst.setFont(Font.font(fontFamily, FontWeight.THIN, fontSize));
+
+        // Creiamo la seconda parte della registrazione
+        Text termsAndConditionSecond = new Text("Termini e condizioni");
+        termsAndConditionSecond.setFont(Font.font(fontFamily + " bold", FontWeight.BOLD, 16));
+        termsAndConditionSecond.setFill(Color.web("#1134FD"));
+        termsAndConditionSecond.setId("termAndCondition");
+
+        // aggiungiamo varie parti del testo di "termini e condizioni" al textFlow
+        textFlow.getChildren().addAll(termsAndConditionFirst, termsAndConditionSecond);
+
+        // allineiamo il texflow al centro
+        textFlow.setTextAlignment(TextAlignment.CENTER);
+
+        // aggiungiamo textflow al gridPane secondo la seguente sintassi:
+        // 1 - indice di colonna
+        // 2 - indice di riga
+        // 3 - span colonna
+        // 4 - span riga
+        gridContainer.add(textFlow, 0, 2, 2,1);
+
+        // Impostiamo un'azione da eseguire quando termini e condizioni viene cliccato
+        termsAndConditionSecond.setOnMouseClicked(mouseEvent -> {
+            // creiamo un nuovo dialog da visualizzare
+            Dialog<ButtonType> termsAndConditionsDialog = new Dialog<>();
+
+            // inizializziamo il proprietario
+            termsAndConditionsDialog.initOwner(gridContainer.getScene().getWindow());
+
+            // Impostiamo il titolo del dialog
+            termsAndConditionsDialog.setTitle("Termini e condizioni");
+
+            // Carichiamo il file di iterfaccia per il dialog
+            FXMLLoader loader = new FXMLLoader();
+            try{
+                Parent root = loader.load(new FileInputStream(dialogController));
+                termsAndConditionsDialog.getDialogPane().setContent(root);
+            }catch (IOException e){
+                System.out.println("File interfaccia dialog termini e condizioni non trovato");
+            }
+
+            // Aggiungiamo il bottone OK al dialogPane
+            termsAndConditionsDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+
+            // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+            Optional<ButtonType> result = termsAndConditionsDialog.showAndWait();
+
+            // Gestiamo il caso in cui l'utente abbia premuto OK
+            if (result.isPresent() && result.get() == ButtonType.OK){
+                System.out.println("OK Premuto da termini e condizioni");
+            }
+        });
+
+        // impostiamo il bottone registrati a disabilitato quando l'input utente non corrisponde ai criteri richiesti
+        registerButton.disableProperty().bind(invalidInputProperty());
     }
 
     //==================================================
@@ -122,4 +196,50 @@ public class CustomerRegistrationController {
         System.out.println("Registrati premuto");
     }
 
+    //==================================================
+    //                    Metodi
+    //==================================================
+
+    /**
+     * Questo metodo constata che le proprietà dei vari controlli siano riempite prima di poter effettuare una
+     * registrazione
+     * @return Ritorna una espressione booleana osservabile che constata la qualità di quanto inserito
+     * */
+    private BooleanExpression invalidInputProperty(){
+        return Bindings.createBooleanBinding(() -> this.fiscalCodeField.getText().trim().isEmpty() ||
+                                                   this.nameField.getText().trim().isEmpty() ||
+                                                   this.surnameField.getText().trim().isEmpty() ||
+                                                   this.dateOfBirthField.getValue() == null ||
+                                                   this.genreField.getValue() == null ||
+                                                   this.emailField.getText().trim().isEmpty() ||
+                                                   this.usernameField.getText().trim().isEmpty() ||
+                                                   this.passwordField.getText().trim().isEmpty() ||
+                                                   this.phoneField.getText().trim().isEmpty() ||
+                                                   !this.informationField.isSelected(),
+                                                   this.fiscalCodeField.textProperty(),
+                                                   this.nameField.textProperty(),
+                                                   this.surnameField.textProperty(),
+                                                   this.dateOfBirthField.valueProperty(),
+                                                   this.genreField.valueProperty(),
+                                                   this.emailField.textProperty(),
+                                                   this.usernameField.textProperty(),
+                                                   this.passwordField.textProperty(),
+                                                   this.phoneField.textProperty(),
+                                                   this.informationField.selectedProperty());
+    }
+
+    /**
+     * Metodo che ricava l'età data la data di nascita
+     * @param birthDate data di nascita
+     * @return età*/
+    private int getYears(LocalDate birthDate){
+        // Ricavo la data attuale
+        LocalDate now = LocalDate.now();
+
+        // Calcolo la differenza tra i due periodi
+        Period difference = Period.between(birthDate,now);
+
+        // ritorno solo gli anni di differenza
+        return difference.getYears();
+    }
 }

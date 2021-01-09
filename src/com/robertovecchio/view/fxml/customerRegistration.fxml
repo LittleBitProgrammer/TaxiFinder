@@ -33,7 +33,10 @@
         </ToolBar>
     </top>
     <center>
-        <GridPane hgap="40" alignment="CENTER" vgap="20">
+        <GridPane hgap="40"
+                  alignment="CENTER"
+                  vgap="20"
+                  fx:id="gridContainer">
 
             <columnConstraints>
                 <ColumnConstraints percentWidth="50"/>
@@ -164,7 +167,7 @@
             </GridPane>
 
             <Button text="Registrati"
-                    GridPane.rowIndex="2"
+                    GridPane.rowIndex="3"
                     GridPane.columnIndex="0"
                     GridPane.columnSpan="2"
                     GridPane.halignment="CENTER"
@@ -177,7 +180,6 @@
                     </ImageView>
                 </graphic>
             </Button>
-
         </GridPane>
     </center>
 </BorderPane>

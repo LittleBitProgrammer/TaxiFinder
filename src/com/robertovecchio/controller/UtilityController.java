@@ -49,7 +49,7 @@ public class UtilityController {
      * @param title Titolo dello stage
      * @param error Errore da stampare in caso di problemi nel caricamento del file fxml
      * @param button Button da cui viene triggerata la navigazione
-     * @param stylesheet foglio di stile
+     * @param stylesheet path foglio di stile
      * @see Button
      * */
     protected static void navigateTo(String fileName, String title, String error, Button button, String stylesheet){
@@ -70,6 +70,7 @@ public class UtilityController {
     /**
      * Metodo atto a constatare la validità di una email inserita sfruttando le api ufficiali di java
      * @param email Email da verificare
+     * @return true se è una mail valid, altrimenti false
      * */
     public static boolean isValidEmailAddress(String email) {
         boolean result = true;

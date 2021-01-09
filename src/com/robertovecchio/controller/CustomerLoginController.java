@@ -36,6 +36,7 @@ public class CustomerLoginController {
 
     private final static String controllerFile = "src/com/robertovecchio/view/fxml/main.fxml";
     private final static String registrationFile = "src/com/robertovecchio/view/fxml/customerRegistration.fxml";
+    private final static String customerRegistrationStyle = "com/robertovecchio/view/fxml/style/customerRegistration.css";
     private final static String userLogo = "Assets/user.png";
     private final static String fontFamily = "Helvetica";
     private final static double fontSize = 15D;
@@ -107,6 +108,7 @@ public class CustomerLoginController {
     //==================================================
     private void handleRegistrationButton(){
         UtilityController.navigateTo(registrationFile,"Registra Cliente",
-                               "Interfaccia di registrazione di un cliente non trovata", backButton);
+                               "Interfaccia di registrazione di un cliente non trovata", backButton,
+                                     customerRegistrationStyle);
     }
 }
