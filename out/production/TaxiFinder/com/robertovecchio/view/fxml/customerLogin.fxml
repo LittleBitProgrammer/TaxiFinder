@@ -9,6 +9,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.text.Font?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.robertovecchio.controller.CustomerLoginController">
@@ -29,24 +30,42 @@
         </ToolBar>
     </top>
     <center>
-        <GridPane alignment="CENTER" vgap="10" hgap="10">
+        <VBox fx:id="vboxUser" alignment="CENTER">
+            <GridPane alignment="CENTER" vgap="15" hgap="10">
 
-            <Label text="Username"
-                   GridPane.rowIndex="0"
-                   GridPane.columnIndex="0"/>
+                <ImageView fx:id="userImage"
+                           GridPane.rowIndex="0"
+                           GridPane.columnIndex="0"
+                           GridPane.columnSpan="2"
+                           GridPane.halignment="CENTER"/>
 
-            <TextField promptText="es. Roberto"
-                       GridPane.rowIndex="0"
-                       GridPane.columnIndex="1"/>
+                <Label text="Login Utente"
+                       GridPane.rowIndex="1"
+                       GridPane.columnIndex="0"
+                       GridPane.columnSpan="2"
+                       GridPane.halignment="CENTER" textFill="#494949">
+                    <font>
+                        <Font name="Helvetica Bold" size="20"/>
+                    </font>
+                </Label>
 
-            <Label text="Password"
-                   GridPane.rowIndex="1"
-                   GridPane.columnIndex="0"/>
+                <Label text="Username:"
+                       GridPane.rowIndex="2"
+                       GridPane.columnIndex="0"/>
 
-            <PasswordField promptText="es. 123"
-                           GridPane.rowIndex="1"
+                <TextField promptText="es. Roberto"
+                           GridPane.rowIndex="2"
                            GridPane.columnIndex="1"/>
 
-        </GridPane>
+                <Label text="Password:"
+                       GridPane.rowIndex="3"
+                       GridPane.columnIndex="0"/>
+
+                <PasswordField promptText="es. 123"
+                               GridPane.rowIndex="3"
+                               GridPane.columnIndex="1"/>
+
+            </GridPane>
+        </VBox>
     </center>
 </BorderPane>

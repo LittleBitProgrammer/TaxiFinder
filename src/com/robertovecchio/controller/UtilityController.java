@@ -39,4 +39,29 @@ public class UtilityController {
             System.out.println(error);
         }
     }
+
+    /**
+     * Metodo atto alla navigazione presso il file fxml successivo con aggiunta di foglio di stile atto alla
+     * personalizzazione dell'interfaccia
+     * @param fileName Nome del file fxml
+     * @param title Titolo dello stage
+     * @param error Errore da stampare in caso di problemi nel caricamento del file fxml
+     * @param button Button da cui viene triggerata la navigazione
+     * @param stylesheet foglio di stile
+     * @see Button
+     * */
+    protected static void navigateTo(String fileName, String title, String error, Button button, String stylesheet){
+        Stage stage = (Stage)button.getScene().getWindow();
+
+        FXMLLoader loader = new FXMLLoader();
+        try {
+            Parent root = loader.load(new FileInputStream(fileName));
+
+            stage.setTitle(title);
+            stage.getScene().setRoot(root);
+            stage.getScene().getStylesheets().add(stylesheet);
+        }catch (IOException e){
+            System.out.println(error);
+        }
+    }
 }

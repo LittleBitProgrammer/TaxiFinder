@@ -38,11 +38,15 @@ public class Controller {
     private final static String logoFilePath = "Assets/logo.png";
     private final static String companyAreaFile = "src/com/robertovecchio/view/fxml/companyArea.fxml";
     private final static String userFile = "src/com/robertovecchio/view/fxml/customerLogin.fxml";
+    private final static String customerLoginStyle = "com/robertovecchio/view/fxml/style/customerLogin.css";
 
     //==================================================
     //               Inizializzazione
     //==================================================
 
+    /**
+     * Questo metodo inizializza la view a cui è collegato il controller corrente
+     * */
     @FXML
     public void initialize(){
         // Inizializziamo una nuova imageview
@@ -116,7 +120,8 @@ public class Controller {
         // impostiamo l'azione al click del bottone che porta all'area cliente
         userButton.setOnAction(actionEvent -> {
            UtilityController.navigateTo(userFile,"Area Cliente",
-                                  "File interfaccia cliente non trovato", userButton);
+                                  "File interfaccia cliente non trovato",
+                                        userButton, customerLoginStyle);
         });
     }
 }

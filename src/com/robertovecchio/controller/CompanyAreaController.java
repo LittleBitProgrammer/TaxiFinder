@@ -27,6 +27,9 @@ public class CompanyAreaController {
     //                Metodi FXML
     //==================================================
 
+    /**
+     * Questo metodo gestisce il caso in cui si voglia tornare indietro, verso main view
+     * */
     @FXML
     public void handleBackButton(){
         UtilityController.navigateTo(controllerFile, "Taxi Finder",

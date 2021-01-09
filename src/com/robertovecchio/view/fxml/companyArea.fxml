@@ -26,6 +26,8 @@
         </ToolBar>
     </top>
     <center>
-
+        <GridPane>
+            <Button/>
+        </GridPane>
     </center>
 </BorderPane>
