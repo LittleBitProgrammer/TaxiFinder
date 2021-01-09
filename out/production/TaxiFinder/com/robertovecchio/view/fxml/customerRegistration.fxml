@@ -12,6 +12,7 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.CheckBox?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.robertovecchio.controller.CustomerRegistrationController">
@@ -88,7 +89,7 @@
                 <ComboBox promptText="es: Uomo"
                            GridPane.rowIndex="2"
                            GridPane.columnIndex="1"
-                           prefWidth="400"
+                           prefWidth="390"
                            fx:id="genreField"/>
 
                 <Label text="Username: "
@@ -99,6 +100,15 @@
                            GridPane.rowIndex="3"
                            GridPane.columnIndex="1"
                            fx:id="usernameField"/>
+
+                <Label text="Numero di Telefono: "
+                       GridPane.rowIndex="4"
+                       GridPane.columnIndex="0"/>
+
+                <TextField promptText="es: 3283844389"
+                           GridPane.rowIndex="4"
+                           GridPane.columnIndex="1"
+                           fx:id="phoneField"/>
             </GridPane>
 
             <GridPane alignment="CENTER_LEFT"
@@ -141,29 +151,25 @@
                            GridPane.rowIndex="3"
                            GridPane.columnIndex="1"
                            fx:id="passwordField"/>
+
+                <Label text="Accetta condizioni:"
+                       GridPane.rowIndex="4"
+                       GridPane.columnIndex="0"/>
+
+                <CheckBox GridPane.rowIndex="4"
+                          GridPane.columnIndex="1"
+                          GridPane.halignment="RIGHT"
+                          prefHeight="25"
+                          fx:id="informationField"/>
+
             </GridPane>
 
-            <HBox alignment="CENTER"
-                  GridPane.rowIndex="2"
-                  GridPane.columnIndex="0"
-                  GridPane.columnSpan="2">
-                <Label text="Numero di Telefono: ">
-                    <padding>
-                        <Insets right="10"/>
-                    </padding>
-                </Label>
-
-                <TextField promptText="es: 3283844389"
-                           prefWidth="905"
-                           fx:id="phoneField"/>
-            </HBox>
-
             <Button text="Registrati"
-                    GridPane.rowIndex="3"
+                    GridPane.rowIndex="2"
                     GridPane.columnIndex="0"
                     GridPane.columnSpan="2"
                     GridPane.halignment="CENTER"
-                    prefWidth="1030"
+                    prefWidth="1070"
                     onAction="#handleRegistration"
                     fx:id="registerButton">
                 <graphic>

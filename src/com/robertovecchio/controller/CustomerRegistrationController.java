@@ -44,6 +44,8 @@ public class CustomerRegistrationController {
     Button registerButton;
     @FXML
     TextField phoneField;
+    @FXML
+    CheckBox informationField;
 
     //==================================================
     //               Variabili Statiche
