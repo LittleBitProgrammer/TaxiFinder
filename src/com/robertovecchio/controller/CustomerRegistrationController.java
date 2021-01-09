@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.StringConverter;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -81,6 +82,23 @@ public class CustomerRegistrationController {
         // inizializziamo la comboBox con tutti i possibili enum
         Set<GenderType> genders = EnumSet.of(GenderType.MALE, GenderType.FEMALE, GenderType.OTHER);
         genreField.getItems().addAll(genders);
+
+        // Permette di mostrare una stringa personalizzata nell'intestazione del ComboBox
+        genreField.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(GenderType genderType) {
+                if (genderType == null){
+                    return null;
+                }else {
+                    return genderType.getTranslation();
+                }
+            }
+
+            @Override
+            public GenderType fromString(String s) {
+                return null;
+            }
+        });
     }
 
     //==================================================
