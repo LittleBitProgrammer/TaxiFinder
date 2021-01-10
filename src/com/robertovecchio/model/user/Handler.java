@@ -4,7 +4,6 @@ package com.robertovecchio.model.user;
 import com.robertovecchio.model.veichle.BrandType;
 import com.robertovecchio.model.veichle.FuelType;
 import com.robertovecchio.model.veichle.builderTaxi.TaxiBuilder;
-
 import java.time.LocalDate;
 
 /**

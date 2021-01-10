@@ -39,12 +39,15 @@ public class Main extends Application {
         *  liste:
         *
         *  1 - Lista Clienti
+        *  2 - Lista Handler
         * */
         try{
             taxiFinderData.loadCustomers();
+            taxiFinderData.loadHandlers();
         } catch (IOException | ClassNotFoundException e){
-            System.out.println("Nessun cliente trovato");
+            System.out.println("Reperimento dati non riuscito");
         }
+        System.out.println(taxiFinderData.getHandlers());
     }
 
     /**
