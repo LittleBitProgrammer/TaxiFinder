@@ -1,8 +1,12 @@
 package com.robertovecchio.controller;
 
+import com.robertovecchio.model.db.TaxiFinderData;
+import com.robertovecchio.model.db.error.HandlerNotFoundException;
+import com.robertovecchio.model.user.Handler;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanExpression;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -48,6 +52,10 @@ public class CompanyAreaController {
     Button handlerLoginButton;
     @FXML
     Button taxiDriverLoginButton;
+    @FXML
+    Label errorHandler;
+    @FXML
+    Label errorTaxiDriver;
 
     //==================================================
     //               Variabili Statiche
@@ -57,7 +65,12 @@ public class CompanyAreaController {
     private final static String adminLogo = "Assets/admin.png";
     private final static String driverLogo = "Assets/driver.png";
     private final static String fontFamily = "Helvetica";
-    private final static double fontSize = 35D;
+
+    //==================================================
+    //               Variabili d'istanza
+    //==================================================
+
+    private final TaxiFinderData taxiFinderData = TaxiFinderData.getInstance();
 
     //==================================================
     //               Inizializzazione
@@ -99,7 +112,19 @@ public class CompanyAreaController {
 
         // Impostiamo un'azione da effettuare quando il bottone di login dell'handler viene premuto
         handlerLoginButton.setOnAction(actionEvent -> {
-            System.out.println("Login handler premuto");
+            // Inizializzo le credenziali con quanto è stato inserito dall'utente
+            String username = this.handlerUsernameField.getText().trim();
+            String password = this.handlerPasswordField.getText().trim();
+
+            try {
+                // Inizializzo L'handler con i dati di login
+                Handler handler = taxiFinderData.loginHandler(new Handler(username,password));
+            }catch (HandlerNotFoundException e){
+                // Stampo l'errore
+                System.out.println(e.getMessage());
+
+                errorHandler.setVisible(true);
+            }
         });
 
         // Impostiamo un'azione da effettuare quando il bottono di login del taxiDriver viene premuto

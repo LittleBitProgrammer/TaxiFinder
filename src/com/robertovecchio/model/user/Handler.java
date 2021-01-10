@@ -75,6 +75,17 @@ public class Handler extends UserAccount{
 
     }
 
+    /**
+     * Costruttore di un Gestore
+     * @param username username utente
+     * @param password password utente
+     * */
+    public Handler(String username, String password){
+
+        // Richiamo il costruttore della classe astratta UserAccount
+        super(username, password);
+    }
+
     //==================================================
     //                      Setter
     //==================================================

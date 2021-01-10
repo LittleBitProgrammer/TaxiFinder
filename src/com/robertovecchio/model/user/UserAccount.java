@@ -72,6 +72,15 @@ public abstract class UserAccount implements Serializable {
         this.password = password;
     }
 
+    /**
+     * Costruttore di un utente
+     * @param username username utente
+     * @param password password utente
+     * */
+    public UserAccount(String username, String password){
+        this("","","",null,null,"", username, password);
+    }
+
     //==================================================
     //                      Setter
     //==================================================
@@ -240,15 +249,11 @@ public abstract class UserAccount implements Serializable {
      * */
     @Override
     public boolean equals(Object o) {
-        // se hanno la stessa reference ritorna true
         if (this == o) return true;
-
-        // se l'oggetto inserito non è istanza di userAccount ritorna false
         if (!(o instanceof UserAccount)) return false;
-
-        // dichiaro un tipo UserAccount castandolo opportunamente e confronto le stringhe codice fiscale
         UserAccount that = (UserAccount) o;
-        return fiscalCode.equals(that.fiscalCode);
+        return username.equals(that.username) &&
+                password.equals(that.password);
     }
 
     /**
@@ -257,6 +262,6 @@ public abstract class UserAccount implements Serializable {
      * */
     @Override
     public int hashCode() {
-        return Objects.hash(fiscalCode);
+        return Objects.hash(username, password);
     }
 }

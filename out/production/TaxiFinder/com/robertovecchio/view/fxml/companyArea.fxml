@@ -31,7 +31,7 @@
         </ToolBar>
     </top>
     <center>
-        <VBox>
+        <VBox alignment="TOP_CENTER">
             <HBox alignment="CENTER">
                 <Label text="Area Riservata"
                        textAlignment="CENTER"
@@ -107,6 +107,19 @@
                             </graphic>
                         </Button>
 
+                        <Label text="Credenziali Errate"
+                               GridPane.rowIndex="5"
+                               GridPane.columnIndex="0"
+                               GridPane.columnSpan="2"
+                               textFill="#E04F5F"
+                               fx:id="errorHandler"
+                               visible="false"
+                               GridPane.halignment="CENTER">
+                            <font>
+                                <Font name="helvetica bold" size="15"/>
+                            </font>
+                        </Label>
+
                     </GridPane>
                 </VBox>
 
@@ -163,6 +176,19 @@
                                 </ImageView>
                             </graphic>
                         </Button>
+
+                        <Label text="Credenziali Errate"
+                               GridPane.rowIndex="5"
+                               GridPane.columnIndex="0"
+                               GridPane.columnSpan="2"
+                               textFill="#E04F5F"
+                               visible="false"
+                               fx:id="errorTaxiDriver"
+                               GridPane.halignment="CENTER">
+                            <font>
+                                <Font name="helvetica bold" size="15"/>
+                            </font>
+                        </Label>
 
                     </GridPane>
                 </VBox>

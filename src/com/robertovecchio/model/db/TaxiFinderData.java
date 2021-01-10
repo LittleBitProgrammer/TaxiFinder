@@ -1,20 +1,20 @@
 package com.robertovecchio.model.db;
 
+import com.robertovecchio.model.db.error.HandlerNotFoundException;
 import com.robertovecchio.model.user.Customer;
 import com.robertovecchio.model.user.GenderType;
 import com.robertovecchio.model.user.Handler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Questa classe si occupa di simulare un database attraverso l'utilizzo di file. Inoltre vi è applicato un singleton
@@ -46,16 +46,16 @@ public class TaxiFinderData {
     private final DateTimeFormatter dateTimeFormatter;
     /**
      * lista osservabile di clienti
-     * @see ObservableList
+     * @see ObservableSet
      * @see Customer
      * */
-    private final ObservableList<Customer> customers;
+    private final ObservableSet<Customer> customers;
     /**
      * lista osservabile di gestori
      * @see List
      * @see Handler
      */
-    private List<Handler> handlers;
+    private Set<Handler> handlers;
 
     //==================================================
     //                   Costruttori
@@ -66,8 +66,8 @@ public class TaxiFinderData {
      * */
     private TaxiFinderData(){
         // Inizializzo le collections
-        this.customers = FXCollections.observableArrayList();
-        this.handlers = new ArrayList<>();
+        this.customers = FXCollections.observableSet();
+        this.handlers = new HashSet<>();
         this.genders = new HashMap<>();
 
         // Popolo l'hasmap
@@ -101,20 +101,20 @@ public class TaxiFinderData {
     /**
      * Metodo setter dei customers
      * @param customers clienti da impostare
-     * @see ObservableList
+     * @see ObservableSet
      * @see Customer
      * */
-    public void setCustomers(ObservableList<Customer> customers){
-        this.customers.setAll(customers);
+    public void setCustomers(ObservableSet<Customer> customers){
+        this.customers.addAll(customers);
     }
 
     /**
      * Metodo setter degli handlers
      * @param handlers Gestori da impostare
-     * @see List
+     * @see Set
      * @see Handler
      */
-    public void setHandlers(List<Handler> handlers){
+    public void setHandlers(Set<Handler> handlers){
         this.handlers = handlers;
     }
 
@@ -125,20 +125,20 @@ public class TaxiFinderData {
     /**
      * Metodo Getter dei Customers
      * @return la lista di customers
-     * @see ObservableList
+     * @see ObservableSet
      * @see Customer
      */
-    public ObservableList<Customer> getCustomers(){
+    public ObservableSet<Customer> getCustomers(){
         return this.customers;
     }
 
     /**
      * Metodo Getter degli handler
      * @return la lista dei gestori
-     * @see List
+     * @see Set
      * @see Handler
      */
-    public List<Handler> getHandlers(){
+    public Set<Handler> getHandlers(){
         return this.handlers;
     }
 
@@ -216,10 +216,14 @@ public class TaxiFinderData {
         // try with resources viene sfruttato per chiamare automaticamente il metodo close
         // sfruttiamo uno stream per deserializzare risorse
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(customerFileName))){
-            this.customers.setAll((ArrayList<Customer>) ois.readObject());
+            this.customers.addAll((ArrayList<Customer>) ois.readObject());
         }
     }
 
+    /**
+     * Metodo atto a popolare la lista di gestori
+     * @exception IOException Questo metodo potrebbe generare errori di input/output
+     * */
     public void loadHandlers() throws IOException{
         // Costruiamo un path sfruttando la stringa che compone il percorso verso il file degli handler
         Path path = Paths.get(handlerFileName);
@@ -253,5 +257,19 @@ public class TaxiFinderData {
                 this.addHandler(newHandler);
             }
         }
+    }
+
+    //==================================================
+    //                 Metodi Login
+    //==================================================
+    public Handler loginHandler(Handler handler) throws HandlerNotFoundException {
+        if (this.handlers.contains(handler)){
+            for (Handler tempHandler : this.handlers) {
+                if (tempHandler.equals(handler)) {
+                    return tempHandler;
+                }
+            }
+        }
+        throw new HandlerNotFoundException();
     }
 }
