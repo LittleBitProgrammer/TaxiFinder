@@ -1,5 +1,7 @@
 package com.robertovecchio.controller;
 
+import com.robertovecchio.model.db.TaxiFinderData;
+import com.robertovecchio.model.user.Customer;
 import com.robertovecchio.model.user.GenderType;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanExpression;
@@ -71,6 +73,11 @@ public class CustomerRegistrationController {
     private final static String userLogo = "Assets/user.png";
     private final static String fontFamily = "Helvetica";
     private final static double fontSize = 15D;
+
+    //==================================================
+    //                  Variabili
+    //==================================================
+    private final TaxiFinderData taxiFinderData = TaxiFinderData.getInstance();
 
     //==================================================
     //               Inizializzazione
@@ -193,7 +200,26 @@ public class CustomerRegistrationController {
      */
     @FXML
     private void handleRegistration(){
-        System.out.println("Registrati premuto");
+        //TODO:// fare controlli consistenza dei dati
+        String fiscalCode = fiscalCodeField.getText().trim();
+        String name = nameField.getText().trim();
+        String surname = surnameField.getText().trim();
+        LocalDate dateOfBirth = dateOfBirthField.getValue();
+        GenderType genderType = genreField.getValue();
+        String email = emailField.getText().trim();
+        String username = usernameField.getText().trim();
+        String password = passwordField.getText().trim();
+        String phoneNumber = phoneField.getText().trim();
+
+        taxiFinderData.addCustomer(new Customer(fiscalCode, name, surname,
+                                                dateOfBirth, genderType,
+                                                email, username,
+                                                password, phoneNumber));
+        try {
+            taxiFinderData.storeCustomers();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     //==================================================

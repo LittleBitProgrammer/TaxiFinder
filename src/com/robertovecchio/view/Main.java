@@ -1,13 +1,14 @@
 package com.robertovecchio.view;
 
 // import javafx necessari
+import com.robertovecchio.model.db.TaxiFinderData;
 import javafx.application.Application; // Gestisce il lifecycle di un'applicazione
 import javafx.fxml.FXMLLoader; // Loader di fxml
 import javafx.scene.Parent; // Nodo Primario
 import javafx.scene.Scene; // Astrae il concetto di View
 import javafx.stage.Stage; // Astrae il concetto di finestra desktop
-
 import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * La classe Main ha la responsabilità di lanciare l'applizione in modalità finestra, gestendo alcune responsabilità
@@ -26,6 +27,25 @@ import java.io.FileInputStream;
 public class Main extends Application {
 
     private static final String rootFilename = "src/com/robertovecchio/view/fxml/main.fxml";
+    private final TaxiFinderData taxiFinderData = TaxiFinderData.getInstance();
+
+    /**
+     * Metodo Triggerato non appena viene inizializzata l'applicazione, ereditato da application
+     * */
+    @Override
+    public void init(){
+        System.out.println("Programma Inizializzato");
+        /* Indipendentemente dall'istanza del tipo di utente, il programma all'inizio deve inizializzare alcune
+        *  liste:
+        *
+        *  1 - Lista Clienti
+        * */
+        try{
+            taxiFinderData.loadCustomers();
+        } catch (IOException | ClassNotFoundException e){
+            System.out.println("Nessun cliente trovato");
+        }
+    }
 
     /**
      * @param primaryStage stage primario da renderizzare
@@ -33,6 +53,7 @@ public class Main extends Application {
      * @see Stage*/
     @Override
     public void start(Stage primaryStage) throws Exception{
+        System.out.println("Programma Lanciato");
         /* Parent è il nodo padre ottenuto attraverso il valore di ritorno del metodo statico load, sfruttando
         *  la classe FXML loader */
         FXMLLoader loader = new FXMLLoader();
@@ -62,5 +83,13 @@ public class Main extends Application {
         /* lanciamo l'applicazione sfruttando il metodo statico della classe Apllication: launch(), il quale prenderà
         *  in considerazione come parametri di input gli argomenti passati dal metodo main*/
         launch(args);
+    }
+
+    /**
+     * Metodo Triggerato non appena viene stoppata l'applicazione, ereditato da application
+     */
+    @Override
+    public void stop(){
+        System.out.println("Programma in chiusura");
     }
 }

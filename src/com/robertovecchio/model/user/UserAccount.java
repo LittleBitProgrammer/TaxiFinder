@@ -1,6 +1,7 @@
 package com.robertovecchio.model.user;
 
 //Import
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -11,20 +12,33 @@ import java.util.Objects;
  * @version 1.0
  * @since 7/01/2021
  * */
-public abstract class UserAccount {
+public abstract class UserAccount implements Serializable {
+
+    private final static long serialVersionUID = 2L;
+
     //==================================================
     //               Variabili d'istanza
     //==================================================
-    private String fiscalCode;     // Codice Fiscale
-    private String firstName;      // Nome
-    private String lastName;       // Cognome
-    /**@see java.time.LocalDate*/
-    private LocalDate dateOfBirth; // Data di nascita
-    /**@see GenderType */
-    private GenderType genderType; // Genere sessuale
-    private String email;          // Email utente
-    private String username;       // Username utente
-    private String password;       // Password utente
+    /**Codice Fiscale*/
+    private String fiscalCode;
+    /**Nome*/
+    private String firstName;
+    /**Cognome*/
+    private String lastName;
+    /**
+     * Data di nascita
+     * @see java.time.LocalDate*/
+    private LocalDate dateOfBirth;
+    /**
+     * Genere sessuale
+     * @see GenderType */
+    private GenderType genderType;
+    /**Email utente*/
+    private String email;
+    /**Username utente*/
+    private String username;
+    /**Password utente*/
+    private String password;
 
     //==================================================
     //                   Costruttori

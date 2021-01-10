@@ -13,7 +13,8 @@ public class TaxiDriver extends UserAccount{
     //==================================================
     //               Variabili d'istanza
     //==================================================
-    private String licenseNumber; // Numero di licenza utente
+    /**Numero di licenza utente*/
+    private String licenseNumber;
 
     //==================================================
     //                   Costruttori

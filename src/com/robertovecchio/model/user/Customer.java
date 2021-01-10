@@ -9,13 +9,18 @@ import java.time.LocalDate;
  * @author robertovecchio
  * @version 1.0
  * @since 7/01/2021
+ * @see UserAccount
  * */
 public class Customer extends UserAccount{
+
+    private final static long serialVersionUID = 1L;
 
     //==================================================
     //               Variabili d'istanza
     //==================================================
-    private String phoneNumber; // Numero telefonico utente
+
+    /**Numero telefonico utente*/
+    private String phoneNumber;
 
     //==================================================
     //                   Costruttori
