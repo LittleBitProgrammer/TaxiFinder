@@ -47,7 +47,6 @@ public class Main extends Application {
         } catch (IOException | ClassNotFoundException e){
             System.out.println("Reperimento dati non riuscito");
         }
-        System.out.println(taxiFinderData.getHandlers());
     }
 
     /**

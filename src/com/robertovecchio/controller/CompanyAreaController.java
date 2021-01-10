@@ -1,14 +1,17 @@
 package com.robertovecchio.controller;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanExpression;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -33,6 +36,18 @@ public class CompanyAreaController {
     Label header;
     @FXML
     Label advice;
+    @FXML
+    TextField handlerUsernameField;
+    @FXML
+    TextField taxiDriverUsernameField;
+    @FXML
+    PasswordField handlerPasswordField;
+    @FXML
+    PasswordField taxiDriverPasswordField;
+    @FXML
+    Button handlerLoginButton;
+    @FXML
+    Button taxiDriverLoginButton;
 
     //==================================================
     //               Variabili Statiche
@@ -77,6 +92,20 @@ public class CompanyAreaController {
 
         advice.setFont(Font.font(fontFamily, FontWeight.BOLD, 30D));
         advice.setTextFill(Color.web("#F3D833"));
+
+        // impostiamo il bottone login a disabilitato quando l'input utente non corrisponde ai criteri richiesti
+        handlerLoginButton.disableProperty().bind(invalidHandlerLogin());
+        taxiDriverLoginButton.disableProperty().bind(invalidTaxiDriverLogin());
+
+        // Impostiamo un'azione da effettuare quando il bottone di login dell'handler viene premuto
+        handlerLoginButton.setOnAction(actionEvent -> {
+            System.out.println("Login handler premuto");
+        });
+
+        // Impostiamo un'azione da effettuare quando il bottono di login del taxiDriver viene premuto
+        taxiDriverLoginButton.setOnAction(actionEvent -> {
+            System.out.println("Login taxi Driver premuto");
+        });
     }
 
     //==================================================
@@ -90,5 +119,33 @@ public class CompanyAreaController {
     public void handleBackButton(){
         UtilityController.navigateTo(controllerFile, "Taxi Finder",
                                "Errore di caricamento file interfaccia main", backButton);
+    }
+
+    //==================================================
+    //                     Metodi
+    //==================================================
+
+    /**
+     * Questo metodo constata che le proprietà dei vari controlli siano riempite prima di poter effettuare un
+     * login Gestore
+     * @return Ritorna una espressione booleana osservabile che constata la qualità di quanto inserito
+     * */
+    private BooleanExpression invalidHandlerLogin(){
+        return Bindings.createBooleanBinding(() -> this.handlerUsernameField.getText().trim().isEmpty() ||
+                                                   this.handlerPasswordField.getText().trim().isEmpty(),
+                                                   this.handlerUsernameField.textProperty(),
+                                                   this.handlerPasswordField.textProperty());
+    }
+
+    /**
+     * Questo metodo constata che le proprietà dei vari controlli siano riempite prima di poter effettuare un
+     * login Tassista
+     * @return Ritorna una espressione booleana osservabile che constata la qualità di quanto inserito
+     * */
+    private BooleanExpression invalidTaxiDriverLogin(){
+        return Bindings.createBooleanBinding(() -> this.taxiDriverUsernameField.getText().trim().isEmpty() ||
+                        this.taxiDriverPasswordField.getText().trim().isEmpty(),
+                        this.taxiDriverUsernameField.textProperty(),
+                        this.taxiDriverPasswordField.textProperty());
     }
 }
