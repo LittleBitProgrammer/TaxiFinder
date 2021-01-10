@@ -6,11 +6,7 @@ import com.robertovecchio.model.user.Handler;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanExpression;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -62,6 +58,7 @@ public class CompanyAreaController {
     //==================================================
 
     private final static String controllerFile = "src/com/robertovecchio/view/fxml/main.fxml";
+    private final static String handlerControllerFile = "src/com/robertovecchio/view/fxml/handler.fxml";
     private final static String adminLogo = "Assets/admin.png";
     private final static String driverLogo = "Assets/driver.png";
     private final static String fontFamily = "Helvetica";
@@ -119,6 +116,12 @@ public class CompanyAreaController {
             try {
                 // Inizializzo L'handler con i dati di login
                 Handler handler = taxiFinderData.loginHandler(new Handler(username,password));
+                UtilityController.changeStageTo(handlerControllerFile,
+                                                String.format("%s %s - %s", handler.getFirstName(),
+                                                                            handler.getLastName(),
+                                                                            handler.getUsername()),
+                                          "Errore di navigazione, alcuni file non sono stati trovati",
+                                                handlerLoginButton);
             }catch (HandlerNotFoundException e){
                 // Stampo l'errore
                 System.out.println(e.getMessage());
