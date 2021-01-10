@@ -5,9 +5,7 @@ import com.robertovecchio.model.user.Customer;
 import com.robertovecchio.model.user.GenderType;
 import com.robertovecchio.model.user.Handler;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -262,6 +260,16 @@ public class TaxiFinderData {
     //==================================================
     //                 Metodi Login
     //==================================================
+
+    /**
+     * Metodo dedito all'accesso di un gestore (figura rappresentante un admin)
+     * @param handler handler con cui si vuole effettuare l'accesso
+     * @return Un Handler nel caso in cui vi ci sia, altrimenti lancia un errore
+     * @see Handler
+     * @exception HandlerNotFoundException Nel caso in cui non venga trovato un handler permette di utilizzare
+     * getMessage() per intrpretare l'errore con maggiore dettaglio
+     * @see HandlerNotFoundException
+     * */
     public Handler loginHandler(Handler handler) throws HandlerNotFoundException {
         if (this.handlers.contains(handler)){
             for (Handler tempHandler : this.handlers) {
