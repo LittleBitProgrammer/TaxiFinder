@@ -1,5 +1,6 @@
 package com.robertovecchio.controller.dialog;
 
+import com.robertovecchio.controller.UtilityController;
 import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.user.GenderType;
 import com.robertovecchio.model.user.TaxiDriver;
@@ -12,6 +13,7 @@ import javafx.util.StringConverter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.EnumSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -118,7 +120,7 @@ public class AddTaxiDriverController {
         LocalDate dateOfBirth = dateOfBirthField.getValue();
         GenderType genderType = genreField.getValue();
         String email = emailField.getText().trim();
-        String username = usernameField.getText().trim();
+        String username = "TF" + usernameField.getText().trim();
         String password = passwordField.getText().trim();
         String licenseNumber = licenseField.getText().trim();
 
@@ -131,5 +133,17 @@ public class AddTaxiDriverController {
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public boolean validateDate(){
+        return !(UtilityController.getYears(this.dateOfBirthField.getValue()) < 18);
+    }
+
+    public boolean validateEmail(){
+        return UtilityController.isValidEmailAddress(this.emailField.getText().trim());
+    }
+
+    public boolean validatePassword(){
+        return UtilityController.isValidPassword(this.passwordField.getText().trim());
     }
 }

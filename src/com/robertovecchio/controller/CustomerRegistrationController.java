@@ -231,19 +231,4 @@ public class CustomerRegistrationController {
                                                    this.phoneField.textProperty(),
                                                    this.informationField.selectedProperty());
     }
-
-    /**
-     * Metodo che ricava l'età data la data di nascita
-     * @param birthDate data di nascita
-     * @return età*/
-    private int getYears(LocalDate birthDate){
-        // Ricavo la data attuale
-        LocalDate now = LocalDate.now();
-
-        // Calcolo la differenza tra i due periodi
-        Period difference = Period.between(birthDate,now);
-
-        // ritorno solo gli anni di differenza
-        return difference.getYears();
-    }
 }

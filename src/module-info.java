@@ -8,8 +8,6 @@ open module TaxiFinder {
     requires javafx.fxml;
     // Dichiaro una dipendenza con javafx.graphics, necessario per poter utilizzare immagini
     requires javafx.graphics;
-    // Dichiaro una dipendenza con java.mail, necessario per poter verificare le Email
-    requires java.mail;
     // Dichiaro una dipendenza con jlfgr, necessario per poter caricare alcune icone di default
     requires jlfgr;
 }

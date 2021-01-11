@@ -285,8 +285,10 @@ public class TaxiFinderData {
     public void loadTaxiDrivers() throws ClassNotFoundException, IOException{
         // try with resources viene sfruttato per chiamare automaticamente il metodo close
         // sfruttiamo uno stream per deserializzare risorse
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(taxiDriverFileName))){
-            this.taxiDrivers.addAll((ArrayList<TaxiDriver>) ois.readObject());
+        if (!this.taxiDrivers.isEmpty()){
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(taxiDriverFileName))){
+                this.taxiDrivers.addAll((ArrayList<TaxiDriver>) ois.readObject());
+            }
         }
     }
 

@@ -67,11 +67,11 @@
                        GridPane.columnIndex="3"
                        fx:id="emailField"/>
 
-            <Label text="Username: "
+            <Label text="Nr. Matricola: "
                    GridPane.rowIndex="3"
                    GridPane.columnIndex="0"/>
 
-            <TextField promptText="es: Roberto93"
+            <TextField promptText="es: 123"
                        GridPane.rowIndex="3"
                        GridPane.columnIndex="1"
                        fx:id="usernameField"/>

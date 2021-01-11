@@ -1,6 +1,7 @@
 package com.robertovecchio.controller;
 
 import com.robertovecchio.controller.dialog.AddTaxiDriverController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -141,6 +142,34 @@ public class HandlerController {
 
             AddTaxiDriverController addTaxiDriverController = loader.getController();
             dialog.getDialogPane().lookupButton(ButtonType.APPLY).disableProperty().bind(addTaxiDriverController.invalidInputProperty());
+            dialog.getDialogPane().lookupButton(ButtonType.APPLY).addEventFilter(ActionEvent.ACTION,
+                    event->{
+                        if (!addTaxiDriverController.validateDate()){
+                            Alert alert = new Alert(Alert.AlertType.WARNING, "Età errata", ButtonType.OK);
+                            alert.setHeaderText("L'utente non può essere un minore");
+                            alert.setContentText("Hai inserito un utente con età inferiore ai 18 anni");
+
+                            Optional<ButtonType> result = alert.showAndWait();
+
+                            event.consume();
+                        }else if (!addTaxiDriverController.validateEmail()){
+                            Alert alert = new Alert(Alert.AlertType.WARNING, "Email errata", ButtonType.OK);
+                            alert.setHeaderText("Hai inserito una email utente errata");
+                            alert.setContentText("Inserisci una email valida");
+
+                            Optional<ButtonType> result = alert.showAndWait();
+
+                            event.consume();
+                        }else if (!addTaxiDriverController.validatePassword()){
+                            Alert alert = new Alert(Alert.AlertType.WARNING, "Password errata", ButtonType.OK);
+                            alert.setHeaderText("Hai inserito una password utente errata");
+                            alert.setContentText("Inserisci una password con lunghezza maggiore di 3 e minore di 15");
+
+                            Optional<ButtonType> result = alert.showAndWait();
+
+                            event.consume();
+                        }
+                    });
 
             // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
             Optional<ButtonType> result = dialog.showAndWait();

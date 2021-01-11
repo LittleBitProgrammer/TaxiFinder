@@ -1,7 +1,6 @@
 package com.robertovecchio.controller;
 
 import com.robertovecchio.controller.dialog.DialogAction;
-import javafx.beans.binding.BooleanExpression;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,13 +10,13 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Optional;
-import java.util.concurrent.Callable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Classe di utilità generale per i vari controller
@@ -177,19 +176,21 @@ public class UtilityController {
     }
 
     /**
-     * Metodo atto a constatare la validità di una email inserita sfruttando le api ufficiali di java
+     * Metodo atto a constatare la validità di una email (REGEX PATTERN)
      * @param email Email da verificare
      * @return true se è una mail valid, altrimenti false
      * */
-    protected static boolean isValidEmailAddress(String email) {
-        boolean result = true;
-        try {
-            InternetAddress emailAddr = new InternetAddress(email);
-            emailAddr.validate();
-        } catch (AddressException ex) {
-            result = false;
-        }
-        return result;
+    public static boolean isValidEmailAddress(String email) {
+        final String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+
+        // Inizializzo un PATTERN
+        Pattern pattern = Pattern.compile(regex);
+
+        // Inizializzo un Matcher
+        Matcher matcher = pattern.matcher(email);
+
+        System.out.println(matcher.matches());
+        return matcher.matches();
     }
 
     protected static void showDialog(Window window, String title, String FXMLPath, String error,
@@ -222,5 +223,24 @@ public class UtilityController {
         if (result.isPresent() && result.get() == ButtonType.OK){
             callable.doDialogAction();
         }
+    }
+
+    /**
+     * Metodo che ricava l'età data la data di nascita
+     * @param birthDate data di nascita
+     * @return età*/
+    public static int getYears(LocalDate birthDate){
+        // Ricavo la data attuale
+        LocalDate now = LocalDate.now();
+
+        // Calcolo la differenza tra i due periodi
+        Period difference = Period.between(birthDate,now);
+
+        // ritorno solo gli anni di differenza
+        return difference.getYears();
+    }
+
+    public static boolean isValidPassword(String password){
+        return !(password.length() < 4 || password.length() > 15);
     }
 }
