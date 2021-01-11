@@ -1,15 +1,22 @@
 package com.robertovecchio.controller;
 
+import com.robertovecchio.controller.dialog.DialogAction;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Optional;
+import java.util.concurrent.Callable;
 
 /**
  * Classe di utilità generale per i vari controller
@@ -182,5 +189,37 @@ public class UtilityController {
             result = false;
         }
         return result;
+    }
+
+    protected static void showDialog(Window window, String title, String FXMLPath, String error,
+                                     DialogAction callable, ButtonType... buttonTypes) throws Exception{
+        // creiamo un nuovo dialog da visualizzare
+        Dialog<ButtonType> dialog = new Dialog<>();
+
+        // inizializziamo il proprietario
+        dialog.initOwner(window);
+
+        // Impostiamo il titolo del dialog
+        dialog.setTitle(title);
+
+        // Carichiamo il file di iterfaccia per il dialog
+        FXMLLoader loader = new FXMLLoader();
+        try{
+            Parent root = loader.load(new FileInputStream(FXMLPath));
+            dialog.getDialogPane().setContent(root);
+        }catch (IOException e){
+            System.out.println("File interfaccia dialog termini e condizioni non trovato");
+        }
+
+        // Aggiungiamo il bottone OK al dialogPane
+        dialog.getDialogPane().getButtonTypes().addAll(buttonTypes);
+
+        // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+        Optional<ButtonType> result = dialog.showAndWait();
+
+        // Gestiamo il caso in cui l'utente abbia premuto OK
+        if (result.isPresent() && result.get() == ButtonType.OK){
+            callable.doDialogAction();
+        }
     }
 }

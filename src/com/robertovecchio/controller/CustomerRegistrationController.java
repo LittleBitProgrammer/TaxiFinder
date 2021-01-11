@@ -6,8 +6,6 @@ import com.robertovecchio.model.user.GenderType;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanExpression;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,7 +19,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.EnumSet;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -148,33 +145,14 @@ public class CustomerRegistrationController {
 
         // Impostiamo un'azione da eseguire quando termini e condizioni viene cliccato
         termsAndConditionSecond.setOnMouseClicked(mouseEvent -> {
-            // creiamo un nuovo dialog da visualizzare
-            Dialog<ButtonType> termsAndConditionsDialog = new Dialog<>();
-
-            // inizializziamo il proprietario
-            termsAndConditionsDialog.initOwner(gridContainer.getScene().getWindow());
-
-            // Impostiamo il titolo del dialog
-            termsAndConditionsDialog.setTitle("Termini e condizioni");
-
-            // Carichiamo il file di iterfaccia per il dialog
-            FXMLLoader loader = new FXMLLoader();
-            try{
-                Parent root = loader.load(new FileInputStream(dialogController));
-                termsAndConditionsDialog.getDialogPane().setContent(root);
-            }catch (IOException e){
-                System.out.println("File interfaccia dialog termini e condizioni non trovato");
-            }
-
-            // Aggiungiamo il bottone OK al dialogPane
-            termsAndConditionsDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-
-            // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
-            Optional<ButtonType> result = termsAndConditionsDialog.showAndWait();
-
-            // Gestiamo il caso in cui l'utente abbia premuto OK
-            if (result.isPresent() && result.get() == ButtonType.OK){
-                System.out.println("OK Premuto da termini e condizioni");
+            try {
+                UtilityController.showDialog(gridContainer.getScene().getWindow(),
+                        "Termini e condizioni", dialogController,
+                        "File interfaccia dialog termini e condizioni non trovato",
+                        ()->{ System.out.println("OK Premuto da termini e condizioni");},
+                        ButtonType.OK, ButtonType.CANCEL);
+            }catch (Exception e){
+                e.printStackTrace();
             }
         });
 

@@ -24,6 +24,12 @@ public class HandlerController {
     //==================================================
 
     private static final String mainControllerFile = "src/com/robertovecchio/view/fxml/main.fxml";
+    private static final String addTaxiDriverControllerFile = "src/com/robertovecchio/view/fxml/dialog/addTaxiDriver.fxml";
+    private static final String removeTaxiDriverControllerFile = "src/com/robertovecchio/view/fxml/dialog/removeTaxiDriver.fxml";
+    private static final String addParkingControllerFile = "src/com/robertovecchio/view/fxml/dialog/addParking.fxml";
+    private static final String removeParkingControllerFile = "src/com/robertovecchio/view/fxml/dialog/removeParking.fxml";
+    private static final String addWaitingStationControllerFile = "src/com/robertovecchio/view/fxml/dialog/addWaitingstation.fxml";
+    private static final String removeWaitingStationControllerFile = "src/com/robertovecchio/view/fxml/dialog/removeWaitingStation.fxml";
 
     //==================================================
     //               Inizializzazione
@@ -49,7 +55,7 @@ public class HandlerController {
     private MenuBar compositeHandlerMEnuBar(){
         // Inizializzo i menuItem del tassista
         MenuItem hireTaxiDriver = new MenuItem("Assumi Tassista");
-        MenuItem firesTaxiDriver = new MenuItem("Licenzia Tassista");
+        MenuItem firesTaxiDriver = new MenuItem("Congeda Tassista");
 
         // Inizializzo i menuItem del parcheggio
         MenuItem addParking = new MenuItem("Aggiungi parcheggio");
@@ -100,32 +106,92 @@ public class HandlerController {
 
         // Aggiungiamo un'azione quando viene cliccato assumi tassista
         hireTaxiDriver.setOnAction(actionEvent -> {
-            System.out.println("Assumi tassista premuto");
+            try{
+                UtilityController.showDialog(this.vBoxContainer.getScene().getWindow(),
+                        "Assumi un tassista",
+                        addTaxiDriverControllerFile,
+                        "errore durante il caricamento del dialog",
+                        ()->{
+                            System.out.println("Callable chiamata su OK");
+                        },ButtonType.OK, ButtonType.CANCEL);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         });
 
         // Aggiungiamo un'azione quando viene cliccato licenzia tassista
         firesTaxiDriver.setOnAction(actionEvent -> {
-            System.out.println("Tassista cliccato");
+            try{
+                UtilityController.showDialog(this.vBoxContainer.getScene().getWindow(),
+                        "Congeda un tassista",
+                        removeTaxiDriverControllerFile,
+                        "errore durante il caricamento del dialog",
+                        ()->{
+                            System.out.println("Callable chiamata su OK");
+                        },ButtonType.OK, ButtonType.CANCEL);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         });
 
         // Aggiungiamo un'azione quando viene cliccato aggiungi parcheggio
         addParking.setOnAction(actionEvent -> {
-            System.out.println("Aggiungi parcheggio premuto");
+            try{
+                UtilityController.showDialog(this.vBoxContainer.getScene().getWindow(),
+                        "Aggiungi un parcheggio",
+                        addParkingControllerFile,
+                        "errore durante il caricamento del dialog",
+                        ()->{
+                            System.out.println("Callable chiamata su OK");
+                        },ButtonType.OK, ButtonType.CANCEL);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         });
 
         // Aggiungiamo un'azione quando viene cliccato rimuovi parcheggio
         removeParking.setOnAction(actionEvent -> {
-            System.out.println("Rimuovi parcheggio premuto");
+            try{
+                UtilityController.showDialog(this.vBoxContainer.getScene().getWindow(),
+                        "Rimuovi un parcheggio",
+                        removeParkingControllerFile,
+                        "errore durante il caricamento del dialog",
+                        ()->{
+                            System.out.println("Callable chiamata su OK");
+                        },ButtonType.OK, ButtonType.CANCEL);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         });
 
         // Aggiungiamo un'azione quando viene cliccato aggiungi postazione
         addWaitingStation.setOnAction(actionEvent -> {
-            System.out.println("Aggiungi postazione premuto");
+            try{
+                UtilityController.showDialog(this.vBoxContainer.getScene().getWindow(),
+                        "Aggiungi una postazione",
+                        addWaitingStationControllerFile,
+                        "errore durante il caricamento del dialog",
+                        ()->{
+                            System.out.println("Callable chiamata su OK");
+                        },ButtonType.OK, ButtonType.CANCEL);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         });
 
         // Aggiungiamo un'azione quando viene cliccato rimuovi parcheggio
         removeWaitingStation.setOnAction(actionEvent -> {
-            System.out.println("Rimuovi parcheggio premuto");
+            try{
+                UtilityController.showDialog(this.vBoxContainer.getScene().getWindow(),
+                        "Rimuovere una postazione",
+                        removeParkingControllerFile,
+                        "errore durante il caricamento del dialog",
+                        ()->{
+                            System.out.println("Callable chiamata su OK");
+                        },ButtonType.OK, ButtonType.CANCEL);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         });
 
         // Aggiungiamo un'azione quando Logout viene premuto
