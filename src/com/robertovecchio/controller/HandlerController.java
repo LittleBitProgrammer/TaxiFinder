@@ -8,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Optional;
@@ -47,7 +46,7 @@ public class HandlerController {
      * */
     @FXML
     public void initialize(){
-        // Aggiungo il menuBar al vBox
+        // Aggiungiamo il menuBar al vBox
         vBoxContainer.getChildren().addAll(compositeHandlerMEnuBar(), compositeToolBar());
     }
 
@@ -135,6 +134,7 @@ public class HandlerController {
                 dialog.getDialogPane().setContent(root);
             }catch (IOException e){
                 System.out.println("Errore di caricamento dialog");
+                e.printStackTrace();
             }
 
             // Aggiungiamo il bottone OK al dialogPane
@@ -142,6 +142,8 @@ public class HandlerController {
 
             AddTaxiDriverController addTaxiDriverController = loader.getController();
             dialog.getDialogPane().lookupButton(ButtonType.APPLY).disableProperty().bind(addTaxiDriverController.invalidInputProperty());
+
+            // Gestione Errori
             dialog.getDialogPane().lookupButton(ButtonType.APPLY).addEventFilter(ActionEvent.ACTION,
                     event->{
                         if (!addTaxiDriverController.validateDate()){
@@ -164,6 +166,14 @@ public class HandlerController {
                             Alert alert = new Alert(Alert.AlertType.WARNING, "Password errata", ButtonType.OK);
                             alert.setHeaderText("Hai inserito una password utente errata");
                             alert.setContentText("Inserisci una password con lunghezza maggiore di 3 e minore di 15");
+
+                            Optional<ButtonType> result = alert.showAndWait();
+
+                            event.consume();
+                        }else if (addTaxiDriverController.validateFiscalCode()){
+                            Alert alert = new Alert(Alert.AlertType.WARNING, "Codice Fiscale errato", ButtonType.OK);
+                            alert.setHeaderText("Hai inserito un codice fiscale errato");
+                            alert.setContentText("Inserisci un codice fiscale con lunghezza pari a 16");
 
                             Optional<ButtonType> result = alert.showAndWait();
 

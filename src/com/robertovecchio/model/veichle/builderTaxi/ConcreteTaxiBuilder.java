@@ -1,6 +1,6 @@
 package com.robertovecchio.model.veichle.builderTaxi;
 
-import com.robertovecchio.model.user.TaxiDriver;
+
 import com.robertovecchio.model.veichle.BrandType;
 import com.robertovecchio.model.veichle.FuelType;
 
@@ -62,15 +62,5 @@ public class ConcreteTaxiBuilder extends TaxiBuilder {
     @Override
     public void buildFuelType(FuelType fuelType) {
         taxi.setFuelType(fuelType);
-    }
-
-    /**
-     * Metodo atto a buildare il Tassista
-     * @param taxiDriver Tassista
-     * @see TaxiDriver
-     * */
-    @Override
-    public void buildTaxiDriver(TaxiDriver taxiDriver) {
-        taxi.setTaxiDriver(taxiDriver);
     }
 }

@@ -1,7 +1,6 @@
 package com.robertovecchio.model.veichle.builderTaxi;
 
 // import
-import com.robertovecchio.model.user.TaxiDriver;
 import com.robertovecchio.model.veichle.BrandType;
 import com.robertovecchio.model.veichle.FuelType;
 
@@ -53,12 +52,6 @@ public abstract class TaxiBuilder {
      * */
     public abstract void buildFuelType(FuelType fuelType);
 
-    /**
-     * Metodo atto a buildare il Tassista
-     * @param taxiDriver Tassista
-     * @see TaxiDriver
-     * */
-    public abstract void buildTaxiDriver(TaxiDriver taxiDriver);
 
     //==================================================
     //                      Metodi

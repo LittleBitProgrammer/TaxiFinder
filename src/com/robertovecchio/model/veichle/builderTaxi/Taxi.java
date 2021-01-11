@@ -1,7 +1,6 @@
 package com.robertovecchio.model.veichle.builderTaxi;
 
 //Import
-import com.robertovecchio.model.user.TaxiDriver;
 import com.robertovecchio.model.veichle.BrandType;
 import com.robertovecchio.model.veichle.FuelType;
 import java.util.Objects;
@@ -23,8 +22,6 @@ public class Taxi {
     private int capacity;        // Capcità del Taxi in termini di persone trasportabili
     /**@see FuelType */
     private FuelType fuelType;   // Tipo di carburante del Taxi
-    /**@see TaxiDriver*/
-    private TaxiDriver taxiDriver; // Tassista associato al taxi
 
     //==================================================
     //                   Costruttori
@@ -79,15 +76,6 @@ public class Taxi {
         this.fuelType = fuelType;
     }
 
-    /**
-     * Setter del Tassista
-     * @param taxiDriver Tassista
-     * @see TaxiDriver
-     * */
-    public void setTaxiDriver(TaxiDriver taxiDriver){
-        this.taxiDriver = taxiDriver;
-    }
-
     //==================================================
     //                      Getter
     //==================================================
@@ -133,16 +121,6 @@ public class Taxi {
     public FuelType getFuelType(){
         return this.fuelType;
     }
-
-    /**
-     * Getter del Tassista
-     * @return la targa del Tassista
-     * @see TaxiDriver
-     * */
-    public TaxiDriver getTaxiDriver(){
-        return this.taxiDriver;
-    }
-
     //==================================================
     //                Metodi Sovrascritti
     //==================================================
@@ -159,7 +137,6 @@ public class Taxi {
                 ", modelName='" + modelName + '\'' +
                 ", capacity=" + capacity +
                 ", fuelType=" + fuelType +
-                ", taxiDriver=" + taxiDriver +
                 '}';
     }
 

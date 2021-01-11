@@ -7,9 +7,11 @@ import com.robertovecchio.model.user.TaxiDriver;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanExpression;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
-
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.EnumSet;
@@ -23,6 +25,12 @@ import java.util.Set;
  * @since 10/01/2021
  * */
 public class AddTaxiDriverController {
+
+    //==================================================
+    //               Variabili Statiche
+    //==================================================
+
+    private final static String addTaxiControllerFile = "src/com/robertovecchio/view/fxml/dialog/addTaxi.fxml";
 
     //==================================================
     //               Variabili FXML
@@ -46,6 +54,8 @@ public class AddTaxiDriverController {
     PasswordField passwordField;
     @FXML
     TextField licenseField;
+    @FXML
+    Button addAutoButton;
 
     //==================================================
     //                  Attributi
@@ -62,7 +72,7 @@ public class AddTaxiDriverController {
     @FXML
     public void initialize(){
         // inizializziamo la comboBox con tutti i possibili enum
-        Set<GenderType> genders = EnumSet.of(GenderType.MALE, GenderType.FEMALE, GenderType.OTHER);
+        Set<GenderType> genders = EnumSet.of(GenderType.MALE, GenderType.FEMALE);
         genreField.getItems().addAll(genders);
 
         // Permette di mostrare una stringa personalizzata nell'intestazione del ComboBox
@@ -80,6 +90,18 @@ public class AddTaxiDriverController {
             public GenderType fromString(String s) {
                 return null;
             }
+        });
+
+        // Impostiamo un dominio di base
+        this.emailField.setText("@taxifinder.com");
+
+        // Impostiamo l'username non editabile
+        this.usernameField.setEditable(false);
+
+
+        // Aggiungiamo un listner al fiscalCodeField
+        this.fiscalCodeField.setOnKeyReleased(keyEvent -> {
+            this.usernameField.setText(this.fiscalCodeField.getText());
         });
     }
 
@@ -127,7 +149,7 @@ public class AddTaxiDriverController {
         taxiFinderData.addTaxiDriver(new TaxiDriver(fiscalCode, name, surname,
                                                     dateOfBirth, genderType,
                                                     email, username,
-                                                    password, licenseNumber));
+                                                    password, licenseNumber, null));
         try {
             taxiFinderData.storeTaxiDrivers();
         }catch (IOException e){
@@ -145,5 +167,47 @@ public class AddTaxiDriverController {
 
     public boolean validatePassword(){
         return UtilityController.isValidPassword(this.passwordField.getText().trim());
+    }
+
+    public boolean validateFiscalCode(){
+        return this.fiscalCodeField.getText().length() == 16;
+    }
+
+    //==================================================
+    //                  Metodi FXML
+    //==================================================
+
+    @FXML
+    private void handleInsertAuto(){
+        // creiamo un nuovo dialog da visualizzare
+        Dialog<ButtonType> dialog = new Dialog<>();
+
+        // inizializziamo il proprietario
+        dialog.initOwner(this.addAutoButton.getScene().getWindow());
+
+        // Impostiamo il titolo del dialog
+        dialog.setTitle("Aggiunun Taxi");
+
+        // Carichiamo il file di iterfaccia per il dialog
+        FXMLLoader loader = new FXMLLoader();
+
+        try{
+            Parent root = loader.load(new FileInputStream(addTaxiControllerFile));
+            dialog.getDialogPane().setContent(root);
+        }catch (IOException e){
+            System.out.println("Errore di caricamento dialog");
+            e.printStackTrace();
+        }
+
+        // Aggiungiamo il bottone OK al dialogPane
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
+
+        // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+        Optional<ButtonType> result = dialog.showAndWait();
+
+        // Gestiamo il caso in cui l'utente abbia premuto OK
+        if (result.isPresent() && result.get() == ButtonType.APPLY){
+            //stub
+        }
     }
 }

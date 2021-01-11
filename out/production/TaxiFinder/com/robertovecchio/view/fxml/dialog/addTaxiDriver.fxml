@@ -67,7 +67,7 @@
                        GridPane.columnIndex="3"
                        fx:id="emailField"/>
 
-            <Label text="Nr. Matricola: "
+            <Label text="Username: "
                    GridPane.rowIndex="3"
                    GridPane.columnIndex="0"/>
 
@@ -95,6 +95,11 @@
                        GridPane.columnSpan="3"
                        fx:id="licenseField"/>
 
+            <Button text="Inserisci Auto"
+                    fx:id="addAutoButton"
+                    onAction="#handleInsertAuto"
+                    GridPane.rowIndex="5"
+                    GridPane.columnIndex="0"/>
         </GridPane>
     </content>
 </DialogPane>

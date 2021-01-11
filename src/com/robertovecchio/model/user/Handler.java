@@ -124,7 +124,5 @@ public class Handler extends UserAccount{
        taxiBuilder.buildModelName(modelName);
        taxiBuilder.buildCapacity(capacity);
        taxiBuilder.buildFuelType(fuelType);
-       taxiBuilder.buildTaxiDriver(taxiDriver);
-
     }
 }

@@ -1,6 +1,8 @@
 package com.robertovecchio.model.user;
 
 //Import
+import com.robertovecchio.model.veichle.builderTaxi.Taxi;
+
 import java.time.LocalDate;
 
 /**
@@ -15,6 +17,7 @@ public class TaxiDriver extends UserAccount{
     //==================================================
     /**Numero di licenza utente*/
     private String licenseNumber;
+    private Taxi taxi;
 
     //==================================================
     //                   Costruttori
@@ -35,16 +38,17 @@ public class TaxiDriver extends UserAccount{
      * @see GenderType
      * */
     public TaxiDriver(String fiscalCode, String firstName,
-                    String lastName, LocalDate dateOfBirth,
-                    GenderType genderType, String email,
-                    String username, String password,
-                    String licenseNumber){
+                      String lastName, LocalDate dateOfBirth,
+                      GenderType genderType, String email,
+                      String username, String password,
+                      String licenseNumber, Taxi taxi){
 
         // Richiamo il costruttore della classe astratta UserAccount
         super(fiscalCode, firstName, lastName, dateOfBirth, genderType, email, username, password);
 
         // inizializzazione delle variabili d'istanza
         this.licenseNumber = licenseNumber;
+        this.taxi = taxi;
     }
 
     //==================================================
@@ -59,6 +63,10 @@ public class TaxiDriver extends UserAccount{
         this.licenseNumber = licenseNumber;
     }
 
+    public void setTaxi(Taxi taxi){
+        this.taxi = taxi;
+    }
+
     //==================================================
     //                      Getter
     //==================================================
@@ -68,6 +76,10 @@ public class TaxiDriver extends UserAccount{
      * */
     public String getLicenseNumber(){
         return this.licenseNumber;
+    }
+
+    public Taxi getTaxi(){
+        return this.taxi;
     }
 
     //==================================================
