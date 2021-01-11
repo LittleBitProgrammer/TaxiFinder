@@ -1,9 +1,16 @@
 package com.robertovecchio.controller;
 
+import com.robertovecchio.controller.dialog.AddTaxiDriverController;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Optional;
 
 /**
  * Classe che gestisce la main View dell'handler (admin)
@@ -106,16 +113,37 @@ public class HandlerController {
 
         // Aggiungiamo un'azione quando viene cliccato assumi tassista
         hireTaxiDriver.setOnAction(actionEvent -> {
+            // creiamo un nuovo dialog da visualizzare
+            Dialog<ButtonType> dialog = new Dialog<>();
+
+            // inizializziamo il proprietario
+            dialog.initOwner(this.vBoxContainer.getScene().getWindow());
+
+            // Impostiamo il titolo del dialog
+            dialog.setTitle("Assumi un tassista");
+
+            // Carichiamo il file di iterfaccia per il dialog
+            FXMLLoader loader = new FXMLLoader();
+
             try{
-                UtilityController.showDialog(this.vBoxContainer.getScene().getWindow(),
-                        "Assumi un tassista",
-                        addTaxiDriverControllerFile,
-                        "errore durante il caricamento del dialog",
-                        ()->{
-                            System.out.println("Callable chiamata su OK");
-                        },ButtonType.OK, ButtonType.CANCEL);
-            }catch (Exception e){
-                e.printStackTrace();
+                Parent root = loader.load(new FileInputStream(addTaxiDriverControllerFile));
+                dialog.getDialogPane().setContent(root);
+            }catch (IOException e){
+                System.out.println("Errore di caricamento dialog");
+            }
+
+            // Aggiungiamo il bottone OK al dialogPane
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
+
+            AddTaxiDriverController addTaxiDriverController = loader.getController();
+            dialog.getDialogPane().lookupButton(ButtonType.APPLY).disableProperty().bind(addTaxiDriverController.invalidInputProperty());
+
+            // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+            Optional<ButtonType> result = dialog.showAndWait();
+
+            // Gestiamo il caso in cui l'utente abbia premuto OK
+            if (result.isPresent() && result.get() == ButtonType.APPLY){
+                //stub
             }
         });
 

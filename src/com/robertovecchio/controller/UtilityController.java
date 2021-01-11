@@ -1,6 +1,7 @@
 package com.robertovecchio.controller;
 
 import com.robertovecchio.controller.dialog.DialogAction;
+import javafx.beans.binding.BooleanExpression;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -192,7 +193,7 @@ public class UtilityController {
     }
 
     protected static void showDialog(Window window, String title, String FXMLPath, String error,
-                                     DialogAction callable, ButtonType... buttonTypes) throws Exception{
+                                     DialogAction callable, ButtonType... buttonTypes){
         // creiamo un nuovo dialog da visualizzare
         Dialog<ButtonType> dialog = new Dialog<>();
 
@@ -208,7 +209,7 @@ public class UtilityController {
             Parent root = loader.load(new FileInputStream(FXMLPath));
             dialog.getDialogPane().setContent(root);
         }catch (IOException e){
-            System.out.println("File interfaccia dialog termini e condizioni non trovato");
+            System.out.println(error);
         }
 
         // Aggiungiamo il bottone OK al dialogPane
