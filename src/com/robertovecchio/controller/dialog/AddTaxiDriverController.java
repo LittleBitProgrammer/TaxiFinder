@@ -135,6 +135,9 @@ public class AddTaxiDriverController {
                 this.licenseField.textProperty());
     }
 
+    /**
+     * Questo metodo processa i dati presenti nel dialog di aggiunta di un tassista
+     */
     public void processAddTaxiDriver(){
         String fiscalCode = fiscalCodeField.getText().trim();
         String name = nameField.getText().trim();
@@ -157,18 +160,33 @@ public class AddTaxiDriverController {
         }
     }
 
+    /**
+     * Questo metodo valida la data inserita, in quanto i minori di 18 anni non possono lavorare/guidare
+     * @return ritorna true se viene inserito una persona con età > 18*/
     public boolean validateDate(){
         return !(UtilityController.getYears(this.dateOfBirthField.getValue()) < 18);
     }
 
+    /**
+     * Questo metodo valida l'email attraverso l'utilizzo di un regex pattern
+     * @return Ritorna true se è una email valida, altrimenti false
+     * */
     public boolean validateEmail(){
         return UtilityController.isValidEmailAddress(this.emailField.getText().trim());
     }
 
+    /**
+     * Questo metodo valida la password inserita
+     * @return Ritorna true se è una password valida, altrimenti false
+     * */
     public boolean validatePassword(){
         return UtilityController.isValidPassword(this.passwordField.getText().trim());
     }
 
+    /**
+     * Questo metodo valida il codice fiscale inserito
+     * @return Ritorna true se è un codice fiscale valido, altrimenti false
+     * */
     public boolean validateFiscalCode(){
         return this.fiscalCodeField.getText().length() == 16;
     }

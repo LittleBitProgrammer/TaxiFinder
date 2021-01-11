@@ -8,5 +8,6 @@ package com.robertovecchio.controller.dialog;
  * @since 10/01/2021
  * */
 public interface DialogAction {
+    /**Azione di ritorno nella creazione di un dialog*/
     void doDialogAction();
 }

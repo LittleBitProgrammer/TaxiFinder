@@ -17,6 +17,8 @@ public class TaxiDriver extends UserAccount{
     //==================================================
     /**Numero di licenza utente*/
     private String licenseNumber;
+    /**Taxi associato al tassista
+     * @see Taxi*/
     private Taxi taxi;
 
     //==================================================
@@ -34,6 +36,7 @@ public class TaxiDriver extends UserAccount{
      * @param username username utente
      * @param password password utente
      * @param licenseNumber numero di licenza taxi
+     * @param taxi Taxi del tassista
      * @see LocalDate
      * @see GenderType
      * */
@@ -63,6 +66,10 @@ public class TaxiDriver extends UserAccount{
         this.licenseNumber = licenseNumber;
     }
 
+    /**
+     * Setter del Taxi
+     * @param taxi Taxi da impostare
+     * */
     public void setTaxi(Taxi taxi){
         this.taxi = taxi;
     }
@@ -71,13 +78,17 @@ public class TaxiDriver extends UserAccount{
     //                      Getter
     //==================================================
     /**
-     * Getter numero di licenza taxi
-     * @return Numero di licenza taxi
+     * Getter numero di licenza tassista
+     * @return Numero di licenza tassista
      * */
     public String getLicenseNumber(){
         return this.licenseNumber;
     }
 
+    /**
+     * Getter del Taxi
+     * @return Taxi del tassista
+     * */
     public Taxi getTaxi(){
         return this.taxi;
     }

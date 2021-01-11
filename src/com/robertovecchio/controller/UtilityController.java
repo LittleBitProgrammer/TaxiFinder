@@ -193,6 +193,15 @@ public class UtilityController {
         return matcher.matches();
     }
 
+    /**
+     * Questo metodo serve a mostrare un dialog, personalizzata attraverso i parametri di input
+     * @param window La finestra da cui si vuole mostrare il dialog
+     * @param title Titolo della finestra
+     * @param FXMLPath path del file FXML che gestisce la view
+     * @param error Errore nel caso in cui non venga caricato il file d'interfaccia
+     * @param callable Funzione di ritorno quando viene premuto il tasto ok
+     * @param buttonTypes varargs di Button che si vuole aggiungere al dialog
+     * */
     protected static void showDialog(Window window, String title, String FXMLPath, String error,
                                      DialogAction callable, ButtonType... buttonTypes){
         // creiamo un nuovo dialog da visualizzare
@@ -240,6 +249,10 @@ public class UtilityController {
         return difference.getYears();
     }
 
+    /**
+     * Questo metodo verifica che la password inserita abbia lunghezza maggiore di 4 e minore di 15
+     * @param password Password di cui si vuole verificare la consistenza
+     * @return Ritorna true se e compresa nel range 4-14, altrimenti false*/
     public static boolean isValidPassword(String password){
         return !(password.length() < 4 || password.length() > 15);
     }
