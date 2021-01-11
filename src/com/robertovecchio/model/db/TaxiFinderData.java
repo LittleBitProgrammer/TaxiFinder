@@ -4,6 +4,7 @@ import com.robertovecchio.model.db.error.HandlerNotFoundException;
 import com.robertovecchio.model.user.Customer;
 import com.robertovecchio.model.user.GenderType;
 import com.robertovecchio.model.user.Handler;
+import com.robertovecchio.model.user.TaxiDriver;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableSet;
 import java.io.*;
@@ -31,6 +32,7 @@ public class TaxiFinderData {
     private final static TaxiFinderData instance = new TaxiFinderData();
     private final static String customerFileName = "files/customer.txt";        // Percorso file dei clienti
     private final static String handlerFileName = "files/handler.txt";          // Percorso file dei gestori
+    private final static String taxiDriverFileName = "files/taxiDriver.txt";    // Percorso file dei tassisti
     /**
      * Map utile ad associare ad ogni Stringa un enum
      * @see Map
@@ -49,6 +51,12 @@ public class TaxiFinderData {
      * */
     private final ObservableSet<Customer> customers;
     /**
+     * lista osservabile di tassisti
+     * @see ObservableSet
+     * @see Customer
+     */
+    private final ObservableSet<TaxiDriver> taxiDrivers;
+    /**
      * lista osservabile di gestori
      * @see List
      * @see Handler
@@ -65,6 +73,7 @@ public class TaxiFinderData {
     private TaxiFinderData(){
         // Inizializzo le collections
         this.customers = FXCollections.observableSet();
+        this.taxiDrivers = FXCollections.observableSet();
         this.handlers = new HashSet<>();
         this.genders = new HashMap<>();
 
@@ -107,6 +116,16 @@ public class TaxiFinderData {
     }
 
     /**
+     * Metodo setter dei tassisti
+     * @param taxiDrivers Tassisti da impostare
+     * @see ObservableSet
+     * @see TaxiDriver
+     * */
+    public void setTaxiDrivers(ObservableSet<TaxiDriver> taxiDrivers){
+        this.taxiDrivers.addAll(taxiDrivers);
+    }
+
+    /**
      * Metodo setter degli handlers
      * @param handlers Gestori da impostare
      * @see Set
@@ -131,6 +150,16 @@ public class TaxiFinderData {
     }
 
     /**
+     * Metodo Getter dei tassisti
+     * @return la lista dei tassisti
+     * @see ObservableSet
+     * @see TaxiDriver
+     */
+    public ObservableSet<TaxiDriver> getTaxiDrivers(){
+        return this.taxiDrivers;
+    }
+
+    /**
      * Metodo Getter degli handler
      * @return la lista dei gestori
      * @see Set
@@ -145,12 +174,21 @@ public class TaxiFinderData {
     //==================================================
 
     /**
-     * Metodo che aggiunge un cliente all'observablelist di clienti
+     * Metodo che aggiunge un cliente all'observableSet di clienti
      * @param customer Cliente da aggiungere
      * @see Customer
      */
     public void addCustomer(Customer customer){
         this.customers.add(customer);
+    }
+
+    /**
+     * Metodo che aggiunge un tassista all'ObservableSet di tassisti
+     * @param taxiDriver Tassista da aggiungere
+     * @see TaxiDriver
+     */
+    public void addTaxiDriver(TaxiDriver taxiDriver){
+        this.taxiDrivers.add(taxiDriver);
     }
 
     /**
@@ -173,6 +211,15 @@ public class TaxiFinderData {
      */
     public void removeCustomer(Customer customer){
         this.customers.remove(customer);
+    }
+
+    /**
+     * Metodo che rimuove un tassista dall'observablelist di tassisti
+     * @param taxiDriver Tassista da rimuovere
+     * @see TaxiDriver
+     */
+    public void removeTaxiDriver(TaxiDriver taxiDriver){
+        this.taxiDrivers.remove(taxiDriver);
     }
 
     /**
@@ -200,6 +247,18 @@ public class TaxiFinderData {
         }
     }
 
+    /**
+     * Metodo atto alla memorizzazione tassisti
+     * @exception IOException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di input/output
+     * */
+    public void storeTaxiDrivers() throws IOException{
+        // try with resources viene sfruttato per chiamare automaticamente il metodo close
+        // Creiamo uno stream serializzato di risorse
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(taxiDriverFileName))) {
+            oos.writeObject(new ArrayList<>(this.taxiDrivers));
+        }
+    }
+
     //==================================================
     //                 Metodi LOADER
     //==================================================
@@ -215,6 +274,19 @@ public class TaxiFinderData {
         // sfruttiamo uno stream per deserializzare risorse
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(customerFileName))){
             this.customers.addAll((ArrayList<Customer>) ois.readObject());
+        }
+    }
+
+    /**
+     * Metodo atto a popolare la lista dei tassisti
+     * @exception ClassNotFoundException questo metodo potrebbe non trovare la classe richiesta
+     * @exception IOException Questo metodo potrebbe generare errori di input/output
+     * */
+    public void loadTaxiDrivers() throws ClassNotFoundException, IOException{
+        // try with resources viene sfruttato per chiamare automaticamente il metodo close
+        // sfruttiamo uno stream per deserializzare risorse
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(taxiDriverFileName))){
+            this.taxiDrivers.addAll((ArrayList<TaxiDriver>) ois.readObject());
         }
     }
 

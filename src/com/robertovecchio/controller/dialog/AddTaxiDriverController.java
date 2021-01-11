@@ -1,11 +1,16 @@
 package com.robertovecchio.controller.dialog;
 
+import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.user.GenderType;
+import com.robertovecchio.model.user.TaxiDriver;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanExpression;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
+
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.EnumSet;
 import java.util.Set;
 
@@ -39,6 +44,12 @@ public class AddTaxiDriverController {
     PasswordField passwordField;
     @FXML
     TextField licenseField;
+
+    //==================================================
+    //                  Attributi
+    //==================================================
+
+    TaxiFinderData taxiFinderData = TaxiFinderData.getInstance();
 
     //==================================================
     //               Inizializzazione
@@ -98,5 +109,27 @@ public class AddTaxiDriverController {
                 this.usernameField.textProperty(),
                 this.passwordField.textProperty(),
                 this.licenseField.textProperty());
+    }
+
+    public void processAddTaxiDriver(){
+        String fiscalCode = fiscalCodeField.getText().trim();
+        String name = nameField.getText().trim();
+        String surname = surnameField.getText().trim();
+        LocalDate dateOfBirth = dateOfBirthField.getValue();
+        GenderType genderType = genreField.getValue();
+        String email = emailField.getText().trim();
+        String username = usernameField.getText().trim();
+        String password = passwordField.getText().trim();
+        String licenseNumber = licenseField.getText().trim();
+
+        taxiFinderData.addTaxiDriver(new TaxiDriver(fiscalCode, name, surname,
+                                                    dateOfBirth, genderType,
+                                                    email, username,
+                                                    password, licenseNumber));
+        try {
+            taxiFinderData.storeTaxiDrivers();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }

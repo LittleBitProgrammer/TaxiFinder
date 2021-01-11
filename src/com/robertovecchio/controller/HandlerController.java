@@ -111,6 +111,10 @@ public class HandlerController {
             System.out.println("Home premuto");
         });
 
+        //==================================================
+        //                 Aggiungi Tassista
+        //==================================================
+
         // Aggiungiamo un'azione quando viene cliccato assumi tassista
         hireTaxiDriver.setOnAction(actionEvent -> {
             // creiamo un nuovo dialog da visualizzare
@@ -143,7 +147,8 @@ public class HandlerController {
 
             // Gestiamo il caso in cui l'utente abbia premuto OK
             if (result.isPresent() && result.get() == ButtonType.APPLY){
-                //stub
+                //TODO//: Selezione del modello aggiunto
+                addTaxiDriverController.processAddTaxiDriver();
             }
         });
 

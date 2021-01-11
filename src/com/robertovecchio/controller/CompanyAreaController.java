@@ -14,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * Classe che gestisce la view dell'area aziendale
@@ -116,6 +117,10 @@ public class CompanyAreaController {
             try {
                 // Inizializzo L'handler con i dati di login
                 Handler handler = taxiFinderData.loginHandler(new Handler(username,password));
+                // Carichiamo le liste inerenti all'admin su di un nuovo Thread
+                taxiFinderData.loadTaxiDrivers();
+
+                // Cambiamo Stage
                 UtilityController.changeStageTo(handlerControllerFile,
                                                 String.format("%s %s - %s", handler.getFirstName(),
                                                                             handler.getLastName(),
@@ -125,8 +130,9 @@ public class CompanyAreaController {
             }catch (HandlerNotFoundException e){
                 // Stampo l'errore
                 System.out.println(e.getMessage());
-
                 errorHandler.setVisible(true);
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
             }
         });
 
