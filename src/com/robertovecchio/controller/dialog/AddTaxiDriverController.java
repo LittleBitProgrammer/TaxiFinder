@@ -43,6 +43,9 @@ public class AddTaxiDriverController {
     private TableColumn<Taxi,String> capacityColumn;
     private TableColumn<Taxi,String> fuelTypeColumn;
 
+    // Taxi
+    private Taxi newTaxi;
+
     //==================================================
     //               Variabili Statiche
     //==================================================
@@ -119,9 +122,7 @@ public class AddTaxiDriverController {
 
 
         // Aggiungiamo un listner al fiscalCodeField
-        this.fiscalCodeField.setOnKeyReleased(keyEvent -> {
-            this.usernameField.setText(this.fiscalCodeField.getText());
-        });
+        this.fiscalCodeField.setOnKeyReleased(keyEvent -> this.usernameField.setText(this.fiscalCodeField.getText()));
 
         // Creiamo la TableView
         tableTaxi = createTableView();
@@ -143,6 +144,7 @@ public class AddTaxiDriverController {
      * @return Ritorna una espressione booleana osservabile che constata la qualità di quanto inserito
      * */
     public BooleanExpression invalidInputProperty(){
+
         return Bindings.createBooleanBinding(() -> this.fiscalCodeField.getText().trim().isEmpty() ||
                         this.nameField.getText().trim().isEmpty() ||
                         this.surnameField.getText().trim().isEmpty() ||
@@ -151,7 +153,8 @@ public class AddTaxiDriverController {
                         this.emailField.getText().trim().isEmpty() ||
                         this.usernameField.getText().trim().isEmpty() ||
                         this.passwordField.getText().trim().isEmpty() ||
-                        this.licenseField.getText().trim().isEmpty(),
+                        this.licenseField.getText().trim().isEmpty() ||
+                        this.addAutoButton.getText().equals("Inserisci Auto"),
                 this.fiscalCodeField.textProperty(),
                 this.nameField.textProperty(),
                 this.surnameField.textProperty(),
@@ -160,27 +163,28 @@ public class AddTaxiDriverController {
                 this.emailField.textProperty(),
                 this.usernameField.textProperty(),
                 this.passwordField.textProperty(),
-                this.licenseField.textProperty());
+                this.licenseField.textProperty(),
+                this.addAutoButton.textProperty());
     }
 
     /**
      * Questo metodo processa i dati presenti nel dialog di aggiunta di un tassista
      */
     public void processAddTaxiDriver(){
-        String fiscalCode = fiscalCodeField.getText().trim();
-        String name = nameField.getText().trim();
-        String surname = surnameField.getText().trim();
+        String fiscalCode = fiscalCodeField.getText().trim().toUpperCase();
+        String name = nameField.getText().trim().substring(0,1).toUpperCase() + nameField.getText().trim().substring(1);
+        String surname = surnameField.getText().trim().substring(0,1).toUpperCase() + surnameField.getText().trim().substring(1);
         LocalDate dateOfBirth = dateOfBirthField.getValue();
         GenderType genderType = genreField.getValue();
         String email = emailField.getText().trim();
-        String username = "TF" + usernameField.getText().trim();
+        String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
-        String licenseNumber = licenseField.getText().trim();
+        String licenseNumber = licenseField.getText().trim().toUpperCase();
 
         taxiFinderData.addTaxiDriver(new TaxiDriver(fiscalCode, name, surname,
                                                     dateOfBirth, genderType,
                                                     email, username,
-                                                    password, licenseNumber, null));
+                                                    password, licenseNumber, newTaxi));
         try {
             taxiFinderData.storeTaxiDrivers();
         }catch (IOException e){
@@ -258,7 +262,7 @@ public class AddTaxiDriverController {
         if (result.isPresent() && result.get() == ButtonType.APPLY){
             // Inizializziamo il nuovo taxi
             // Taxi
-            Taxi newTaxi = addTaxiController.processTaxiResult();
+            this.newTaxi = addTaxiController.processTaxiResult();
 
             // modifichiamo il testo del botton
             this.addAutoButton.setText("Modifica Auto");
