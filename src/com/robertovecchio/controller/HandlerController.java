@@ -1,11 +1,16 @@
 package com.robertovecchio.controller;
 
 import com.robertovecchio.controller.dialog.AddTaxiDriverController;
+import com.robertovecchio.model.db.TaxiFinderData;
+import com.robertovecchio.model.graph.node.Street;
+import com.robertovecchio.model.user.TaxiDriver;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.control.skin.TableHeaderRow;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import java.io.FileInputStream;
@@ -21,10 +26,50 @@ import java.util.Optional;
 public class HandlerController {
 
     //==================================================
+    //               Variabili d'istanza
+    //==================================================
+
+    //DB
+    TaxiFinderData taxiFinderData = TaxiFinderData.getInstance();
+
+    // TableView
+    private TableView<TaxiDriver> tableTaxiDriver;
+    private TableView<Street> tableParking;
+    private TableView<Street> tableWaitingStation;
+
+    // Columns - tableTaxiDriver
+    private TableColumn<TaxiDriver, String> fiscalCodeColumn;
+    private TableColumn<TaxiDriver, String> firstNameColumn;
+    private TableColumn<TaxiDriver, String> lastNameColumn;
+    private TableColumn<TaxiDriver, String> dateOfBirthColumn;
+    private TableColumn<TaxiDriver, String> genderColumn;
+    private TableColumn<TaxiDriver, String> emailColumn;
+    private TableColumn<TaxiDriver, String> taxiColumn;
+    private TableColumn<TaxiDriver, String> licenseNumberColumn;
+
+    // Columns - tableParking
+    private TableColumn<Street, String> latitudeColumn;
+    private TableColumn<Street, String> longitudeColumn;
+    private TableColumn<Street, String> streetNameColumn;
+    private TableColumn<Street, String> streetNumberColumn;
+    private TableColumn<Street, String> stationNameColumn;
+    private TableColumn<Street, String> capacityColumn;
+
+    // Columns - tableWaitingStation
+    private TableColumn<Street, String>  latitudeWaitingStationColumn;
+    private TableColumn<Street, String> longitudeWaitingStationColumn;
+    private TableColumn<Street, String> streetNameWaitingStationColumn;
+    private TableColumn<Street, String> streetNumberWaitingStationColumn;
+    private TableColumn<Street, String> stationNameWaitingStationColumn;
+
+
+    //==================================================
     //               Variabili FXML
     //==================================================
     @FXML
     VBox vBoxContainer;
+    @FXML
+    StackPane vBoxCenterContainer;
 
     //==================================================
     //               Variabili Statiche
@@ -48,6 +93,17 @@ public class HandlerController {
     public void initialize(){
         // Aggiungiamo il menuBar al vBox
         vBoxContainer.getChildren().addAll(compositeHandlerMEnuBar(), compositeToolBar());
+
+        // Inizializzo le TableView
+        compositeTaxiDriverTableView();
+        compositeParkingTableView();
+        compositeWaitingStationTableView();
+
+        // Aggiungiamo al vbox centrale il
+        vBoxCenterContainer.getChildren().addAll(tableTaxiDriver, tableParking, tableWaitingStation);
+
+        // Impostiamo la visibilità
+        changeVisibility(this.tableTaxiDriver, this.tableParking, this.tableWaitingStation);
     }
 
     //==================================================
@@ -292,19 +348,272 @@ public class HandlerController {
 
         // Aggiungiamo un'azione quando visualizza tassisti viene premuto
         visualizeTaxiDriver.setOnAction(actionEvent -> {
-            System.out.println("Visualizza tassisti premuto");
+            changeVisibility(this.tableTaxiDriver, this.tableParking, this.tableWaitingStation);
         });
 
         //Aggiungiamo un'azione quando visualizza parcheggi viene premuto
         visualizeParking.setOnAction(actionEvent -> {
-            System.out.println("Visualizza parcheggi premuto");
+            changeVisibility(this.tableParking, this.tableTaxiDriver, this.tableWaitingStation);
         });
 
         //Aggiungiamo un'azione quando visualizza postazioni viene premuto
         visualizeWaitingStations.setOnAction(actionEvent -> {
-            System.out.println("Visualizza postazioni premuto");
+            changeVisibility(this.tableWaitingStation, this.tableTaxiDriver, this.tableParking);
         });
 
         return toolBar;
+    }
+
+    private void changeVisibility(TableView<?> visible, TableView<?>... invisibles){
+        visible.setVisible(true);
+        for (TableView<?> invisible : invisibles){
+            invisible.setVisible(false);
+        }
+    }
+
+    //==================================================
+    //               TABLEVIEW - TASSISTI
+    //==================================================
+
+    private void compositeTaxiDriverTableView(){
+        // Creiamo le colonne della tableView
+        this.fiscalCodeColumn = new TableColumn<>("Codice Fiscale");
+        this.firstNameColumn = new TableColumn<>("Nome");
+        this.lastNameColumn = new TableColumn<>("Cognome");
+        this.dateOfBirthColumn = new TableColumn<>("Data di nascita");
+        this.genderColumn = new TableColumn<>("Genere");
+        this.emailColumn = new TableColumn<>("Email");
+        this.taxiColumn = new TableColumn<>("Targa Taxi");
+        this.licenseNumberColumn = new TableColumn<>("Nr. Licensa");
+
+        // Inizializziamo la TableView
+        this.tableTaxiDriver = new TableView<>();
+
+        // Aggiungiamo le colonne alla tabella
+        this.tableTaxiDriver.getColumns().add(fiscalCodeColumn);
+        this.tableTaxiDriver.getColumns().add(firstNameColumn);
+        this.tableTaxiDriver.getColumns().add(lastNameColumn);
+        this.tableTaxiDriver.getColumns().add(dateOfBirthColumn);
+        this.tableTaxiDriver.getColumns().add(genderColumn);
+        this.tableTaxiDriver.getColumns().add(emailColumn);
+        this.tableTaxiDriver.getColumns().add(taxiColumn);
+        this.tableTaxiDriver.getColumns().add(licenseNumberColumn);
+
+        // Impostiamo la grandezza massima della tabella per ogni colonna
+        this.tableTaxiDriver.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        this.fiscalCodeColumn.setMaxWidth(Integer.MAX_VALUE * 12.5);      // 12,5%
+        this.firstNameColumn.setMaxWidth(Integer.MAX_VALUE * 12.5D);      // 12,5%
+        this.lastNameColumn.setMaxWidth(Integer.MAX_VALUE * 12.5D);       // 12,5%
+        this.dateOfBirthColumn.setMaxWidth(Integer.MAX_VALUE * 12.5D);    // 12,5%
+        this.genderColumn.setMaxWidth(Integer.MAX_VALUE * 12.5D);         // 12,5%
+        this.emailColumn.setMaxWidth(Integer.MAX_VALUE * 12.5D);          // 12,5%
+        this.taxiColumn.setMaxWidth(Integer.MAX_VALUE * 12.5D);           // 12,5%
+        this.licenseNumberColumn.setMaxWidth(Integer.MAX_VALUE * 12.5D);  // 12,5%
+
+        // Impediamo che le tabelle possano essere riordinate dall'utente
+        this.tableTaxiDriver.skinProperty().addListener((observableValue, oldWidth, newWidth) ->{
+            final TableHeaderRow header = (TableHeaderRow) tableTaxiDriver.lookup("TableHeaderRow");
+
+            header.reorderingProperty().addListener((obs, oldValue, newValue) -> header.setReordering(false));
+        });
+
+        // Rendiamo la tableView non editabile
+        this.tableTaxiDriver.setEditable(false);
+
+        // Impostiamo le proprietà delle colonne
+        setFiscalCodeColumnProperty();
+        setFirstNameColumnProperty();
+        setLastNameColumnProperty();
+        setDateOfBirthColumnProperty();
+        setGenderColumnProperty();
+        setEmailColumnProperty();
+        setTaxiColumnProperty();
+        setLicenseNumberColumnProperty();
+
+        this.tableTaxiDriver.setPrefWidth(2048);
+    }
+
+    //==================================================
+    //              TABLEVIEW - PARCHEGGI
+    //==================================================
+
+    private void compositeParkingTableView(){
+        // Creiamo le colonne della tableView
+        this.latitudeColumn = new TableColumn<>("Latitudine");
+        this.longitudeColumn = new TableColumn<>("Longitude");
+        this.streetNameColumn = new TableColumn<>("Strada");
+        this.streetNumberColumn = new TableColumn<>("Civico");
+        this.stationNameColumn = new TableColumn<>("Parcheggio");
+        this.capacityColumn = new TableColumn<>("Capacità");
+
+        // Inizializziamo la TableView
+        this.tableParking = new TableView<>();
+
+        // Aggiungiamo le colonne alla tabella
+        this.tableParking.getColumns().add(latitudeColumn);
+        this.tableParking.getColumns().add(longitudeColumn);
+        this.tableParking.getColumns().add(streetNameColumn);
+        this.tableParking.getColumns().add(streetNumberColumn);
+        this.tableParking.getColumns().add(stationNameColumn);
+        this.tableParking.getColumns().add(capacityColumn);
+
+        // Impostiamo la grandezza massima della tabella per ogni colonna
+        this.tableParking.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        this.latitudeColumn.setMaxWidth(Integer.MAX_VALUE * 16.6D);          // 16,6%
+        this.longitudeColumn.setMaxWidth(Integer.MAX_VALUE * 16.6D);         // 16,6%
+        this.streetNameColumn.setMaxWidth(Integer.MAX_VALUE * 16.6D);        // 16,6%
+        this.streetNumberColumn.setMaxWidth(Integer.MAX_VALUE * 16.6D);      // 16,6%
+        this.stationNameColumn.setMaxWidth(Integer.MAX_VALUE * 16.6D);       // 16,6%
+        this.capacityColumn.setMaxWidth(Integer.MAX_VALUE * 16.6D);          // 16,6%
+
+        // Impediamo che le tabelle possano essere riordinate dall'utente
+        this.tableParking.skinProperty().addListener((observableValue, oldWidth, newWidth) ->{
+            final TableHeaderRow header = (TableHeaderRow) tableParking.lookup("TableHeaderRow");
+
+            header.reorderingProperty().addListener((obs, oldValue, newValue) -> header.setReordering(false));
+        });
+
+        // Rendiamo la tableView non editabile
+        this.tableParking.setEditable(false);
+
+        // Impostiamo le proprietà delle colonne
+        setLatitudeColumnProperty();
+        setLongitudeColumnProperty();
+        setStreetNameColumnProperty();
+        setStreetNumberColumnProperty();
+        setStationNameColumnProperty();
+        setCapacityColumnProperty();
+
+        this.tableParking.setPrefWidth(2048);
+    }
+
+    //==================================================
+    //              TABLEVIEW - POSTAZIONI
+    //==================================================
+
+    private void compositeWaitingStationTableView(){
+        // Creiamo le colonne della tableView
+        this.latitudeWaitingStationColumn = new TableColumn<>("Latitudine");
+        this.longitudeWaitingStationColumn = new TableColumn<>("Longitudine");
+        this.streetNameWaitingStationColumn = new TableColumn<>("Strada");
+        this.streetNumberWaitingStationColumn = new TableColumn<>("Civico");
+        this.stationNameWaitingStationColumn = new TableColumn<>("Postazione");
+
+        // Inizializziamo la TableView
+        this.tableWaitingStation = new TableView<>();
+
+        // Aggiungiamo le colonne alla tabella
+        this.tableWaitingStation.getColumns().add(latitudeWaitingStationColumn);
+        this.tableWaitingStation.getColumns().add(longitudeWaitingStationColumn);
+        this.tableWaitingStation.getColumns().add(streetNameWaitingStationColumn);
+        this.tableWaitingStation.getColumns().add(streetNumberWaitingStationColumn);
+        this.tableWaitingStation.getColumns().add(stationNameWaitingStationColumn);
+
+        // Impostiamo la grandezza massima della tabella per ogni colonna
+        this.tableWaitingStation.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        this.latitudeWaitingStationColumn.setMaxWidth(Integer.MAX_VALUE * 20D); // 20%
+        this.longitudeWaitingStationColumn.setMaxWidth(Integer.MAX_VALUE * 20D); // 20%
+        this.streetNameWaitingStationColumn.setMaxWidth(Integer.MAX_VALUE * 20D); // 20%
+        this.streetNumberWaitingStationColumn.setMaxWidth(Integer.MAX_VALUE * 20D); // 20%
+        this.stationNameWaitingStationColumn.setMaxWidth(Integer.MAX_VALUE * 20D); // 20%
+
+        // Impediamo che le tabelle possano essere riordinate dall'utente
+        this.tableWaitingStation.skinProperty().addListener((observableValue, oldWidth, newWidth) ->{
+            final TableHeaderRow header = (TableHeaderRow) tableWaitingStation.lookup("TableHeaderRow");
+
+            header.reorderingProperty().addListener((obs, oldValue, newValue) -> header.setReordering(false));
+        });
+
+        // Rendiamo la tableView non editabile
+        this.tableWaitingStation.setEditable(false);
+
+        // Impostiamo le proprietà delle colonne
+        setLatitudeWaitingStationColumnProperty();
+        setLongitudeWaitingStationColumnProperty();
+        setStreetNameWaitingStationColumnProperty();
+        setStreetNumberWaitingStationColumnProperty();
+        setStationNameWaitingStationColumnProperty();
+
+        this.tableWaitingStation.setPrefWidth(2048);
+    }
+
+    //==================================================
+    //            Metodi Propietà Colonne
+    //==================================================
+
+    private void setFiscalCodeColumnProperty(){
+        //stub
+    }
+
+    private void setFirstNameColumnProperty(){
+        //stub
+    }
+
+    private void setLastNameColumnProperty(){
+        //stub
+    }
+
+    private void setDateOfBirthColumnProperty(){
+        //stub
+    }
+
+    private void setGenderColumnProperty(){
+        //stub
+    }
+
+    private void setEmailColumnProperty(){
+        //stub
+    }
+
+    private void setTaxiColumnProperty(){
+        //stub
+    }
+
+    private void setLicenseNumberColumnProperty(){
+        //stub
+    }
+
+    private void setLatitudeColumnProperty(){
+        //stub
+    }
+
+    private void setLongitudeColumnProperty(){
+        //stub
+    }
+
+    private void setStreetNameColumnProperty(){
+        //stub
+    }
+
+    private void setStreetNumberColumnProperty(){
+        //stub
+    }
+
+    private void setStationNameColumnProperty(){
+        //stub
+    }
+
+    private void setCapacityColumnProperty(){
+        //stub
+    }
+
+    private void setLatitudeWaitingStationColumnProperty(){
+        //stub
+    }
+
+    private void setLongitudeWaitingStationColumnProperty(){
+        //stub
+    }
+
+    private void setStreetNameWaitingStationColumnProperty(){
+        //stub
+    }
+
+    private void setStreetNumberWaitingStationColumnProperty(){
+        //stub
+    }
+
+    private void setStationNameWaitingStationColumnProperty(){
+        //stub
     }
 }

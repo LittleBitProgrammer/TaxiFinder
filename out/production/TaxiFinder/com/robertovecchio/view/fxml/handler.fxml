@@ -11,4 +11,9 @@
 
         </VBox>
     </top>
+    <center>
+        <StackPane fx:id="vBoxCenterContainer">
+
+        </StackPane>
+    </center>
 </BorderPane>
