@@ -3,6 +3,7 @@ package com.robertovecchio.model.user;
 //Import
 import com.robertovecchio.model.veichle.BrandType;
 import com.robertovecchio.model.veichle.FuelType;
+import com.robertovecchio.model.veichle.builderTaxi.ConcreteTaxiBuilder;
 import com.robertovecchio.model.veichle.builderTaxi.TaxiBuilder;
 import java.time.LocalDate;
 
@@ -44,6 +45,7 @@ public class Handler extends UserAccount{
 
         // Richiamo il costruttore della classe astratta UserAccount
         super(fiscalCode, firstName, lastName, dateOfBirth, genderType, email, username, password);
+        this.taxiBuilder = new ConcreteTaxiBuilder();
     }
 
     /**
@@ -100,6 +102,19 @@ public class Handler extends UserAccount{
     }
 
     //==================================================
+    //                      Getter
+    //==================================================
+
+    /**
+     * Getter builder taxi dell'handler
+     * @return Builder del Taxi
+     * @see TaxiBuilder
+     * */
+    public TaxiBuilder getTaxiBuilder(){
+        return this.taxiBuilder;
+    }
+
+    //==================================================
     //                      Metodi
     //==================================================
     /**
@@ -109,14 +124,15 @@ public class Handler extends UserAccount{
      * @param modelName Nome del modello del Taxi
      * @param capacity Capacità del Taxi in termini di persone trasportabili
      * @param fuelType tipo di carburante del Taxi
-     * @param taxiDriver Tassista
      * @see BrandType
      * @see FuelType
-     * @see TaxiDriver
      * */
     public void buildTaxi(String licensePlate, BrandType brandType,
                           String modelName, int capacity,
-                          FuelType fuelType, TaxiDriver taxiDriver){
+                          FuelType fuelType){
+
+        // creiamo l'istanza di taxi
+        taxiBuilder.createTaxi();
 
         // Build delle variabili d'istanza
        taxiBuilder.buildLicensePlate(licensePlate);

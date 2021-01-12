@@ -170,7 +170,7 @@ public class HandlerController {
                             Optional<ButtonType> result = alert.showAndWait();
 
                             event.consume();
-                        }else if (addTaxiDriverController.validateFiscalCode()){
+                        }else if (!addTaxiDriverController.validateFiscalCode()){
                             Alert alert = new Alert(Alert.AlertType.WARNING, "Codice Fiscale errato", ButtonType.OK);
                             alert.setHeaderText("Hai inserito un codice fiscale errato");
                             alert.setContentText("Inserisci un codice fiscale con lunghezza pari a 16");

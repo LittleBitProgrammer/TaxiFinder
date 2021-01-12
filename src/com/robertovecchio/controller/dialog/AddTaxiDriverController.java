@@ -4,19 +4,22 @@ import com.robertovecchio.controller.UtilityController;
 import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.user.GenderType;
 import com.robertovecchio.model.user.TaxiDriver;
+import com.robertovecchio.model.veichle.builderTaxi.Taxi;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanExpression;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.control.skin.TableHeaderRow;
+import javafx.scene.layout.GridPane;
 import javafx.util.StringConverter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.EnumSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Classe che gestisce la view di aggiunta Tassista
@@ -25,6 +28,20 @@ import java.util.Set;
  * @since 10/01/2021
  * */
 public class AddTaxiDriverController {
+
+    //==================================================
+    //               Variabili d'istanza
+    //==================================================
+
+    // TableView
+    private TableView<Taxi> tableTaxi;
+
+    // TableColumn
+    private TableColumn<Taxi,String> licensePlateColumn;
+    private TableColumn<Taxi,String> brandNameColumn;
+    private TableColumn<Taxi,String> modelNameColumn;
+    private TableColumn<Taxi,String> capacityColumn;
+    private TableColumn<Taxi,String> fuelTypeColumn;
 
     //==================================================
     //               Variabili Statiche
@@ -36,6 +53,8 @@ public class AddTaxiDriverController {
     //               Variabili FXML
     //==================================================
 
+    @FXML
+    GridPane gridContainer;
     @FXML
     TextField fiscalCodeField;
     @FXML
@@ -103,6 +122,15 @@ public class AddTaxiDriverController {
         this.fiscalCodeField.setOnKeyReleased(keyEvent -> {
             this.usernameField.setText(this.fiscalCodeField.getText());
         });
+
+        // Creiamo la TableView
+        tableTaxi = createTableView();
+
+        // aggiungiamo la tableView al gridContainer
+        this.gridContainer.add(tableTaxi,0,6,4,1);
+
+        // Rendiamo la tableview invisibile
+        this.tableTaxi.setVisible(false);
     }
 
     //==================================================
@@ -217,15 +245,180 @@ public class AddTaxiDriverController {
             e.printStackTrace();
         }
 
+        AddTaxiController addTaxiController = loader.getController();
+
         // Aggiungiamo il bottone OK al dialogPane
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
+        dialog.getDialogPane().lookupButton(ButtonType.APPLY).disableProperty().bind(addTaxiController.invalidInputProperty());
 
         // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
         Optional<ButtonType> result = dialog.showAndWait();
 
         // Gestiamo il caso in cui l'utente abbia premuto OK
         if (result.isPresent() && result.get() == ButtonType.APPLY){
-            //stub
+            // Inizializziamo il nuovo taxi
+            // Taxi
+            Taxi newTaxi = addTaxiController.processTaxiResult();
+
+            // modifichiamo il testo del botton
+            this.addAutoButton.setText("Modifica Auto");
+
+            // Modifichiamo la grandezza del Button
+            this.addAutoButton.setPrefWidth(150D);
+
+            // Creiamo una lista per popolare la tableview
+            List<Taxi> taxi = new ArrayList<>();
+            taxi.add(newTaxi);
+
+            // Impostiamo gli item da visualizzare, nel nostro casoil singolo taxi
+            this.tableTaxi.setItems(FXCollections.observableList(taxi));
+
+            // rendiamo la tableView Visibile
+            this.tableTaxi.setVisible(true);
         }
+    }
+
+    private TableView<Taxi> createTableView(){
+
+        // Creiamo le colonne della tableView
+        this.licensePlateColumn = new TableColumn<>("Targa");
+        this.brandNameColumn = new TableColumn<>("Marchio");
+        this.modelNameColumn = new TableColumn<>("Modello");
+        this.capacityColumn = new TableColumn<>("Capacità");
+        this.fuelTypeColumn = new TableColumn<>("Carburante");
+
+        // Inizializziamo la TableView
+        this.tableTaxi = new TableView<>();
+
+        // Aggiungiamo le colonne alla tabella
+        this.tableTaxi.getColumns().add(licensePlateColumn);
+        this.tableTaxi.getColumns().add(brandNameColumn);
+        this.tableTaxi.getColumns().add(modelNameColumn);
+        this.tableTaxi.getColumns().add(capacityColumn);
+        this.tableTaxi.getColumns().add(fuelTypeColumn);
+
+        // Impostiamo la grandezza massima della tabella per ogni colonna
+        this.tableTaxi.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        this.licensePlateColumn.setMaxWidth(Integer.MAX_VALUE * 20D);  // 20%
+        this.brandNameColumn.setMaxWidth(Integer.MAX_VALUE * 20D);     // 20%
+        this.modelNameColumn.setMaxWidth(Integer.MAX_VALUE * 20D);     // 20%
+        this.capacityColumn.setMaxWidth(Integer.MAX_VALUE * 20D);      // 20%
+        this.fuelTypeColumn.setMaxWidth(Integer.MAX_VALUE * 20D);      // 20%
+
+        // Impostiamo le colonne a non ordinabili
+        this.licensePlateColumn.setSortable(false);
+        this.brandNameColumn.setSortable(false);
+        this.modelNameColumn.setSortable(false);
+        this.capacityColumn.setSortable(false);
+        this.fuelTypeColumn.setSortable(false);
+
+        // Impediamo che le tabelle possano essere riordinate dall'utente
+        this.tableTaxi.skinProperty().addListener((observableValue, oldWidth, newWidth) ->{
+            final TableHeaderRow header = (TableHeaderRow) tableTaxi.lookup("TableHeaderRow");
+
+            header.reorderingProperty().addListener((obs, oldValue, newValue) -> header.setReordering(false));
+        });
+
+        // Rendiamo la tableView non editabile
+        this.tableTaxi.setEditable(false);
+
+        // Impostiamo le proprietà delle colonne
+        setLicensePlateColumnProperty();
+        setBrandNameColumnProperty();
+        setModelNameColumnProperty();
+        setCapacityColumnProperty();
+        setFuelTypeColumnProperty();
+
+        return tableTaxi;
+    }
+
+    private void setLicensePlateColumnProperty(){
+        this.licensePlateColumn.setCellValueFactory(taxiStringCellDataFeatures -> new SimpleStringProperty(
+                taxiStringCellDataFeatures.getValue().getLicensePlate()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.licensePlateColumn.setCellFactory(taxiStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String licensePlate, boolean empty){
+                super.updateItem(licensePlate, empty);
+                if(empty || licensePlate == null){
+                    setText(null);
+                } else {
+                    setText(licensePlate);
+                }
+            }
+        });
+    }
+
+    private void setBrandNameColumnProperty(){
+        this.brandNameColumn.setCellValueFactory(taxiStringCellDataFeatures -> new SimpleStringProperty(
+                taxiStringCellDataFeatures.getValue().getBrandType().toString()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.brandNameColumn.setCellFactory(taxiStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String brandName, boolean empty){
+                super.updateItem(brandName, empty);
+                if(empty || brandName == null){
+                    setText(null);
+                } else {
+                    setText(brandName);
+                }
+            }
+        });
+    }
+
+    private void setModelNameColumnProperty(){
+        this.modelNameColumn.setCellValueFactory(taxiStringCellDataFeatures -> new SimpleStringProperty(
+                taxiStringCellDataFeatures.getValue().getModelName()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.modelNameColumn.setCellFactory(taxiStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String modelName, boolean empty){
+                super.updateItem(modelName, empty);
+                if(empty || modelName == null){
+                    setText(null);
+                } else {
+                    setText(modelName);
+                }
+            }
+        });
+    }
+
+    private void setCapacityColumnProperty(){
+        this.capacityColumn.setCellValueFactory(taxiStringCellDataFeatures -> new SimpleStringProperty(
+                String.valueOf(taxiStringCellDataFeatures.getValue().getCapacity())));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.capacityColumn.setCellFactory(taxiStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String capacity, boolean empty){
+                super.updateItem(capacity, empty);
+                if(empty || capacity == null){
+                    setText(null);
+                } else {
+                    setText(capacity);
+                }
+            }
+        });
+    }
+
+    private void setFuelTypeColumnProperty(){
+        this.fuelTypeColumn.setCellValueFactory(taxiStringCellDataFeatures -> new SimpleStringProperty(
+                taxiStringCellDataFeatures.getValue().getFuelType().getTranslation()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.fuelTypeColumn.setCellFactory(taxiStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String fuelType, boolean empty){
+                super.updateItem(fuelType, empty);
+                if(empty || fuelType == null){
+                    setText(null);
+                } else {
+                    setText(fuelType);
+                }
+            }
+        });
     }
 }

@@ -1,10 +1,7 @@
 package com.robertovecchio.model.db;
 
 import com.robertovecchio.model.db.error.HandlerNotFoundException;
-import com.robertovecchio.model.user.Customer;
-import com.robertovecchio.model.user.GenderType;
-import com.robertovecchio.model.user.Handler;
-import com.robertovecchio.model.user.TaxiDriver;
+import com.robertovecchio.model.user.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableSet;
 import java.io.*;
@@ -62,6 +59,7 @@ public class TaxiFinderData {
      * @see Handler
      */
     private Set<Handler> handlers;
+    private UserAccount currentUser;
 
     //==================================================
     //                   Costruttori
@@ -135,6 +133,15 @@ public class TaxiFinderData {
         this.handlers = handlers;
     }
 
+    /**
+     * Metodo setter dell'account corrente
+     * @param userAccount Account corrente
+     * @see UserAccount
+     * */
+    public void setCurrentUser(UserAccount userAccount){
+        this.currentUser = userAccount;
+    }
+
     //==================================================
     //                 Metodi GETTER
     //==================================================
@@ -167,6 +174,15 @@ public class TaxiFinderData {
      */
     public Set<Handler> getHandlers(){
         return this.handlers;
+    }
+
+    /**
+     * Metodo getter dell'utente corrente
+     * @return Utente corrente
+     * @see UserAccount
+     * */
+    public UserAccount getCurrentUser(){
+        return  this.currentUser;
     }
 
     //==================================================
