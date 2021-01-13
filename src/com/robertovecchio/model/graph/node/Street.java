@@ -5,13 +5,11 @@ import java.time.LocalTime;
 /**
  * Questa classe astrae il concetto di strada. Questa classe è intesa come nodo così da poter essere utile all'
  * algoritmo di Dijkstra per poter trovare il percorso più breve o la strada con il tempo di percorrimento minore.
- * Essendo un nodo questa verrà individuata da delle coordinate che di fatto coincidono con il primo numero civico
- * disponibile all'inizio della strada.
  * @author robertovecchio
  * @version 1.0
  * @since 08/01/2021
  * */
-public class Street<T> extends Node{
+public class Street<T>{
     //==================================================
     //               Variabili d'istanza
     //==================================================
@@ -19,7 +17,6 @@ public class Street<T> extends Node{
     /**@see LocalTime*/
     private LocalTime travelTime; // Tempo di percorrimento
     private String streetName; // Nome della strada
-    private double streetLength; // lunghezza della strada espressa in KM
     /**@see WaitingStation*/
     private T waitingStation; // stazione di attesa, può essere presente o meno in una strada, 1 a strada
 
@@ -29,44 +26,31 @@ public class Street<T> extends Node{
 
     /**
      * Metodo costruttore di Street
-     * @param coordinates Coordinate della strada espresse in latitudine e longitudine
      * @param travelTime Tempo di percorrimento della strada basato sui sensori posti ad inizio e fine strada
      * @param streetName Nome della strada
-     * @param streetLength Lunghezza della strada espressa in KM
-     * @see Coordinates
      * @see LocalTime
      * */
-    public Street(Coordinates coordinates, LocalTime travelTime, String streetName, double streetLength){
-        // Richiamo il costruttore della classe astratta UserAccount
-        super(coordinates);
+    public Street(LocalTime travelTime, String streetName){
 
         // Inizializzo le variabili d'istanza
         this.travelTime = travelTime;
         this.streetName = streetName;
-        this.streetLength = streetLength;
     }
 
     /**
      * Metodo costruttore di Street
-     * @param coordinates Coordinate della strada espresse in latitudine e longitudine
      * @param travelTime Tempo di percorrimento della strada basato sui sensori posti ad inizio e fine strada
      * @param streetName Nome della strada
-     * @param streetLength Lunghezza della strada espressa in KM
      * @param waitingStation Stazione di attesa presente nella strada
-     * @see Coordinates
      * @see LocalTime
      * @see WaitingStation
      * */
-    public Street(Coordinates coordinates, LocalTime travelTime,
-                  String streetName, double streetLength, T waitingStation){
-
-        // Richiamo il costruttore della classe astratta UserAccount
-        super(coordinates);
+    public Street(LocalTime travelTime,
+                  String streetName, T waitingStation){
 
         // Inizializzo le variabili d'istanza
         this.travelTime = travelTime;
         this.streetName = streetName;
-        this.streetLength = streetLength;
         this.waitingStation = waitingStation;
     }
 
@@ -89,14 +73,6 @@ public class Street<T> extends Node{
      * */
     public void setStreetName(String streetName){
         this.streetName = streetName;
-    }
-
-    /**
-     * Setter della lunghezza di una strada espressa in KM
-     * @param streetLength Lunghezza di una strada espressa in KM
-     * */
-    public void setStreetLength(double streetLength){
-        this.streetLength = streetLength;
     }
 
     /**
@@ -127,14 +103,6 @@ public class Street<T> extends Node{
      * */
     public String getStreetName(){
         return this.streetName;
-    }
-
-    /**
-     * Getter della lunghezza di una strada espressa in KM
-     * @return Lunghezza di una strada espressa in KM
-     * */
-    public double getStreetLength() {
-        return streetLength;
     }
 
     /**

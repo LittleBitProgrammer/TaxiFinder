@@ -15,6 +15,12 @@ import java.util.*;
 public class Graph {
 
     //==================================================
+    //                   Singleton
+    //==================================================
+
+    private static Graph instance = createGraph();
+
+    //==================================================
     //               Variabili d'istanza
     //==================================================
 
@@ -32,7 +38,7 @@ public class Graph {
      * @see Map
      * @see Node
      * @see List*/
-    public Graph(Map<Node,List<Node>> nodes){
+    private Graph(Map<Node,List<Node>> nodes){
         this.nodes = nodes;
     }
 
@@ -75,6 +81,10 @@ public class Graph {
     //==================================================
     //                    Metodi
     //==================================================
+
+    public static Graph getInstance(){
+        return instance;
+    }
 
     /**
      * Metodo atto ad aggiungere un nodo
