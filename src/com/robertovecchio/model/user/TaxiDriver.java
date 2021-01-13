@@ -26,7 +26,7 @@ public class TaxiDriver extends UserAccount{
     //==================================================
 
     /**
-     * Costruttore di un Gestore
+     * Costruttore di un Tassista
      * @param fiscalCode codice fiscale utente
      * @param firstName nome utente
      * @param lastName cognome utente
@@ -39,6 +39,7 @@ public class TaxiDriver extends UserAccount{
      * @param taxi Taxi del tassista
      * @see LocalDate
      * @see GenderType
+     * @see Taxi
      * */
     public TaxiDriver(String fiscalCode, String firstName,
                       String lastName, LocalDate dateOfBirth,
@@ -54,6 +55,15 @@ public class TaxiDriver extends UserAccount{
         this.taxi = taxi;
     }
 
+    /**
+     * Costruttore di un Tassista
+     * @param username username utente
+     * @param password password utente
+     * @param taxi Taxi del tassista
+     * @see LocalDate
+     * @see GenderType
+     * @see Taxi
+     * */
     public TaxiDriver(String username, String password, Taxi taxi){
 
         // Richiamo il costruttore della classe astratta UserAccount

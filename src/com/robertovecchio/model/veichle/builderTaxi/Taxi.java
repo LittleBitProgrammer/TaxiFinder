@@ -3,6 +3,8 @@ package com.robertovecchio.model.veichle.builderTaxi;
 //Import
 import com.robertovecchio.model.veichle.BrandType;
 import com.robertovecchio.model.veichle.FuelType;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -14,16 +16,22 @@ import java.util.Objects;
  * */
 public class Taxi implements Serializable {
 
+    /**Numero serializzabile, utile alla persistenza della classe*/
+    @Serial
     private final static long serialVersionUID = 5L;
 
     //==================================================
     //               Variabili d'istanza
     //==================================================
-    private String licensePlate; // Targa del taxi
+
+    /**Targa del taxi*/
+    private String licensePlate;
     /**@see BrandType */
     private BrandType brandType; // Brand del Taxi
-    private String modelName;    // Modello del Taxi
-    private int capacity;        // Capcità del Taxi in termini di persone trasportabili
+    /**Modello del Taxi*/
+    private String modelName;
+    /**Capcità del Taxi in termini di persone trasportabili*/
+    private int capacity;
     /**@see FuelType */
     private FuelType fuelType;   // Tipo di carburante del Taxi
 

@@ -168,8 +168,10 @@ public class AddTaxiDriverController {
     }
 
     /**
-     * Questo metodo processa i dati presenti nel dialog di aggiunta di un tassista
-     */
+     * Metodo che ha lo scopo di processare i dati recuperati all'interno dei vari controlli mostrati su
+     * Interfaccia utente, con l'obiettivo di aggiungere un nuovo tassista ed un taxi ad esso associato
+     * @return Tassista aggiunto
+     * @see TaxiDriver*/
     public TaxiDriver processAddTaxiDriver(){
         String fiscalCode = fiscalCodeField.getText().trim().toUpperCase();
         String name = nameField.getText().trim().substring(0,1).toUpperCase() + nameField.getText().trim().substring(1);
@@ -203,12 +205,20 @@ public class AddTaxiDriverController {
         return !(UtilityController.getYears(this.dateOfBirthField.getValue()) < 18);
     }
 
+    /**
+     * Metodo che ha lo scopo di constatare se l'utente inserito esiste già
+     * @return Se esiste già un utente torna true, altrimenti false
+     * */
     public boolean existYet(){
         TaxiDriver driver = new TaxiDriver(usernameField.getText().trim(), passwordField.getText().trim(), this.newTaxi);
         return taxiFinderData.getTaxiDrivers().contains(driver) || existTaxi(driver);
     }
 
-    public boolean existTaxi(TaxiDriver taxiDriver){
+    /**
+     * Metodo che ha lo scopo di verificare se un utente ha già inserito quel taxi (Stessa targa)
+     * @return Se esiste già un taxi con targa uguale ritorna true, altrimenti false
+     * */
+    private boolean existTaxi(TaxiDriver taxiDriver){
         boolean isContained = false;
         for (TaxiDriver driver : taxiFinderData.getTaxiDrivers()){
             if (driver.getTaxi().equals(taxiDriver.getTaxi())) {

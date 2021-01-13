@@ -118,6 +118,10 @@ public class RemoveTaxiDriverController {
         this.licensePlateField.setText(taxiDriver.getTaxi().getLicensePlate());
     }
 
+    /**
+     * Metodo che ha lo scopo di processare i dati recuperati all'interno dei vari controlli mostrati su
+     * Interfaccia utente con l'obiettivo di rimuovere un tassista ed un taxi ad esso associato
+     * */
     public void processFireTaxiDriver(){
         TaxiDriver taxiDriver = this.taxiDriverComboBox.getSelectionModel().getSelectedItem();
 

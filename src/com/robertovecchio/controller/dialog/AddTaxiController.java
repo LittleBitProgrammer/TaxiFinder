@@ -136,6 +136,11 @@ public class AddTaxiController {
                 this.fuelTypeField.valueProperty());
     }
 
+    /**
+     * Metodo che ha lo scopo di buildare un Taxi attraverso i dati inseriti nei cari controlli posti su interfaccia
+     * utnte
+     * @return Taxi aggiunto
+     * @see Taxi*/
     public Taxi processTaxiResult(){
         // Ricavo l'handler da cui buildare il taxi
         Handler handler = (Handler) taxiFinderData.getCurrentUser();
