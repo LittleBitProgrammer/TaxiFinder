@@ -11,7 +11,7 @@ import java.time.LocalTime;
  * @version 1.0
  * @since 08/01/2021
  * */
-public class Street extends Node{
+public class Street<T> extends Node{
     //==================================================
     //               Variabili d'istanza
     //==================================================
@@ -21,7 +21,7 @@ public class Street extends Node{
     private String streetName; // Nome della strada
     private double streetLength; // lunghezza della strada espressa in KM
     /**@see WaitingStation*/
-    private WaitingStation waitingStation; // stazione di attesa, può essere presente o meno in una strada, 1 a strada
+    private T waitingStation; // stazione di attesa, può essere presente o meno in una strada, 1 a strada
 
     //==================================================
     //                   Costruttori
@@ -58,7 +58,7 @@ public class Street extends Node{
      * @see WaitingStation
      * */
     public Street(Coordinates coordinates, LocalTime travelTime,
-                  String streetName, double streetLength, WaitingStation waitingStation){
+                  String streetName, double streetLength, T waitingStation){
 
         // Richiamo il costruttore della classe astratta UserAccount
         super(coordinates);
@@ -104,7 +104,7 @@ public class Street extends Node{
      * @param waitingStation Stazione di attesa
      * @see WaitingStation
      * */
-    public void setWaitingStation(WaitingStation waitingStation){
+    public void setWaitingStation(T waitingStation){
         this.waitingStation = waitingStation;
     }
 
@@ -142,7 +142,7 @@ public class Street extends Node{
      * @return stazione di attesa
      * @see WaitingStation
      * */
-    public WaitingStation getWaitingStation(){
+    public T getWaitingStation(){
         return this.waitingStation;
     }
 }

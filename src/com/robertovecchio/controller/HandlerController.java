@@ -3,7 +3,9 @@ package com.robertovecchio.controller;
 import com.robertovecchio.controller.dialog.AddTaxiDriverController;
 import com.robertovecchio.controller.dialog.RemoveTaxiDriverController;
 import com.robertovecchio.model.db.TaxiFinderData;
+import com.robertovecchio.model.graph.node.Parking;
 import com.robertovecchio.model.graph.node.Street;
+import com.robertovecchio.model.graph.node.WaitingStation;
 import com.robertovecchio.model.user.TaxiDriver;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -39,8 +41,8 @@ public class HandlerController {
 
     // TableView
     private TableView<TaxiDriver> tableTaxiDriver;
-    private TableView<Street> tableParking;
-    private TableView<Street> tableWaitingStation;
+    private TableView<Street<Parking>> tableParking;
+    private TableView<Street<WaitingStation>> tableWaitingStation;
 
     // Columns - tableTaxiDriver
     private TableColumn<TaxiDriver, String> fiscalCodeColumn;
@@ -53,19 +55,19 @@ public class HandlerController {
     private TableColumn<TaxiDriver, String> licenseNumberColumn;
 
     // Columns - tableParking
-    private TableColumn<Street, String> latitudeColumn;
-    private TableColumn<Street, String> longitudeColumn;
-    private TableColumn<Street, String> streetNameColumn;
-    private TableColumn<Street, String> streetNumberColumn;
-    private TableColumn<Street, String> stationNameColumn;
-    private TableColumn<Street, String> capacityColumn;
+    private TableColumn<Street<Parking>, String> latitudeColumn;
+    private TableColumn<Street<Parking>, String> longitudeColumn;
+    private TableColumn<Street<Parking>, String> streetNameColumn;
+    private TableColumn<Street<Parking>, String> streetNumberColumn;
+    private TableColumn<Street<Parking>, String> stationNameColumn;
+    private TableColumn<Street<Parking>, String> capacityColumn;
 
     // Columns - tableWaitingStation
-    private TableColumn<Street, String>  latitudeWaitingStationColumn;
-    private TableColumn<Street, String> longitudeWaitingStationColumn;
-    private TableColumn<Street, String> streetNameWaitingStationColumn;
-    private TableColumn<Street, String> streetNumberWaitingStationColumn;
-    private TableColumn<Street, String> stationNameWaitingStationColumn;
+    private TableColumn<Street<WaitingStation>, String>  latitudeWaitingStationColumn;
+    private TableColumn<Street<WaitingStation>, String> longitudeWaitingStationColumn;
+    private TableColumn<Street<WaitingStation>, String> streetNameWaitingStationColumn;
+    private TableColumn<Street<WaitingStation>, String> streetNumberWaitingStationColumn;
+    private TableColumn<Street<WaitingStation>, String> stationNameWaitingStationColumn;
 
     // Observable List
     ObservableList<TaxiDriver> drivers;
@@ -466,14 +468,16 @@ public class HandlerController {
         this.tableTaxiDriver.setEditable(false);
 
         // Impostiamo le proprietà delle colonne
-        setFiscalCodeColumnProperty();
-        setFirstNameColumnProperty();
-        setLastNameColumnProperty();
-        setDateOfBirthColumnProperty();
-        setGenderColumnProperty();
-        setEmailColumnProperty();
-        setTaxiColumnProperty();
-        setLicenseNumberColumnProperty();
+        new Thread(()->{
+            setFiscalCodeColumnProperty();
+            setFirstNameColumnProperty();
+            setLastNameColumnProperty();
+            setDateOfBirthColumnProperty();
+            setGenderColumnProperty();
+            setEmailColumnProperty();
+            setTaxiColumnProperty();
+            setLicenseNumberColumnProperty();
+        });
 
         // Impostiamo una larghezza base
         this.tableTaxiDriver.setPrefWidth(2048);
@@ -527,12 +531,14 @@ public class HandlerController {
         this.tableParking.setEditable(false);
 
         // Impostiamo le proprietà delle colonne
-        setLatitudeColumnProperty();
-        setLongitudeColumnProperty();
-        setStreetNameColumnProperty();
-        setStreetNumberColumnProperty();
-        setStationNameColumnProperty();
-        setCapacityColumnProperty();
+        new Thread(()->{
+            setLatitudeColumnProperty();
+            setLongitudeColumnProperty();
+            setStreetNameColumnProperty();
+            setStreetNumberColumnProperty();
+            setStationNameColumnProperty();
+            setCapacityColumnProperty();
+        });
 
         // Impostiamo una larghezza base
         this.tableParking.setPrefWidth(2048);
@@ -579,11 +585,14 @@ public class HandlerController {
         this.tableWaitingStation.setEditable(false);
 
         // Impostiamo le proprietà delle colonne
-        setLatitudeWaitingStationColumnProperty();
-        setLongitudeWaitingStationColumnProperty();
-        setStreetNameWaitingStationColumnProperty();
-        setStreetNumberWaitingStationColumnProperty();
-        setStationNameWaitingStationColumnProperty();
+        new Thread(()->{
+            setLatitudeWaitingStationColumnProperty();
+            setLongitudeWaitingStationColumnProperty();
+            setStreetNameWaitingStationColumnProperty();
+            setStreetNumberWaitingStationColumnProperty();
+            setStationNameWaitingStationColumnProperty();
+        });
+
 
         // Impostiamo una larghezza base
         this.tableWaitingStation.setPrefWidth(2048);
@@ -738,46 +747,201 @@ public class HandlerController {
     }
 
     private void setLatitudeColumnProperty(){
-        //stub
+        this.latitudeColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
+                String.valueOf(streetStringCellDataFeatures.getValue().getWaitingStation().getCoordinates().getLatitude())));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.latitudeColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String latitude, boolean empty){
+                super.updateItem(latitude, empty);
+                if(empty || latitude == null){
+                    setText(null);
+                } else {
+                    setText(latitude);
+                }
+            }
+        });
     }
 
     private void setLongitudeColumnProperty(){
-        //stub
+        this.longitudeColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
+                String.valueOf(streetStringCellDataFeatures.getValue().getWaitingStation().getCoordinates().getLongitude())));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.longitudeColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String longitude, boolean empty){
+                super.updateItem(longitude, empty);
+                if(empty || longitude == null){
+                    setText(null);
+                } else {
+                    setText(longitude);
+                }
+            }
+        });
     }
 
     private void setStreetNameColumnProperty(){
-        //stub
+        this.streetNameColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
+                streetStringCellDataFeatures.getValue().getStreetName()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.streetNameColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String streetName, boolean empty){
+                super.updateItem(streetName, empty);
+                if(empty || streetName == null){
+                    setText(null);
+                } else {
+                    setText(streetName);
+                }
+            }
+        });
     }
 
     private void setStreetNumberColumnProperty(){
-        //stub
+        this.streetNumberColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
+                streetStringCellDataFeatures.getValue().getWaitingStation().getStreetNumber()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.streetNumberColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String streetNumber, boolean empty){
+                super.updateItem(streetNumber, empty);
+                if(empty || streetNumber == null){
+                    setText(null);
+                } else {
+                    setText(streetNumber);
+                }
+            }
+        });
     }
 
     private void setStationNameColumnProperty(){
-        //stub
+        this.stationNameColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
+                streetStringCellDataFeatures.getValue().getWaitingStation().getStationName()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.streetNumberColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String stationName, boolean empty){
+                super.updateItem(stationName, empty);
+                if(empty || stationName == null){
+                    setText(null);
+                } else {
+                    setText(stationName);
+                }
+            }
+        });
     }
 
     private void setCapacityColumnProperty(){
-        //stub
+        this.capacityColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
+                String.valueOf(streetStringCellDataFeatures.getValue().getWaitingStation().getParkingCapacity())
+        ));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.capacityColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String capacity, boolean empty){
+                super.updateItem(capacity, empty);
+                if(empty || capacity == null){
+                    setText(null);
+                } else {
+                    setText(capacity);
+                }
+            }
+        });
     }
 
     private void setLatitudeWaitingStationColumnProperty(){
-        //stub
+        this.latitudeWaitingStationColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
+                String.valueOf(streetStringCellDataFeatures.getValue().getWaitingStation().getCoordinates().getLatitude())));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.latitudeWaitingStationColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String latitude, boolean empty){
+                super.updateItem(latitude, empty);
+                if(empty || latitude == null){
+                    setText(null);
+                } else {
+                    setText(latitude);
+                }
+            }
+        });
     }
 
     private void setLongitudeWaitingStationColumnProperty(){
-        //stub
+        this.longitudeWaitingStationColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
+                String.valueOf(streetStringCellDataFeatures.getValue().getWaitingStation().getCoordinates().getLongitude())));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.longitudeWaitingStationColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String longitude, boolean empty){
+                super.updateItem(longitude, empty);
+                if(empty || longitude == null){
+                    setText(null);
+                } else {
+                    setText(longitude);
+                }
+            }
+        });
     }
 
     private void setStreetNameWaitingStationColumnProperty(){
-        //stub
+        this.streetNameWaitingStationColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
+                streetStringCellDataFeatures.getValue().getStreetName()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.streetNameWaitingStationColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String streetName, boolean empty){
+                super.updateItem(streetName, empty);
+                if(empty || streetName == null){
+                    setText(null);
+                } else {
+                    setText(streetName);
+                }
+            }
+        });
     }
 
     private void setStreetNumberWaitingStationColumnProperty(){
-        //stub
+        this.streetNumberWaitingStationColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
+                streetStringCellDataFeatures.getValue().getWaitingStation().getStationName()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.streetNumberWaitingStationColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String stationName, boolean empty){
+                super.updateItem(stationName, empty);
+                if(empty || stationName == null){
+                    setText(null);
+                } else {
+                    setText(stationName);
+                }
+            }
+        });
     }
 
     private void setStationNameWaitingStationColumnProperty(){
-        //stub
+        this.stationNameWaitingStationColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
+                streetStringCellDataFeatures.getValue().getWaitingStation().getStreetNumber()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.stationNameWaitingStationColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String streetNumber, boolean empty){
+                super.updateItem(streetNumber, empty);
+                if(empty || streetNumber == null){
+                    setText(null);
+                } else {
+                    setText(streetNumber);
+                }
+            }
+        });
     }
 }
