@@ -28,31 +28,31 @@ public class CompanyAreaController {
     //==================================================
 
     @FXML
-    private Button backButton;
+    Button backButton;
     @FXML
-    private ImageView adminImage;
+    ImageView adminImage;
     @FXML
-    private ImageView driverImage;
+    ImageView driverImage;
     @FXML
-    private Label header;
+    Label header;
     @FXML
-    private Label advice;
+    Label advice;
     @FXML
-    private TextField handlerUsernameField;
+    TextField handlerUsernameField;
     @FXML
-    private TextField taxiDriverUsernameField;
+    TextField taxiDriverUsernameField;
     @FXML
-    private PasswordField handlerPasswordField;
+    PasswordField handlerPasswordField;
     @FXML
-    private PasswordField taxiDriverPasswordField;
+    PasswordField taxiDriverPasswordField;
     @FXML
-    private Button handlerLoginButton;
+    Button handlerLoginButton;
     @FXML
-    private Button taxiDriverLoginButton;
+    Button taxiDriverLoginButton;
     @FXML
-    private Label errorHandler;
+    Label errorHandler;
     @FXML
-    private Label errorTaxiDriver;
+    Label errorTaxiDriver;
 
     //==================================================
     //               Variabili Statiche

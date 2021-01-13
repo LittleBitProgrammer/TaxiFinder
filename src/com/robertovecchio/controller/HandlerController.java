@@ -7,10 +7,9 @@ import com.robertovecchio.model.graph.node.Parking;
 import com.robertovecchio.model.graph.node.Street;
 import com.robertovecchio.model.graph.node.WaitingStation;
 import com.robertovecchio.model.user.TaxiDriver;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,7 +36,10 @@ public class HandlerController {
     //==================================================
 
     //DB
-    TaxiFinderData taxiFinderData = TaxiFinderData.getInstance();
+    private final TaxiFinderData taxiFinderData = TaxiFinderData.getInstance();
+
+    private boolean isFirstEntryParking = true;
+    private boolean isFirstEntryWaiting = true;
 
     // TableView
     private TableView<TaxiDriver> tableTaxiDriver;
@@ -109,14 +111,9 @@ public class HandlerController {
 
         // Inizializzo le TableView
         compositeTaxiDriverTableView();
-        compositeParkingTableView();
-        compositeWaitingStationTableView();
 
         // Aggiungiamo al vbox centrale il
-        vBoxCenterContainer.getChildren().addAll(tableTaxiDriver, tableParking, tableWaitingStation);
-
-        // Impostiamo la visibilità
-        changeVisibility(this.tableTaxiDriver, this.tableParking, this.tableWaitingStation);
+        vBoxCenterContainer.getChildren().add(tableTaxiDriver);
     }
 
     //==================================================
@@ -400,11 +397,19 @@ public class HandlerController {
 
         //Aggiungiamo un'azione quando visualizza parcheggi viene premuto
         visualizeParking.setOnAction(actionEvent -> {
+            if (this.isFirstEntryParking){
+                compositeParkingTableView();
+                vBoxCenterContainer.getChildren().add(tableParking);
+            }
             changeVisibility(this.tableParking, this.tableTaxiDriver, this.tableWaitingStation);
         });
 
         //Aggiungiamo un'azione quando visualizza postazioni viene premuto
         visualizeWaitingStations.setOnAction(actionEvent -> {
+            if (this.isFirstEntryWaiting){
+                compositeWaitingStationTableView();
+                vBoxCenterContainer.getChildren().add(tableWaitingStation);
+            }
             changeVisibility(this.tableWaitingStation, this.tableTaxiDriver, this.tableParking);
         });
 
@@ -414,7 +419,9 @@ public class HandlerController {
     private void changeVisibility(TableView<?> visible, TableView<?>... invisibles){
         visible.setVisible(true);
         for (TableView<?> invisible : invisibles){
-            invisible.setVisible(false);
+            if (invisible != null){
+                invisible.setVisible(false);
+            }
         }
     }
 
@@ -468,16 +475,14 @@ public class HandlerController {
         this.tableTaxiDriver.setEditable(false);
 
         // Impostiamo le proprietà delle colonne
-        new Thread(()->{
-            setFiscalCodeColumnProperty();
-            setFirstNameColumnProperty();
-            setLastNameColumnProperty();
-            setDateOfBirthColumnProperty();
-            setGenderColumnProperty();
-            setEmailColumnProperty();
-            setTaxiColumnProperty();
-            setLicenseNumberColumnProperty();
-        });
+        setFiscalCodeColumnProperty();
+        setFirstNameColumnProperty();
+        setLastNameColumnProperty();
+        setDateOfBirthColumnProperty();
+        setGenderColumnProperty();
+        setEmailColumnProperty();
+        setTaxiColumnProperty();
+        setLicenseNumberColumnProperty();
 
         // Impostiamo una larghezza base
         this.tableTaxiDriver.setPrefWidth(2048);
@@ -531,14 +536,12 @@ public class HandlerController {
         this.tableParking.setEditable(false);
 
         // Impostiamo le proprietà delle colonne
-        new Thread(()->{
-            setLatitudeColumnProperty();
-            setLongitudeColumnProperty();
-            setStreetNameColumnProperty();
-            setStreetNumberColumnProperty();
-            setStationNameColumnProperty();
-            setCapacityColumnProperty();
-        });
+        setLatitudeColumnProperty();
+        setLongitudeColumnProperty();
+        setStreetNameColumnProperty();
+        setStreetNumberColumnProperty();
+        setStationNameColumnProperty();
+        setCapacityColumnProperty();
 
         // Impostiamo una larghezza base
         this.tableParking.setPrefWidth(2048);
@@ -585,17 +588,17 @@ public class HandlerController {
         this.tableWaitingStation.setEditable(false);
 
         // Impostiamo le proprietà delle colonne
-        new Thread(()->{
-            setLatitudeWaitingStationColumnProperty();
-            setLongitudeWaitingStationColumnProperty();
-            setStreetNameWaitingStationColumnProperty();
-            setStreetNumberWaitingStationColumnProperty();
-            setStationNameWaitingStationColumnProperty();
-        });
-
+        setLatitudeWaitingStationColumnProperty();
+        setLongitudeWaitingStationColumnProperty();
+        setStreetNameWaitingStationColumnProperty();
+        setStreetNumberWaitingStationColumnProperty();
+        setStationNameWaitingStationColumnProperty();
 
         // Impostiamo una larghezza base
         this.tableWaitingStation.setPrefWidth(2048);
+
+        // Impostiamo altezza base
+        this.tableWaitingStation.setPrefHeight(3096);
     }
 
     //==================================================

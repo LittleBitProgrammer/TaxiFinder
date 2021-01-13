@@ -306,7 +306,7 @@ public class TaxiFinderData {
         // try with resources viene sfruttato per chiamare automaticamente il metodo close
         // sfruttiamo uno stream per deserializzare risorse
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(customerFileName))){
-            this.customers.addAll((ArrayList<Customer>) ois.readObject());
+            this.customers.setAll((ArrayList<Customer>) ois.readObject());
         } catch (EOFException e){
             System.out.println("Customers non presenti");
         }
@@ -321,7 +321,7 @@ public class TaxiFinderData {
         // try with resources viene sfruttato per chiamare automaticamente il metodo close
         // sfruttiamo uno stream per deserializzare risorse
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(taxiDriverFileName))){
-            this.taxiDrivers.addAll((ArrayList<TaxiDriver>) ois.readObject());
+            this.taxiDrivers.setAll((ArrayList<TaxiDriver>) ois.readObject());
         } catch (EOFException e){
             System.out.println("Taxi Drivers Non presenti");
         }
