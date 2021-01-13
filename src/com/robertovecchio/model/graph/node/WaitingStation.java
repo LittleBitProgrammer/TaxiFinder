@@ -15,6 +15,7 @@ public class WaitingStation extends Node{
     //==================================================
     private String streetNumber; // numero civico
     private String stationName;  // nome della stazione di attesa
+    private String streetName;   // nome della strada
 
     //==================================================
     //                   Costruttori
@@ -56,6 +57,10 @@ public class WaitingStation extends Node{
         this.stationName = stationName;
     }
 
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
+    }
+
     //==================================================
     //                      Getter
     //==================================================
@@ -74,5 +79,9 @@ public class WaitingStation extends Node{
      * */
     public String getStationName(){
         return this.stationName;
+    }
+
+    public String getStreetName() {
+        return streetName;
     }
 }

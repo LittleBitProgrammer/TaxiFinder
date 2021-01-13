@@ -4,10 +4,8 @@ import com.robertovecchio.controller.dialog.AddTaxiDriverController;
 import com.robertovecchio.controller.dialog.RemoveTaxiDriverController;
 import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.graph.node.Parking;
-import com.robertovecchio.model.graph.node.Street;
 import com.robertovecchio.model.graph.node.WaitingStation;
 import com.robertovecchio.model.user.TaxiDriver;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,8 +41,8 @@ public class HandlerController {
 
     // TableView
     private TableView<TaxiDriver> tableTaxiDriver;
-    private TableView<Street<Parking>> tableParking;
-    private TableView<Street<WaitingStation>> tableWaitingStation;
+    private TableView<Parking> tableParking;
+    private TableView<WaitingStation> tableWaitingStation;
 
     // Columns - tableTaxiDriver
     private TableColumn<TaxiDriver, String> fiscalCodeColumn;
@@ -57,19 +55,19 @@ public class HandlerController {
     private TableColumn<TaxiDriver, String> licenseNumberColumn;
 
     // Columns - tableParking
-    private TableColumn<Street<Parking>, String> latitudeColumn;
-    private TableColumn<Street<Parking>, String> longitudeColumn;
-    private TableColumn<Street<Parking>, String> streetNameColumn;
-    private TableColumn<Street<Parking>, String> streetNumberColumn;
-    private TableColumn<Street<Parking>, String> stationNameColumn;
-    private TableColumn<Street<Parking>, String> capacityColumn;
+    private TableColumn<Parking, String> latitudeColumn;
+    private TableColumn<Parking, String> longitudeColumn;
+    private TableColumn<Parking, String> streetNameColumn;
+    private TableColumn<Parking, String> streetNumberColumn;
+    private TableColumn<Parking, String> stationNameColumn;
+    private TableColumn<Parking, String> capacityColumn;
 
     // Columns - tableWaitingStation
-    private TableColumn<Street<WaitingStation>, String>  latitudeWaitingStationColumn;
-    private TableColumn<Street<WaitingStation>, String> longitudeWaitingStationColumn;
-    private TableColumn<Street<WaitingStation>, String> streetNameWaitingStationColumn;
-    private TableColumn<Street<WaitingStation>, String> streetNumberWaitingStationColumn;
-    private TableColumn<Street<WaitingStation>, String> stationNameWaitingStationColumn;
+    private TableColumn<WaitingStation, String>  latitudeWaitingStationColumn;
+    private TableColumn<WaitingStation, String> longitudeWaitingStationColumn;
+    private TableColumn<WaitingStation, String> streetNameWaitingStationColumn;
+    private TableColumn<WaitingStation, String> streetNumberWaitingStationColumn;
+    private TableColumn<WaitingStation, String> stationNameWaitingStationColumn;
 
     // Observable List
     ObservableList<TaxiDriver> drivers;
@@ -751,7 +749,7 @@ public class HandlerController {
 
     private void setLatitudeColumnProperty(){
         this.latitudeColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
-                String.valueOf(streetStringCellDataFeatures.getValue().getWaitingStation().getCoordinates().getLatitude())));
+                String.valueOf(streetStringCellDataFeatures.getValue().getCoordinates().getLatitude())));
 
         // Personalizziamo la cella e quello che vogliamo vedere
         this.latitudeColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
@@ -769,7 +767,7 @@ public class HandlerController {
 
     private void setLongitudeColumnProperty(){
         this.longitudeColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
-                String.valueOf(streetStringCellDataFeatures.getValue().getWaitingStation().getCoordinates().getLongitude())));
+                String.valueOf(streetStringCellDataFeatures.getValue().getCoordinates().getLongitude())));
 
         // Personalizziamo la cella e quello che vogliamo vedere
         this.longitudeColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
@@ -805,7 +803,7 @@ public class HandlerController {
 
     private void setStreetNumberColumnProperty(){
         this.streetNumberColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
-                streetStringCellDataFeatures.getValue().getWaitingStation().getStreetNumber()));
+                streetStringCellDataFeatures.getValue().getStreetNumber()));
 
         // Personalizziamo la cella e quello che vogliamo vedere
         this.streetNumberColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
@@ -823,7 +821,7 @@ public class HandlerController {
 
     private void setStationNameColumnProperty(){
         this.stationNameColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
-                streetStringCellDataFeatures.getValue().getWaitingStation().getStationName()));
+                streetStringCellDataFeatures.getValue().getStationName()));
 
         // Personalizziamo la cella e quello che vogliamo vedere
         this.streetNumberColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
@@ -841,7 +839,7 @@ public class HandlerController {
 
     private void setCapacityColumnProperty(){
         this.capacityColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
-                String.valueOf(streetStringCellDataFeatures.getValue().getWaitingStation().getParkingCapacity())
+                String.valueOf(streetStringCellDataFeatures.getValue().getParkingCapacity())
         ));
 
         // Personalizziamo la cella e quello che vogliamo vedere
@@ -860,7 +858,7 @@ public class HandlerController {
 
     private void setLatitudeWaitingStationColumnProperty(){
         this.latitudeWaitingStationColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
-                String.valueOf(streetStringCellDataFeatures.getValue().getWaitingStation().getCoordinates().getLatitude())));
+                String.valueOf(streetStringCellDataFeatures.getValue().getCoordinates().getLatitude())));
 
         // Personalizziamo la cella e quello che vogliamo vedere
         this.latitudeWaitingStationColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
@@ -878,7 +876,7 @@ public class HandlerController {
 
     private void setLongitudeWaitingStationColumnProperty(){
         this.longitudeWaitingStationColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
-                String.valueOf(streetStringCellDataFeatures.getValue().getWaitingStation().getCoordinates().getLongitude())));
+                String.valueOf(streetStringCellDataFeatures.getValue().getCoordinates().getLongitude())));
 
         // Personalizziamo la cella e quello che vogliamo vedere
         this.longitudeWaitingStationColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
@@ -914,7 +912,7 @@ public class HandlerController {
 
     private void setStreetNumberWaitingStationColumnProperty(){
         this.streetNumberWaitingStationColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
-                streetStringCellDataFeatures.getValue().getWaitingStation().getStationName()));
+                streetStringCellDataFeatures.getValue().getStationName()));
 
         // Personalizziamo la cella e quello che vogliamo vedere
         this.streetNumberWaitingStationColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
@@ -932,7 +930,7 @@ public class HandlerController {
 
     private void setStationNameWaitingStationColumnProperty(){
         this.stationNameWaitingStationColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
-                streetStringCellDataFeatures.getValue().getWaitingStation().getStreetNumber()));
+                streetStringCellDataFeatures.getValue().getStreetNumber()));
 
         // Personalizziamo la cella e quello che vogliamo vedere
         this.stationNameWaitingStationColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
