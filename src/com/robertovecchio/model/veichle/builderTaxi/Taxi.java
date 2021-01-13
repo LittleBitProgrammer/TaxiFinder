@@ -3,6 +3,7 @@ package com.robertovecchio.model.veichle.builderTaxi;
 //Import
 import com.robertovecchio.model.veichle.BrandType;
 import com.robertovecchio.model.veichle.FuelType;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -11,7 +12,10 @@ import java.util.Objects;
  * @version 1.0
  * @since 7/01/2021
  * */
-public class Taxi {
+public class Taxi implements Serializable {
+
+    private final static long serialVersionUID = 5L;
+
     //==================================================
     //               Variabili d'istanza
     //==================================================

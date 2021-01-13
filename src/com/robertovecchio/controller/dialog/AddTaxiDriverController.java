@@ -170,7 +170,7 @@ public class AddTaxiDriverController {
     /**
      * Questo metodo processa i dati presenti nel dialog di aggiunta di un tassista
      */
-    public void processAddTaxiDriver(){
+    public TaxiDriver processAddTaxiDriver(){
         String fiscalCode = fiscalCodeField.getText().trim().toUpperCase();
         String name = nameField.getText().trim().substring(0,1).toUpperCase() + nameField.getText().trim().substring(1);
         String surname = surnameField.getText().trim().substring(0,1).toUpperCase() + surnameField.getText().trim().substring(1);
@@ -181,15 +181,19 @@ public class AddTaxiDriverController {
         String password = passwordField.getText().trim();
         String licenseNumber = licenseField.getText().trim().toUpperCase();
 
-        taxiFinderData.addTaxiDriver(new TaxiDriver(fiscalCode, name, surname,
-                                                    dateOfBirth, genderType,
-                                                    email, username,
-                                                    password, licenseNumber, newTaxi));
+        TaxiDriver newTaxiDriver = new TaxiDriver(fiscalCode, name, surname,
+                                                  dateOfBirth, genderType,
+                                                  email, username,
+                                                  password, licenseNumber, newTaxi);
+        taxiFinderData.addTaxiDriver(newTaxiDriver);
+
         try {
             taxiFinderData.storeTaxiDrivers();
         }catch (IOException e){
             e.printStackTrace();
         }
+
+        return newTaxiDriver;
     }
 
     /**
@@ -197,6 +201,23 @@ public class AddTaxiDriverController {
      * @return ritorna true se viene inserito una persona con età > 18*/
     public boolean validateDate(){
         return !(UtilityController.getYears(this.dateOfBirthField.getValue()) < 18);
+    }
+
+    public boolean existYet(){
+        TaxiDriver driver = new TaxiDriver(usernameField.getText().trim(), passwordField.getText().trim(), this.newTaxi);
+        return taxiFinderData.getTaxiDrivers().contains(driver) || existTaxi(driver);
+    }
+
+    public boolean existTaxi(TaxiDriver taxiDriver){
+        boolean isContained = false;
+        for (TaxiDriver driver : taxiFinderData.getTaxiDrivers()){
+            if (driver.getTaxi().equals(taxiDriver.getTaxi())) {
+                isContained = true;
+                break;
+            }
+        }
+
+        return isContained;
     }
 
     /**

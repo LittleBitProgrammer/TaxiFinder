@@ -3,7 +3,7 @@ package com.robertovecchio.model.db;
 import com.robertovecchio.model.db.error.HandlerNotFoundException;
 import com.robertovecchio.model.user.*;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableSet;
+import javafx.collections.ObservableList;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -40,19 +40,19 @@ public class TaxiFinderData {
      * Formatter per la gestione delle date
      * @see DateTimeFormatter
      * */
-    private final DateTimeFormatter dateTimeFormatter;
+    private DateTimeFormatter dateTimeFormatter;
     /**
      * lista osservabile di clienti
-     * @see ObservableSet
+     * @see ObservableList
      * @see Customer
      * */
-    private final ObservableSet<Customer> customers;
+    private final ObservableList<Customer> customers;
     /**
      * lista osservabile di tassisti
-     * @see ObservableSet
+     * @see ObservableList
      * @see Customer
      */
-    private final ObservableSet<TaxiDriver> taxiDrivers;
+    private final ObservableList<TaxiDriver> taxiDrivers;
     /**
      * lista osservabile di gestori
      * @see List
@@ -70,8 +70,8 @@ public class TaxiFinderData {
      * */
     private TaxiFinderData(){
         // Inizializzo le collections
-        this.customers = FXCollections.observableSet();
-        this.taxiDrivers = FXCollections.observableSet();
+        this.customers = FXCollections.observableArrayList();
+        this.taxiDrivers = FXCollections.observableArrayList();
         this.handlers = new HashSet<>();
         this.genders = new HashMap<>();
 
@@ -104,22 +104,31 @@ public class TaxiFinderData {
     //==================================================
 
     /**
+     * Metodo setter del dateTimeFormatter
+     * @param dateTimeFormatter formattazione data e ora
+     * @see DateTimeFormatter
+     */
+    public void setDateTimeFormatter(DateTimeFormatter dateTimeFormatter){
+        this.dateTimeFormatter = dateTimeFormatter;
+    }
+
+    /**
      * Metodo setter dei customers
      * @param customers clienti da impostare
-     * @see ObservableSet
+     * @see ObservableList
      * @see Customer
      * */
-    public void setCustomers(ObservableSet<Customer> customers){
+    public void setCustomers(ObservableList<Customer> customers){
         this.customers.addAll(customers);
     }
 
     /**
      * Metodo setter dei tassisti
      * @param taxiDrivers Tassisti da impostare
-     * @see ObservableSet
+     * @see ObservableList
      * @see TaxiDriver
      * */
-    public void setTaxiDrivers(ObservableSet<TaxiDriver> taxiDrivers){
+    public void setTaxiDrivers(ObservableList<TaxiDriver> taxiDrivers){
         this.taxiDrivers.addAll(taxiDrivers);
     }
 
@@ -147,22 +156,30 @@ public class TaxiFinderData {
     //==================================================
 
     /**
+     * Metodo Getter del dateTimeFormatte
+     * @return Un dateTimeFormatter per data e ora
+     */
+    public DateTimeFormatter getDateTimeFormatter(){
+        return this.dateTimeFormatter;
+    }
+
+    /**
      * Metodo Getter dei Customers
      * @return la lista di customers
-     * @see ObservableSet
+     * @see ObservableList
      * @see Customer
      */
-    public ObservableSet<Customer> getCustomers(){
+    public ObservableList<Customer> getCustomers(){
         return this.customers;
     }
 
     /**
      * Metodo Getter dei tassisti
      * @return la lista dei tassisti
-     * @see ObservableSet
+     * @see ObservableList
      * @see TaxiDriver
      */
-    public ObservableSet<TaxiDriver> getTaxiDrivers(){
+    public ObservableList<TaxiDriver> getTaxiDrivers(){
         return this.taxiDrivers;
     }
 
@@ -190,7 +207,7 @@ public class TaxiFinderData {
     //==================================================
 
     /**
-     * Metodo che aggiunge un cliente all'observableSet di clienti
+     * Metodo che aggiunge un cliente all'ObservableList di clienti
      * @param customer Cliente da aggiungere
      * @see Customer
      */
@@ -199,7 +216,7 @@ public class TaxiFinderData {
     }
 
     /**
-     * Metodo che aggiunge un tassista all'ObservableSet di tassisti
+     * Metodo che aggiunge un tassista all'ObservableList di tassisti
      * @param taxiDriver Tassista da aggiungere
      * @see TaxiDriver
      */
@@ -290,6 +307,8 @@ public class TaxiFinderData {
         // sfruttiamo uno stream per deserializzare risorse
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(customerFileName))){
             this.customers.addAll((ArrayList<Customer>) ois.readObject());
+        } catch (EOFException e){
+            System.out.println("Customers non presenti");
         }
     }
 
@@ -301,10 +320,10 @@ public class TaxiFinderData {
     public void loadTaxiDrivers() throws ClassNotFoundException, IOException{
         // try with resources viene sfruttato per chiamare automaticamente il metodo close
         // sfruttiamo uno stream per deserializzare risorse
-        if (!this.taxiDrivers.isEmpty()){
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(taxiDriverFileName))){
-                this.taxiDrivers.addAll((ArrayList<TaxiDriver>) ois.readObject());
-            }
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(taxiDriverFileName))){
+            this.taxiDrivers.addAll((ArrayList<TaxiDriver>) ois.readObject());
+        } catch (EOFException e){
+            System.out.println("Taxi Drivers Non presenti");
         }
     }
 

@@ -1,9 +1,14 @@
 package com.robertovecchio.controller;
 
 import com.robertovecchio.controller.dialog.AddTaxiDriverController;
+import com.robertovecchio.controller.dialog.RemoveTaxiDriverController;
 import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.graph.node.Street;
 import com.robertovecchio.model.user.TaxiDriver;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,6 +67,9 @@ public class HandlerController {
     private TableColumn<Street, String> streetNumberWaitingStationColumn;
     private TableColumn<Street, String> stationNameWaitingStationColumn;
 
+    // Observable List
+    ObservableList<TaxiDriver> drivers;
+
 
     //==================================================
     //               Variabili FXML
@@ -93,6 +101,9 @@ public class HandlerController {
     public void initialize(){
         // Aggiungiamo il menuBar al vBox
         vBoxContainer.getChildren().addAll(compositeHandlerMEnuBar(), compositeToolBar());
+
+        // Inizializziamo la collections
+        this.drivers = taxiFinderData.getTaxiDrivers();
 
         // Inizializzo le TableView
         compositeTaxiDriverTableView();
@@ -193,7 +204,7 @@ public class HandlerController {
                 e.printStackTrace();
             }
 
-            // Aggiungiamo il bottone OK al dialogPane
+            // Aggiungiamo il bottone OK e CANCEL al dialogPane
             dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
 
             AddTaxiDriverController addTaxiDriverController = loader.getController();
@@ -234,6 +245,14 @@ public class HandlerController {
                             Optional<ButtonType> result = alert.showAndWait();
 
                             event.consume();
+                        }else if (addTaxiDriverController.existYet()){
+                            Alert alert = new Alert(Alert.AlertType.WARNING, "Già esistente", ButtonType.OK);
+                            alert.setHeaderText("Utente o un auto esistente");
+                            alert.setContentText("Hai inserito un utente o auto già inserito");
+
+                            Optional<ButtonType> result = alert.showAndWait();
+
+                            event.consume();
                         }
                     });
 
@@ -242,23 +261,49 @@ public class HandlerController {
 
             // Gestiamo il caso in cui l'utente abbia premuto OK
             if (result.isPresent() && result.get() == ButtonType.APPLY){
-                //TODO//: Selezione del modello aggiunto
-                addTaxiDriverController.processAddTaxiDriver();
+                TaxiDriver newTaxiDriver = addTaxiDriverController.processAddTaxiDriver();
+                this.tableTaxiDriver.getSelectionModel().select(newTaxiDriver);
             }
         });
 
-        // Aggiungiamo un'azione quando viene cliccato licenzia tassista
+        //==================================================
+        //                 Congeda Tassista
+        //==================================================
+
+        // Aggiungiamo un'azione quando viene cliccato congeda tassista
         firesTaxiDriver.setOnAction(actionEvent -> {
+            // creiamo un nuovo dialog da visualizzare
+            Dialog<ButtonType> dialog = new Dialog<>();
+
+            // inizializziamo il proprietario
+            dialog.initOwner(this.vBoxContainer.getScene().getWindow());
+
+            // Impostiamo il titolo del dialog
+            dialog.setTitle("Congeda un tassista");
+
+            // Carichiamo il file di iterfaccia per il dialog
+            FXMLLoader loader = new FXMLLoader();
+
             try{
-                UtilityController.showDialog(this.vBoxContainer.getScene().getWindow(),
-                        "Congeda un tassista",
-                        removeTaxiDriverControllerFile,
-                        "errore durante il caricamento del dialog",
-                        ()->{
-                            System.out.println("Callable chiamata su OK");
-                        },ButtonType.OK, ButtonType.CANCEL);
-            }catch (Exception e){
+                Parent root = loader.load(new FileInputStream(removeTaxiDriverControllerFile));
+                dialog.getDialogPane().setContent(root);
+            }catch (IOException e){
+                System.out.println("Errore di caricamento dialog");
                 e.printStackTrace();
+            }
+
+            // Aggiungiamo il bottone OK e CANCEL al dialogPane
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
+
+            // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+            Optional<ButtonType> result = dialog.showAndWait();
+
+            RemoveTaxiDriverController removeTaxiDriverController = loader.getController();
+
+            // Gestiamo il caso in cui l'utente abbia premuto OK
+            if (result.isPresent() && result.get() == ButtonType.APPLY){
+                removeTaxiDriverController.processFireTaxiDriver();
+                this.tableTaxiDriver.getSelectionModel().selectFirst();
             }
         });
 
@@ -430,7 +475,12 @@ public class HandlerController {
         setTaxiColumnProperty();
         setLicenseNumberColumnProperty();
 
+        // Impostiamo una larghezza base
         this.tableTaxiDriver.setPrefWidth(2048);
+
+        // Impostiamo gli item da visualizzare
+        System.out.println(this.drivers);
+        this.tableTaxiDriver.setItems(this.drivers);
     }
 
     //==================================================
@@ -484,6 +534,7 @@ public class HandlerController {
         setStationNameColumnProperty();
         setCapacityColumnProperty();
 
+        // Impostiamo una larghezza base
         this.tableParking.setPrefWidth(2048);
     }
 
@@ -534,6 +585,7 @@ public class HandlerController {
         setStreetNumberWaitingStationColumnProperty();
         setStationNameWaitingStationColumnProperty();
 
+        // Impostiamo una larghezza base
         this.tableWaitingStation.setPrefWidth(2048);
     }
 
@@ -542,35 +594,147 @@ public class HandlerController {
     //==================================================
 
     private void setFiscalCodeColumnProperty(){
-        //stub
+        this.fiscalCodeColumn.setCellValueFactory(taxiDriverStringCellDataFeatures -> new SimpleStringProperty(
+                taxiDriverStringCellDataFeatures.getValue().getFiscalCode()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.fiscalCodeColumn.setCellFactory(taxiStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String fiscalCode, boolean empty){
+                super.updateItem(fiscalCode, empty);
+                if(empty || fiscalCode == null){
+                    setText(null);
+                } else {
+                    setText(fiscalCode);
+                }
+            }
+        });
     }
 
     private void setFirstNameColumnProperty(){
-        //stub
+        this.firstNameColumn.setCellValueFactory(taxiDriverStringCellDataFeatures -> new SimpleStringProperty(
+                taxiDriverStringCellDataFeatures.getValue().getFirstName()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.firstNameColumn.setCellFactory(taxiStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String firstName, boolean empty){
+                super.updateItem(firstName, empty);
+                if(empty || firstName == null){
+                    setText(null);
+                } else {
+                    setText(firstName);
+                }
+            }
+        });
     }
 
     private void setLastNameColumnProperty(){
-        //stub
+        this.lastNameColumn.setCellValueFactory(taxiDriverStringCellDataFeatures -> new SimpleStringProperty(
+                taxiDriverStringCellDataFeatures.getValue().getLastName()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.lastNameColumn.setCellFactory(taxiStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String lastName, boolean empty){
+                super.updateItem(lastName, empty);
+                if(empty || lastName == null){
+                    setText(null);
+                } else {
+                    setText(lastName);
+                }
+            }
+        });
     }
 
     private void setDateOfBirthColumnProperty(){
-        //stub
+        this.dateOfBirthColumn.setCellValueFactory(taxiDriverStringCellDataFeatures -> new SimpleStringProperty(
+                taxiDriverStringCellDataFeatures.getValue().getDateOfBirth().format(taxiFinderData.getDateTimeFormatter())));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.dateOfBirthColumn.setCellFactory(taxiStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String dateOfBirth, boolean empty){
+                super.updateItem(dateOfBirth, empty);
+                if(empty || dateOfBirth == null){
+                    setText(null);
+                } else {
+                    setText(dateOfBirth);
+                }
+            }
+        });
     }
 
     private void setGenderColumnProperty(){
-        //stub
+        this.genderColumn.setCellValueFactory(taxiDriverStringCellDataFeatures -> new SimpleStringProperty(
+                taxiDriverStringCellDataFeatures.getValue().getGenderType().getTranslation()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.genderColumn.setCellFactory(taxiStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String genderType, boolean empty){
+                super.updateItem(genderType, empty);
+                if(empty || genderType == null){
+                    setText(null);
+                } else {
+                    setText(genderType);
+                }
+            }
+        });
     }
 
     private void setEmailColumnProperty(){
-        //stub
+        this.emailColumn.setCellValueFactory(taxiDriverStringCellDataFeatures -> new SimpleStringProperty(
+                taxiDriverStringCellDataFeatures.getValue().getEmail()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.emailColumn.setCellFactory(taxiStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String email, boolean empty){
+                super.updateItem(email, empty);
+                if(empty || email == null){
+                    setText(null);
+                } else {
+                    setText(email);
+                }
+            }
+        });
     }
 
     private void setTaxiColumnProperty(){
-        //stub
+        this.taxiColumn.setCellValueFactory(taxiDriverStringCellDataFeatures -> new SimpleStringProperty(
+                taxiDriverStringCellDataFeatures.getValue().getTaxi().getLicensePlate()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.taxiColumn.setCellFactory(taxiStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String licensePlate, boolean empty){
+                super.updateItem(licensePlate, empty);
+                if(empty || licensePlate == null){
+                    setText(null);
+                } else {
+                    setText(licensePlate);
+                }
+            }
+        });
     }
 
     private void setLicenseNumberColumnProperty(){
-        //stub
+        this.licenseNumberColumn.setCellValueFactory(taxiDriverStringCellDataFeatures -> new SimpleStringProperty(
+                taxiDriverStringCellDataFeatures.getValue().getLicenseNumber()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.licenseNumberColumn.setCellFactory(taxiStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String licenseNumber, boolean empty){
+                super.updateItem(licenseNumber, empty);
+                if(empty || licenseNumber == null){
+                    setText(null);
+                } else {
+                    setText(licenseNumber);
+                }
+            }
+        });
     }
 
     private void setLatitudeColumnProperty(){

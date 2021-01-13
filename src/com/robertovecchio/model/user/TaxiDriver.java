@@ -54,6 +54,15 @@ public class TaxiDriver extends UserAccount{
         this.taxi = taxi;
     }
 
+    public TaxiDriver(String username, String password, Taxi taxi){
+
+        // Richiamo il costruttore della classe astratta UserAccount
+        super(username, password);
+
+        // inizializzazione delle variabili d'istanza
+        this.taxi = taxi;
+    }
+
     //==================================================
     //                      Setter
     //==================================================

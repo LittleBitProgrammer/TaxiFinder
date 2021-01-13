@@ -2,7 +2,6 @@
 
 
 <?import javafx.scene.control.*?>
-
 <DialogPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.robertovecchio.controller.dialog.RemoveParkingController"
@@ -10,6 +9,6 @@
             prefHeight="400.0"
             prefWidth="600.0">
     <content>
-        <Label text="ciao"/>
+
     </content>
 </DialogPane>
