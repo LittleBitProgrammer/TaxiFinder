@@ -6,7 +6,7 @@
 <title>Parking</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="dc.created" content="2021-01-13">
-<meta name="description" content="declaration: module: TaxiFinder, package: com.robertovecchio.model.graph.node, class: Parking">
+<meta name="description" content="declaration: module: TaxiFinder, package: com.robertovecchio.model.weightedGraph.node, class: Parking">
 <meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../../script-dir/jquery-ui.min.css" title="Style">
@@ -75,20 +75,20 @@ loadScripts(document, 'script');</script>
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="sub-title"><span class="module-label-in-type">Module</span>&nbsp;<a href="../../../../../module-summary.html">TaxiFinder</a></div>
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">com.robertovecchio.model.graph.node</a></div>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">com.robertovecchio.model.weightedGraph.node</a></div>
 <h1 title="Class Parking" class="title">Class Parking</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree">java.lang.Object
-<div class="inheritance"><a href="Node.html" title="class in com.robertovecchio.model.graph.node">com.robertovecchio.model.graph.node.Node</a>
-<div class="inheritance"><a href="WaitingStation.html" title="class in com.robertovecchio.model.graph.node">com.robertovecchio.model.graph.node.WaitingStation</a>
-<div class="inheritance">com.robertovecchio.model.graph.node.Parking</div>
+<div class="inheritance"><a href="Node.html" title="class in com.robertovecchio.model.weightedGraph.node">com.robertovecchio.model.weightedGraph.node.Node</a>
+<div class="inheritance"><a href="WaitingStation.html" title="class in com.robertovecchio.model.weightedGraph.node">com.robertovecchio.model.weightedGraph.node.WaitingStation</a>
+<div class="inheritance">com.robertovecchio.model.weightedGraph.node.Parking</div>
 </div>
 </div>
 </div>
 <section class="description">
 <hr>
 <pre>public class <span class="type-name-label">Parking</span>
-extends <a href="WaitingStation.html" title="class in com.robertovecchio.model.graph.node">WaitingStation</a></pre>
+extends <a href="WaitingStation.html" title="class in com.robertovecchio.model.weightedGraph.node">WaitingStation</a></pre>
 <div class="block">Classe che astrae il concetto di parcheggio, che può essere a sua volta una stazione di attesa. Questa classe
  attraverso l'ereditarietà è a sua volta un nodo, quindi utilizzabile dall'algoritmo di Dijkstra</div>
 <dl class="notes">
@@ -99,8 +99,8 @@ extends <a href="WaitingStation.html" title="class in com.robertovecchio.model.g
 <dt>Author:</dt>
 <dd>robertovecchio</dd>
 <dt>See Also:</dt>
-<dd><a href="WaitingStation.html" title="class in com.robertovecchio.model.graph.node"><code>WaitingStation</code></a>, 
-<a href="Node.html" title="class in com.robertovecchio.model.graph.node"><code>Node</code></a></dd>
+<dd><a href="WaitingStation.html" title="class in com.robertovecchio.model.weightedGraph.node"><code>WaitingStation</code></a>,
+<a href="Node.html" title="class in com.robertovecchio.model.weightedGraph.node"><code>Node</code></a></dd>
 </dl>
 </section>
 <section class="summary">
@@ -150,7 +150,7 @@ extends <a href="WaitingStation.html" title="class in com.robertovecchio.model.g
 </thead>
 <tbody>
 <tr class="alt-color">
-<th class="col-constructor-name" scope="row"><code><span class="member-name-link"><a href="#%3Cinit%3E(com.robertovecchio.model.graph.node.Coordinates,java.lang.String,java.lang.String,int)">Parking</a></span>&#8203;(<a href="Coordinates.html" title="class in com.robertovecchio.model.graph.node">Coordinates</a>&nbsp;coordinates,
+<th class="col-constructor-name" scope="row"><code><span class="member-name-link"><a href="#%3Cinit%3E(com.robertovecchio.model.weightedGraph.node.Coordinates,java.lang.String,java.lang.String,int)">Parking</a></span>&#8203;(<a href="Coordinates.html" title="class in com.robertovecchio.model.weightedGraph.node">Coordinates</a>&nbsp;coordinates,
 java.lang.String&nbsp;streetNumber,
 java.lang.String&nbsp;stationName,
 int&nbsp;parkingCapacity)</code></th>
@@ -159,7 +159,7 @@ int&nbsp;parkingCapacity)</code></th>
 </td>
 </tr>
 <tr class="row-color">
-<th class="col-constructor-name" scope="row"><code><span class="member-name-link"><a href="#%3Cinit%3E(com.robertovecchio.model.graph.node.Coordinates,java.lang.String,java.lang.String,int,java.util.Queue)">Parking</a></span>&#8203;(<a href="Coordinates.html" title="class in com.robertovecchio.model.graph.node">Coordinates</a>&nbsp;coordinates,
+<th class="col-constructor-name" scope="row"><code><span class="member-name-link"><a href="#%3Cinit%3E(com.robertovecchio.model.weightedGraph.node.Coordinates,java.lang.String,java.lang.String,int,java.util.Queue)">Parking</a></span>&#8203;(<a href="Coordinates.html" title="class in com.robertovecchio.model.weightedGraph.node">Coordinates</a>&nbsp;coordinates,
 java.lang.String&nbsp;streetNumber,
 java.lang.String&nbsp;stationName,
 int&nbsp;parkingCapacity,
@@ -250,11 +250,11 @@ java.util.Queue&lt;<a href="../../veichle/builderTaxi/Taxi.html" title="class in
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods.inherited.from.class.com.robertovecchio.model.graph.node.WaitingStation">Methods inherited from class&nbsp;com.robertovecchio.model.graph.node.<a href="WaitingStation.html" title="class in com.robertovecchio.model.graph.node">WaitingStation</a></h3>
+<h3 id="methods.inherited.from.class.com.robertovecchio.model.weightedGraph.node.WaitingStation">Methods inherited from class&nbsp;com.robertovecchio.model.weightedGraph.node.<a href="WaitingStation.html" title="class in com.robertovecchio.model.weightedGraph.node">WaitingStation</a></h3>
 <code><a href="WaitingStation.html#getStationName()">getStationName</a>, <a href="WaitingStation.html#getStreetNumber()">getStreetNumber</a>, <a href="WaitingStation.html#setStationName(java.lang.String)">setStationName</a>, <a href="WaitingStation.html#setStreetNumber(java.lang.String)">setStreetNumber</a></code></div>
 <div class="inherited-list">
-<h3 id="methods.inherited.from.class.com.robertovecchio.model.graph.node.Node">Methods inherited from class&nbsp;com.robertovecchio.model.graph.node.<a href="Node.html" title="class in com.robertovecchio.model.graph.node">Node</a></h3>
-<code><a href="Node.html#equals(java.lang.Object)">equals</a>, <a href="Node.html#getCoordinates()">getCoordinates</a>, <a href="Node.html#hashCode()">hashCode</a>, <a href="Node.html#setCoordinates(com.robertovecchio.model.graph.node.Coordinates)">setCoordinates</a>, <a href="Node.html#toString()">toString</a></code></div>
+<h3 id="methods.inherited.from.class.com.robertovecchio.model.weightedGraph.node.Node">Methods inherited from class&nbsp;com.robertovecchio.model.weightedGraph.node.<a href="Node.html" title="class in com.robertovecchio.model.weightedGraph.node">Node</a></h3>
+<code><a href="Node.html#equals(java.lang.Object)">equals</a>, <a href="Node.html#getCoordinates()">getCoordinates</a>, <a href="Node.html#hashCode()">hashCode</a>, <a href="Node.html#setCoordinates(com.robertovecchio.model.weightedGraph.node.Coordinates)">setCoordinates</a>, <a href="Node.html#toString()">toString</a></code></div>
 <div class="inherited-list">
 <h3 id="methods.inherited.from.class.java.lang.Object">Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, finalize, getClass, notify, notifyAll, wait, wait, wait</code></div>
@@ -295,9 +295,9 @@ java.util.Queue&lt;<a href="../../veichle/builderTaxi/Taxi.html" title="class in
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(com.robertovecchio.model.graph.node.Coordinates,java.lang.String,java.lang.String,int,java.util.Queue)">
+<section class="detail" id="&lt;init&gt;(com.robertovecchio.model.weightedGraph.node.Coordinates,java.lang.String,java.lang.String,int,java.util.Queue)">
 <h3>Parking</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="member-name">Parking</span>&#8203;(<span class="parameters"><a href="Coordinates.html" title="class in com.robertovecchio.model.graph.node">Coordinates</a>&nbsp;coordinates,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="member-name">Parking</span>&#8203;(<span class="parameters"><a href="Coordinates.html" title="class in com.robertovecchio.model.weightedGraph.node">Coordinates</a>&nbsp;coordinates,
 java.lang.String&nbsp;streetNumber,
 java.lang.String&nbsp;stationName,
 int&nbsp;parkingCapacity,
@@ -311,16 +311,16 @@ java.util.Queue&lt;<a href="../../veichle/builderTaxi/Taxi.html" title="class in
 <dd><code>parkingCapacity</code> - Capacità del parcheggio in termini di posti auto</dd>
 <dd><code>taxis</code> - lista taxi presenti</dd>
 <dt>See Also:</dt>
-<dd><a href="Coordinates.html" title="class in com.robertovecchio.model.graph.node"><code>Coordinates</code></a>, 
+<dd><a href="Coordinates.html" title="class in com.robertovecchio.model.weightedGraph.node"><code>Coordinates</code></a>,
 <code>Queue</code>, 
 <a href="../../veichle/builderTaxi/Taxi.html" title="class in com.robertovecchio.model.veichle.builderTaxi"><code>Taxi</code></a></dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(com.robertovecchio.model.graph.node.Coordinates,java.lang.String,java.lang.String,int)">
+<section class="detail" id="&lt;init&gt;(com.robertovecchio.model.weightedGraph.node.Coordinates,java.lang.String,java.lang.String,int)">
 <h3>Parking</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="member-name">Parking</span>&#8203;(<span class="parameters"><a href="Coordinates.html" title="class in com.robertovecchio.model.graph.node">Coordinates</a>&nbsp;coordinates,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="member-name">Parking</span>&#8203;(<span class="parameters"><a href="Coordinates.html" title="class in com.robertovecchio.model.weightedGraph.node">Coordinates</a>&nbsp;coordinates,
 java.lang.String&nbsp;streetNumber,
 java.lang.String&nbsp;stationName,
 int&nbsp;parkingCapacity)</span></div>
@@ -332,7 +332,7 @@ int&nbsp;parkingCapacity)</span></div>
 <dd><code>stationName</code> - Nome del parcheggio</dd>
 <dd><code>parkingCapacity</code> - Capacità del parcheggio in termini di posti auto</dd>
 <dt>See Also:</dt>
-<dd><a href="Coordinates.html" title="class in com.robertovecchio.model.graph.node"><code>Coordinates</code></a></dd>
+<dd><a href="Coordinates.html" title="class in com.robertovecchio.model.weightedGraph.node"><code>Coordinates</code></a></dd>
 </dl>
 </section>
 </li>
