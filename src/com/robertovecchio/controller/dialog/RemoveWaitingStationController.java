@@ -6,7 +6,6 @@ import com.robertovecchio.model.graph.node.WaitingStation;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
-
 import java.io.IOException;
 import java.util.Optional;
 
@@ -120,7 +119,9 @@ public class RemoveWaitingStationController {
         taxiFinderData.getGraph().removeNode(waitingStation);
 
         try {
-            taxiFinderData.storeParkings();
+            taxiFinderData.storeWaitingStations();
+            taxiFinderData.storeGraph();
+            taxiFinderData.getGraph().printGraph();
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Operazione impossibile", ButtonType.OK);
             alert.setHeaderText("Il parcheggio non può essere eliminato");

@@ -40,7 +40,7 @@ public class WeightedGraph<T> implements Serializable {
     public void removeNode(T node){
         for (int i = 0; i < adjacencylist.size(); i++) {
             LinkedList<Edge<T>> linked = adjacencylist.get(i);
-            if (linked.get(i).getSource().equals(node)) {
+            if (!linked.isEmpty() && linked.get(i).getSource().equals(node)) {
                 this.adjacencylist.remove(i);
                 break;
             }

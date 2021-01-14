@@ -123,6 +123,7 @@ public class RemoveParkingController {
 
         try {
             taxiFinderData.storeParkings();
+            taxiFinderData.storeGraph();
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Operazione impossibile", ButtonType.OK);
             alert.setHeaderText("Il parcheggio non può essere eliminato");

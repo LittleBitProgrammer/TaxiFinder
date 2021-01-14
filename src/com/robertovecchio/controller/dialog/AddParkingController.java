@@ -110,7 +110,6 @@ public class AddParkingController {
 
         try {
             taxiFinderData.storeParkings();
-            taxiFinderData.getGraph().addNode();
         }catch (IOException e){
             // Mostro l'errore
             Alert alert = new Alert(Alert.AlertType.ERROR, "Memorizzazione impossibile", ButtonType.OK);

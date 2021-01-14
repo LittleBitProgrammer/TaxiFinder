@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.robertovecchio.controller.CompanyAreaController">
+    <top>
+        <ToolBar>
+            <HBox>
+                <Button text="Indietro" onAction="#handleBackButton" fx:id="backButton">
+                    <tooltip>
+                        <Tooltip text="Torna indietro"/>
+                    </tooltip>
+                    <graphic>
+                        <ImageView>
+                            <Image url="@/toolbarButtonGraphics/navigation/Back16.gif"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </HBox>
+        </ToolBar>
+    </top>
+    <center>
+        <VBox alignment="TOP_CENTER">
+            <HBox alignment="CENTER">
+                <Label text="Area Riservata"
+                       textAlignment="CENTER"
+                       fx:id="advice">
+                    <padding>
+                        <Insets top="50"/>
+                    </padding>
+                </Label>
+            </HBox>
+            <HBox alignment="CENTER">
+                <Label text="Scegli con quale utente effettuare l'accesso"
+                       textAlignment="CENTER"
+                       fx:id="header"/>
+            </HBox>
+
+            <GridPane  alignment="CENTER" vgap="100">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50"/>
+                    <ColumnConstraints percentWidth="50"/>
+                </columnConstraints>
+
+                <VBox alignment="CENTER_RIGHT"
+                      GridPane.rowIndex="1"
+                      GridPane.columnIndex="0">
+                    <GridPane alignment="CENTER" vgap="15" hgap="10">
+
+                        <ImageView fx:id="adminImage"
+                                   GridPane.rowIndex="0"
+                                   GridPane.columnIndex="0"
+                                   GridPane.columnSpan="2"
+                                   GridPane.halignment="CENTER"/>
+
+                        <Label text="Login Gestore"
+                               GridPane.rowIndex="1"
+                               GridPane.columnIndex="0"
+                               GridPane.columnSpan="2"
+                               GridPane.halignment="CENTER" textFill="#494949">
+                            <font>
+                                <Font name="Helvetica Bold" size="20"/>
+                            </font>
+                        </Label>
+
+                        <Label text="Username:"
+                               GridPane.rowIndex="2"
+                               GridPane.columnIndex="0"/>
+
+                        <TextField promptText="es. Roberto"
+                                   GridPane.rowIndex="2"
+                                   fx:id="handlerUsernameField"
+                                   GridPane.columnIndex="1"/>
+
+                        <Label text="Password:"
+                               GridPane.rowIndex="3"
+                               GridPane.columnIndex="0"/>
+
+                        <PasswordField promptText="es. 123"
+                                       GridPane.rowIndex="3"
+                                       GridPane.columnIndex="1"
+                                       fx:id="handlerPasswordField"
+                                       prefWidth="400"/>
+
+                        <Button text="Login"
+                                GridPane.rowIndex="4"
+                                GridPane.columnIndex="0"
+                                GridPane.columnSpan="2"
+                                GridPane.halignment="CENTER"
+                                fx:id="handlerLoginButton"
+                                prefWidth="470">
+                            <graphic>
+                                <ImageView>
+                                    <Image url="@/toolbarButtonGraphics/general/Open24.gif"/>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+
+                        <Label text="Credenziali Errate"
+                               GridPane.rowIndex="5"
+                               GridPane.columnIndex="0"
+                               GridPane.columnSpan="2"
+                               textFill="#E04F5F"
+                               fx:id="errorHandler"
+                               visible="false"
+                               GridPane.halignment="CENTER">
+                            <font>
+                                <Font name="helvetica bold" size="15"/>
+                            </font>
+                        </Label>
+
+                    </GridPane>
+                </VBox>
+
+                <VBox alignment="CENTER_LEFT"
+                      GridPane.rowIndex="1"
+                      GridPane.columnIndex="1">
+                    <GridPane alignment="CENTER" vgap="15" hgap="10">
+
+                        <ImageView fx:id="driverImage"
+                                   GridPane.rowIndex="0"
+                                   GridPane.columnIndex="0"
+                                   GridPane.columnSpan="2"
+                                   GridPane.halignment="CENTER"/>
+
+                        <Label text="Login Tassista"
+                               GridPane.rowIndex="1"
+                               GridPane.columnIndex="0"
+                               GridPane.columnSpan="2"
+                               GridPane.halignment="CENTER" textFill="#494949">
+                            <font>
+                                <Font name="Helvetica Bold" size="20"/>
+                            </font>
+                        </Label>
+
+                        <Label text="Username:"
+                               GridPane.rowIndex="2"
+                               GridPane.columnIndex="0"/>
+
+                        <TextField promptText="es. Roberto"
+                                   GridPane.rowIndex="2"
+                                   fx:id="taxiDriverUsernameField"
+                                   GridPane.columnIndex="1"/>
+
+                        <Label text="Password:"
+                               GridPane.rowIndex="3"
+                               GridPane.columnIndex="0"/>
+
+                        <PasswordField promptText="es. 123"
+                                       GridPane.rowIndex="3"
+                                       GridPane.columnIndex="1"
+                                       fx:id="taxiDriverPasswordField"
+                                       prefWidth="400"/>
+
+                        <Button text="Login"
+                                GridPane.rowIndex="4"
+                                GridPane.columnIndex="0"
+                                GridPane.columnSpan="2"
+                                GridPane.halignment="CENTER"
+                                fx:id="taxiDriverLoginButton"
+                                prefWidth="470">
+                            <graphic>
+                                <ImageView>
+                                    <Image url="@/toolbarButtonGraphics/general/Open24.gif"/>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+
+                        <Label text="Credenziali Errate"
+                               GridPane.rowIndex="5"
+                               GridPane.columnIndex="0"
+                               GridPane.columnSpan="2"
+                               textFill="#E04F5F"
+                               visible="false"
+                               fx:id="errorTaxiDriver"
+                               GridPane.halignment="CENTER">
+                            <font>
+                                <Font name="helvetica bold" size="15"/>
+                            </font>
+                        </Label>
+
+                    </GridPane>
+                </VBox>
+            </GridPane>
+        </VBox>
+    </center>
+</BorderPane>

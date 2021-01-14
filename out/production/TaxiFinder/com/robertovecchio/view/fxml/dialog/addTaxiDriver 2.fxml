@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+
+<?import javafx.scene.layout.GridPane?>
+<DialogPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.robertovecchio.controller.dialog.AddTaxiDriverController"
+            headerText="Riempi i campi per aggiungere un Tassista da assumere"
+            prefHeight="400.0"
+            prefWidth="600.0">
+    <content>
+        <GridPane alignment="CENTER" vgap="10" hgap="10" fx:id="gridContainer">
+            <Label text="Codice Fiscale: "
+                   GridPane.rowIndex="0"
+                   GridPane.columnIndex="0"/>
+
+            <TextField promptText="es: VCCRRT..."
+                       GridPane.rowIndex="0"
+                       GridPane.columnIndex="1"
+                       fx:id="fiscalCodeField"/>
+
+            <Label text="Nome: "
+                   GridPane.rowIndex="0"
+                   GridPane.columnIndex="2"/>
+
+            <TextField promptText="es: Roberto"
+                       GridPane.rowIndex="0"
+                       GridPane.columnIndex="3"
+                       fx:id="nameField"/>
+
+            <Label text="Cognome: "
+                   GridPane.rowIndex="1"
+                   GridPane.columnIndex="0"/>
+
+            <TextField promptText="es: Vecchio"
+                       GridPane.rowIndex="1"
+                       GridPane.columnIndex="1"
+                       fx:id="surnameField"/>
+
+            <Label text="Data di nascita: "
+                   GridPane.rowIndex="1"
+                   GridPane.columnIndex="2"/>
+
+            <DatePicker promptText="es: 01/01/1993"
+                        GridPane.rowIndex="1"
+                        GridPane.columnIndex="3"
+                        fx:id="dateOfBirthField"/>
+
+            <Label text="Genere: "
+                   GridPane.rowIndex="2"
+                   GridPane.columnIndex="0"/>
+
+            <ComboBox promptText="es: Uomo"
+                      GridPane.rowIndex="2"
+                      GridPane.columnIndex="1"
+                      prefWidth="160"
+                      fx:id="genreField"/>
+
+            <Label text="Email: "
+                   GridPane.rowIndex="2"
+                   GridPane.columnIndex="2"/>
+
+            <TextField promptText="es: test@gmail.com"
+                       GridPane.rowIndex="2"
+                       GridPane.columnIndex="3"
+                       fx:id="emailField"/>
+
+            <Label text="Username: "
+                   GridPane.rowIndex="3"
+                   GridPane.columnIndex="0"/>
+
+            <TextField promptText="es: 123"
+                       GridPane.rowIndex="3"
+                       GridPane.columnIndex="1"
+                       fx:id="usernameField"/>
+
+            <Label text="Password: "
+                   GridPane.rowIndex="3"
+                   GridPane.columnIndex="2"/>
+
+            <PasswordField promptText="es: 123"
+                           GridPane.rowIndex="3"
+                           GridPane.columnIndex="3"
+                           fx:id="passwordField"/>
+
+            <Label text="Nr. Licensa: "
+                   GridPane.rowIndex="4"
+                   GridPane.columnIndex="0"/>
+
+            <TextField promptText="es. 123"
+                       GridPane.rowIndex="4"
+                       GridPane.columnIndex="1"
+                       GridPane.columnSpan="3"
+                       fx:id="licenseField"/>
+
+            <Button text="Inserisci Auto"
+                    fx:id="addAutoButton"
+                    onAction="#handleInsertAuto"
+                    GridPane.rowIndex="5"
+                    GridPane.columnIndex="0"/>
+        </GridPane>
+    </content>
+</DialogPane>
