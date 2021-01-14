@@ -29,13 +29,21 @@ public class WeightedGraph<T> implements Serializable {
         adjacencylist = new ArrayList<>();
     }
 
+    public int getNumberOfNode(){
+        return this.adjacencylist.size();
+    }
+
     public void addNode(T node){
         adjacencylist.add(new LinkedList<>());
     }
 
     public void addEdge(T source, T destination, int weight, double lengthWeight) {
         Edge<T> edge = new Edge<>(source, destination, weight, lengthWeight);
-        adjacencylist.get(adjacencylist.indexOf(source)).addFirst(edge); //for directed graph
+        for (LinkedList<Edge<T>> linked : adjacencylist) {
+            if (linked.get(0).getSource().equals(source)) {
+                linked.addFirst(edge);
+            }
+        }
     }
 
     public void printGraph(){

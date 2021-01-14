@@ -44,6 +44,7 @@ public class Main extends Application {
         try{
             taxiFinderData.loadCustomers();
             taxiFinderData.loadHandlers();
+            taxiFinderData.loadGraph();
         } catch (IOException | ClassNotFoundException e){
             System.out.println("Reperimento dati non riuscito");
         }
@@ -55,7 +56,14 @@ public class Main extends Application {
      * @see Stage*/
     @Override
     public void start(Stage primaryStage) throws Exception{
+
+        // Debug Grafo
         System.out.println("Programma Lanciato");
+        System.out.println("\n\nDebug Grafo\n");
+        System.out.println("Numero nodi: " + taxiFinderData.getGraph().getNumberOfNode());
+        System.out.println("\nGrafo: \n");
+        taxiFinderData.getGraph().printGraph();
+        
         /* Parent è il nodo padre ottenuto attraverso il valore di ritorno del metodo statico load, sfruttando
         *  la classe FXML loader */
         FXMLLoader loader = new FXMLLoader();
