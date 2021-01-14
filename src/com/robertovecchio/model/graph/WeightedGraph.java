@@ -33,15 +33,38 @@ public class WeightedGraph<T> implements Serializable {
         return this.adjacencylist.size();
     }
 
-    public void addNode(T node){
+    public void addNode(){
         adjacencylist.add(new LinkedList<>());
     }
 
+    public void removeNode(T node){
+        for (int i = 0; i < adjacencylist.size(); i++) {
+            LinkedList<Edge<T>> linked = adjacencylist.get(i);
+            if (linked.get(i).getSource().equals(node)) {
+                this.adjacencylist.remove(i);
+                break;
+            }
+        }
+    }
+
     public void addEdge(T source, T destination, int weight, double lengthWeight) {
+        boolean isContained = false;
+
         Edge<T> edge = new Edge<>(source, destination, weight, lengthWeight);
-        for (LinkedList<Edge<T>> linked : adjacencylist) {
-            if (linked.get(0).getSource().equals(source)) {
+        for (int i = 0; i < adjacencylist.size(); i++){
+            LinkedList<Edge<T>> linked = adjacencylist.get(i);
+            if (linked.get(i).getSource().equals(source)){
                 linked.addFirst(edge);
+                isContained = true;
+                break;
+            }
+        }
+
+        if (!isContained){
+            for (LinkedList<Edge<T>> linked : adjacencylist) {
+                if (linked.isEmpty()) {
+                    linked.addFirst(edge);
+                }
             }
         }
     }

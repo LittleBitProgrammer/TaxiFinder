@@ -11,7 +11,7 @@
             prefHeight="400.0"
             prefWidth="600.0">
     <content>
-        <GridPane alignment="CENTER" vgap="10" hgap="10">
+        <GridPane alignment="CENTER" vgap="10" hgap="10" fx:id="GridContainer">
             <Label text="Nome Strada: "
                    GridPane.rowIndex="0"
                    GridPane.columnIndex="0"/>

@@ -119,6 +119,7 @@ public class CompanyAreaController {
                 Handler handler = taxiFinderData.loginHandler(new Handler(username,password));
                 // Carichiamo le liste inerenti all'admin su di un nuovo Thread
                 taxiFinderData.loadTaxiDrivers();
+                taxiFinderData.loadParkings();
                 taxiFinderData.setCurrentUser(handler);
 
                 // Cambiamo Stage

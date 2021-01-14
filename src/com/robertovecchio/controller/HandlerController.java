@@ -72,6 +72,7 @@ public class HandlerController {
 
     // Observable List
     ObservableList<TaxiDriver> drivers;
+    ObservableList<Parking> parkings;
 
 
     //==================================================
@@ -107,6 +108,7 @@ public class HandlerController {
 
         // Inizializziamo la collections
         this.drivers = taxiFinderData.getTaxiDrivers();
+        this.parkings = taxiFinderData.getParkings();
 
         // Inizializzo le TableView
         compositeTaxiDriverTableView();
@@ -426,6 +428,7 @@ public class HandlerController {
             if (this.isFirstEntryParking){
                 compositeParkingTableView();
                 vBoxCenterContainer.getChildren().add(tableParking);
+                isFirstEntryParking = false;
             }
             changeVisibility(this.tableParking, this.tableTaxiDriver, this.tableWaitingStation);
         });
@@ -435,6 +438,7 @@ public class HandlerController {
             if (this.isFirstEntryWaiting){
                 compositeWaitingStationTableView();
                 vBoxCenterContainer.getChildren().add(tableWaitingStation);
+                isFirstEntryWaiting = false;
             }
             changeVisibility(this.tableWaitingStation, this.tableTaxiDriver, this.tableParking);
         });
@@ -514,7 +518,6 @@ public class HandlerController {
         this.tableTaxiDriver.setPrefWidth(2048);
 
         // Impostiamo gli item da visualizzare
-        System.out.println(this.drivers);
         this.tableTaxiDriver.setItems(this.drivers);
     }
 
@@ -571,6 +574,9 @@ public class HandlerController {
 
         // Impostiamo una larghezza base
         this.tableParking.setPrefWidth(2048);
+
+        // Impostiamo gli item da visualizzare
+        this.tableParking.setItems(this.parkings);
     }
 
     //==================================================

@@ -1,6 +1,7 @@
 package com.robertovecchio.model.graph.node;
 
 // import
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -9,7 +10,11 @@ import java.util.Objects;
  * @version 1.0
  * @since 07/01/2021
  * */
-public class Coordinates {
+public class Coordinates  implements Serializable {
+
+    // Tipo numerico Long utile alla serializzazione
+    private final static long serialVersionUID = 10L;
+
     //==================================================
     //               Variabili d'istanza
     //==================================================

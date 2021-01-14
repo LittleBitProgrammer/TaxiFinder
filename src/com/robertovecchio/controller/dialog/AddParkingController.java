@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
-
 import java.io.IOException;
 import java.util.Optional;
 
@@ -70,7 +69,7 @@ public class AddParkingController {
 
         // Impostiamo che la textfield capacity potrà accettare solo valori numerici
         this.capacityField.textProperty().addListener((observableValue, s, t1) -> {
-            if (!t1.matches("\\d{0,4}?")){
+            if (!t1.matches("\\d{0,4}")){
                 capacityField.setText(s);
             }
         });
@@ -114,10 +113,13 @@ public class AddParkingController {
                                          streetNumber, parkingName, capacity);
 
         taxiFinderData.addParking(newParking);
+        System.out.println(newParking);
 
         try {
             taxiFinderData.storeParkings();
+            taxiFinderData.getGraph().addNode();
         }catch (IOException e){
+            e.printStackTrace();
             // Mostro l'errore
             Alert alert = new Alert(Alert.AlertType.ERROR, "Memorizzazione impossibile", ButtonType.OK);
             alert.setHeaderText("Impossibile memorizzare");

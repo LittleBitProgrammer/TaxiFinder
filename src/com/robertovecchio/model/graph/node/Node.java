@@ -1,5 +1,6 @@
 package com.robertovecchio.model.graph.node;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -10,7 +11,11 @@ import java.util.Objects;
  * @version 1.0
  * @since 07/01/2021
  * */
-public abstract class Node {
+public abstract class Node implements Serializable {
+
+    // Tipo numerico Long utile alla serializzazione
+    private final static long serialVersionUID = 9L;
+
     //==================================================
     //               Variabili d'istanza
     //==================================================

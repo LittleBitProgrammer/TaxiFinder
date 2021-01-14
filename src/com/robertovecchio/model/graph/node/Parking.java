@@ -2,6 +2,8 @@ package com.robertovecchio.model.graph.node;
 
 // import
 import com.robertovecchio.model.veichle.builderTaxi.Taxi;
+
+import java.io.Serializable;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -14,7 +16,10 @@ import java.util.Queue;
  * @see WaitingStation
  * @see Node
  * */
-public class Parking extends WaitingStation{
+public class Parking extends WaitingStation implements Serializable {
+
+    // Tipo numerico Long utile alla serializzazione
+    private final static long serialVersionUID = 7L;
 
     //==================================================
     //               Variabili d'istanza
@@ -149,5 +154,13 @@ public class Parking extends WaitingStation{
      * */
     public boolean isEmpty(){
         return this.getFreeParkingSpaces() == this.parkingCapacity;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nParking{" +
+                "parkingCapacity=" + parkingCapacity +
+                ", taxis=" + taxis +
+                '}';
     }
 }

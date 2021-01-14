@@ -1,5 +1,7 @@
 package com.robertovecchio.model.graph.node;
 
+import java.io.Serializable;
+
 /**
  * Questa classe astrae il concetto di postazione di attesa, ovvero il luogo dove ad un cliente è permesso di attendere
  * un Taxi, ad esso associato (quello più vicino). Questa classe è intesa come nodo così da poter essere utile all'
@@ -9,7 +11,11 @@ package com.robertovecchio.model.graph.node;
  * @since 08/01/2021
  * @see Node
  * */
-public class WaitingStation extends Node{
+public class WaitingStation extends Node implements Serializable {
+
+    // Tipo numerico Long utile alla serializzazione
+    private final static long serialVersionUID = 8L;
+
     //==================================================
     //               Variabili d'istanza
     //==================================================
@@ -84,5 +90,14 @@ public class WaitingStation extends Node{
 
     public String getStreetName() {
         return streetName;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nWaitingStation{" +
+                "streetNumber='" + streetNumber + '\'' +
+                ", stationName='" + stationName + '\'' +
+                ", streetName='" + streetName + '\'' +
+                '}';
     }
 }
