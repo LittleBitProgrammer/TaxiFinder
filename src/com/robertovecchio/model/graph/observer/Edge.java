@@ -1,12 +1,12 @@
 package com.robertovecchio.model.graph.observer;
 
-public class Edge<T, W> extends ArchObserver {
+public class Edge<T> extends ArchObserver {
     private T source;
     private T destination;
-    private W weight;
+    private int weight;
     private double lengthWeight;
 
-    public Edge(T source, T destination, W weight, double lengthWeight){
+    public Edge(T source, T destination, int weight, double lengthWeight){
         this.source = source;
         this.destination = destination;
         this.weight = weight;
@@ -30,11 +30,11 @@ public class Edge<T, W> extends ArchObserver {
         this.destination = destination;
     }
 
-    public W getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    public void setWeight(W weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 

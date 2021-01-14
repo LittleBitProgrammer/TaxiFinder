@@ -1,6 +1,8 @@
 package com.robertovecchio.model.db;
 
 import com.robertovecchio.model.db.error.HandlerNotFoundException;
+import com.robertovecchio.model.graph.WeightedGraph;
+import com.robertovecchio.model.graph.node.Node;
 import com.robertovecchio.model.graph.node.Parking;
 import com.robertovecchio.model.graph.node.WaitingStation;
 import com.robertovecchio.model.user.*;
@@ -34,6 +36,7 @@ public class TaxiFinderData {
     private final static String taxiDriverFileName = "files/taxiDriver.txt";         // Percorso file dei tassisti
     private final static String parkingDriverFileName = "files/parking.txt";         // Percorso file dei parcheggi
     private final static String waitingStationFileName = "files/waitingStation.txt"; // Percorso file delle postazioni
+    private final static String graphFileName = "files/graph.txt";                    // Percorso file del grafo
 
     /**
      * Map utile ad associare ad ogni Stringa un enum
@@ -77,6 +80,7 @@ public class TaxiFinderData {
      */
     private Set<Handler> handlers;
     private UserAccount currentUser;
+    private WeightedGraph<Node> graph;
 
     //==================================================
     //                   Costruttori
@@ -93,6 +97,9 @@ public class TaxiFinderData {
         this.waitingStations = FXCollections.observableArrayList();
         this.handlers = new HashSet<>();
         this.genders = new HashMap<>();
+
+        // Inizializziamo il grafo
+        graph = new WeightedGraph<>();
 
         // Popolo l'hasmap
         genders.put("UOMO", GenderType.MALE);
@@ -190,6 +197,16 @@ public class TaxiFinderData {
         this.currentUser = userAccount;
     }
 
+    /**
+     * Metodo setter del grafo corrente
+     * @param graph Grafo da impostare
+     * @see WeightedGraph
+     * @see Node
+     */
+    public void setGraph(WeightedGraph<Node> graph){
+        this.graph = graph;
+    }
+
     //==================================================
     //                 Metodi GETTER
     //==================================================
@@ -258,7 +275,17 @@ public class TaxiFinderData {
      * @see UserAccount
      * */
     public UserAccount getCurrentUser(){
-        return  this.currentUser;
+        return this.currentUser;
+    }
+
+    /**
+     * Metodo gette del grafo
+     * @return Il grafo corrente
+     * @see WeightedGraph
+     * @see Node
+     */
+    public WeightedGraph<Node> getGraph(){
+        return this.graph;
     }
 
     //==================================================
@@ -411,6 +438,18 @@ public class TaxiFinderData {
         }
     }
 
+    /**
+     * Metodo atto alla memorizzazione del grafo
+     * @throws IOException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di input/output
+     */
+    public void storeGraph() throws IOException{
+        // try with resources viene sfruttato per chiamare automaticamente il metodo close
+        // Creiamo uno stream serializzato di risorse
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(graphFileName))){
+            oos.writeObject(this.graph);
+        }
+    }
+
     //==================================================
     //                 Metodi LOADER
     //==================================================
@@ -476,6 +515,21 @@ public class TaxiFinderData {
             this.waitingStations.setAll((ArrayList<WaitingStation>) ois.readObject());
         } catch (EOFException e){
             System.out.println("Postazioni non trovate non presenti");
+        }
+    }
+
+    /**
+     * Metodo atto a popolare il grafo
+     * @throws ClassNotFoundException questo metodo potrebbe non trovare la classe richiesta
+     * @throws IOException Questo metodo potrebbe generare errori di input/output
+     */
+    public void loadGraph() throws ClassNotFoundException, IOException{
+        // try with resources viene sfruttato per chiamare automaticamente il metodo close
+        // sfruttiamo uno stream per deserializzare risorse
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(waitingStationFileName))){
+            this.setGraph((WeightedGraph<Node>) ois.readObject());
+        } catch (EOFException e){
+            System.out.println("Grafo non presente");
         }
     }
 
