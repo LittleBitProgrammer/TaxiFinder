@@ -4,7 +4,6 @@ package com.robertovecchio.controller.dialog;
 import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.graph.node.Coordinates;
 import com.robertovecchio.model.graph.node.Parking;
-import com.robertovecchio.model.user.TaxiDriver;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanExpression;
 import javafx.fxml.FXML;

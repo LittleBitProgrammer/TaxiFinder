@@ -5,6 +5,7 @@ import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.graph.node.Parking;
 import com.robertovecchio.model.graph.node.WaitingStation;
 import com.robertovecchio.model.user.TaxiDriver;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,9 +17,12 @@ import javafx.scene.control.skin.TableHeaderRow;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.util.Callback;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Classe che gestisce la main View dell'handler (admin)
@@ -73,6 +77,9 @@ public class HandlerController {
     ObservableList<Parking> parkings;
     ObservableList<WaitingStation> waitingStations;
 
+    // ContextMenu
+    private ContextMenu contextMenu;
+
 
     //==================================================
     //               Variabili FXML
@@ -93,6 +100,7 @@ public class HandlerController {
     private static final String removeParkingControllerFile = "src/com/robertovecchio/view/fxml/dialog/removeParking.fxml";
     private static final String addWaitingStationControllerFile = "src/com/robertovecchio/view/fxml/dialog/addWaitingstation.fxml";
     private static final String removeWaitingStationControllerFile = "src/com/robertovecchio/view/fxml/dialog/removeWaitingStation.fxml";
+    private static final String showVehicleControllerFile = "src/com/robertovecchio/view/fxml/dialog/showVehicle.fxml";
 
     //==================================================
     //               Inizializzazione
@@ -104,6 +112,20 @@ public class HandlerController {
     public void initialize(){
         // Aggiungiamo il menuBar al vBox
         vBoxContainer.getChildren().addAll(compositeHandlerMEnuBar(), compositeToolBar());
+
+        // Inizializziamo un contextMenu
+        contextMenu = new ContextMenu();
+
+        // Inizializziamo un menu Item
+        MenuItem menuItem = new MenuItem("Mostra veicolo");
+
+        menuItem.setOnAction(actionEvent -> {
+            TaxiDriver taxiDriver = tableTaxiDriver.getSelectionModel().getSelectedItem();
+            this.showVehicle(taxiDriver);
+        });
+
+        // Aggiungiamo i menuItem al contextMenu
+        contextMenu.getItems().add(menuItem);
 
         // Inizializziamo la collections
         this.drivers = taxiFinderData.getTaxiDrivers();
@@ -598,6 +620,20 @@ public class HandlerController {
         // Impostiamo una larghezza base
         this.tableTaxiDriver.setPrefWidth(2048);
 
+        tableTaxiDriver.setRowFactory(new Callback<TableView<TaxiDriver>, TableRow<TaxiDriver>>() {
+            @Override
+            public TableRow<TaxiDriver> call(TableView<TaxiDriver> taxiDriverTableView) {
+                final TableRow<TaxiDriver> row = new TableRow<>();
+                // Impostiamo il contextmenu su di una row, ma usiamo il binding solo se non è vuota
+                row.contextMenuProperty().bind(
+                        Bindings.when(row.emptyProperty())
+                                .then((ContextMenu)null)
+                                .otherwise(contextMenu)
+                );
+                return row ;
+            }
+        });
+
         // Impostiamo gli item da visualizzare
         this.tableTaxiDriver.setItems(this.drivers);
     }
@@ -1062,5 +1098,36 @@ public class HandlerController {
                 }
             }
         });
+    }
+
+    private void showVehicle(TaxiDriver taxiDriver){
+        // creiamo un nuovo dialog da visualizzare
+        Dialog<ButtonType> dialog = new Dialog<>();
+
+        // inizializziamo il proprietario
+        dialog.initOwner(this.vBoxContainer.getScene().getWindow());
+
+        // Impostiamo il titolo del dialog
+        dialog.setTitle(String.format("Veicolo di %s %s", taxiDriver.getFirstName(), taxiDriver.getLastName()));
+
+        // Carichiamo il file di iterfaccia per il dialog
+        FXMLLoader loader = new FXMLLoader();
+
+        try{
+            Parent root = loader.load(new FileInputStream(showVehicleControllerFile));
+            dialog.getDialogPane().setContent(root);
+        }catch (IOException e){
+            System.out.println("Errore di caricamento dialog");
+            e.printStackTrace();
+        }
+
+        VehicleController vehicleController = loader.getController();
+        vehicleController.initData(taxiDriver);
+
+        // Aggiungiamo il bottone OK e CANCEL al dialogPane
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK);
+
+        // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+        Optional<ButtonType> result = dialog.showAndWait();
     }
 }

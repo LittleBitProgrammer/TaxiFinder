@@ -526,7 +526,7 @@ public class TaxiFinderData {
     public void loadGraph() throws ClassNotFoundException, IOException{
         // try with resources viene sfruttato per chiamare automaticamente il metodo close
         // sfruttiamo uno stream per deserializzare risorse
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(waitingStationFileName))){
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(graphFileName))){
             this.setGraph((WeightedGraph<Node>) ois.readObject());
         } catch (EOFException e){
             System.out.println("Grafo non presente");
