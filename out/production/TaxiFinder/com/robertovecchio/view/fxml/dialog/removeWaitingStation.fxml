@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 
+<?import javafx.scene.layout.GridPane?>
 <DialogPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.robertovecchio.controller.dialog.RemoveWaitingStationController"
@@ -9,6 +10,50 @@
             prefHeight="400.0"
             prefWidth="600.0">
     <content>
-        <Label text="ciao"/>
+        <GridPane alignment="CENTER" hgap="10" vgap="10">
+            <Label text="Postazione: "
+                   GridPane.rowIndex="0"
+                   GridPane.columnIndex="0"/>
+
+            <ComboBox GridPane.rowIndex="0"
+                      GridPane.columnIndex="1"
+                      fx:id="waitingStationComboBox"/>
+
+            <Label text="Nome Strada: "
+                   GridPane.rowIndex="1"
+                   GridPane.columnIndex="0"/>
+
+            <TextField editable="false"
+                       fx:id="streetNameField"
+                       GridPane.rowIndex="1"
+                       GridPane.columnIndex="1"/>
+
+            <Label text="Nr. Civico: "
+                   GridPane.rowIndex="2"
+                   GridPane.columnIndex="0"/>
+
+            <TextField fx:id="streetNumberField"
+                       editable="false"
+                       GridPane.rowIndex="2"
+                       GridPane.columnIndex="1"/>
+
+            <Label text="latitudine: "
+                   GridPane.rowIndex="3"
+                   GridPane.columnIndex="0"/>
+
+            <TextField fx:id="latitudeField"
+                       editable="false"
+                       GridPane.rowIndex="3"
+                       GridPane.columnIndex="1"/>
+
+            <Label text="Longitudine: "
+                   GridPane.rowIndex="4"
+                   GridPane.columnIndex="0"/>
+
+            <TextField fx:id="longitudeField"
+                       editable="false"
+                       GridPane.rowIndex="4"
+                       GridPane.columnIndex="1"/>
+        </GridPane>
     </content>
 </DialogPane>

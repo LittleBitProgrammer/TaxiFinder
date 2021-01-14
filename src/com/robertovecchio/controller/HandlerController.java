@@ -17,12 +17,9 @@ import javafx.scene.control.skin.TableHeaderRow;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.util.Callback;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Classe che gestisce la main View dell'handler (admin)
@@ -196,9 +193,7 @@ public class HandlerController {
         menuBar.getMenus().addAll(home, taxiDriver, parking, waitingStation,exit);
 
         // Aggiungiamo un'azione quando viene premuto home
-        homeLabel.setOnMouseClicked(actionEvent -> {
-            System.out.println("Home premuto");
-        });
+        homeLabel.setOnMouseClicked(actionEvent -> System.out.println("Home premuto"));
 
         //==================================================
         //                 Aggiungi Tassista
@@ -241,6 +236,7 @@ public class HandlerController {
                             alert.setContentText("Hai inserito un utente con età inferiore ai 18 anni");
 
                             Optional<ButtonType> result = alert.showAndWait();
+                            System.out.println(result);
 
                             event.consume();
                         }else if (!addTaxiDriverController.validateEmail()){
@@ -249,6 +245,7 @@ public class HandlerController {
                             alert.setContentText("Inserisci una email valida");
 
                             Optional<ButtonType> result = alert.showAndWait();
+                            System.out.println(result);
 
                             event.consume();
                         }else if (!addTaxiDriverController.validatePassword()){
@@ -257,6 +254,7 @@ public class HandlerController {
                             alert.setContentText("Inserisci una password con lunghezza maggiore di 3 e minore di 15");
 
                             Optional<ButtonType> result = alert.showAndWait();
+                            System.out.println(result);
 
                             event.consume();
                         }else if (!addTaxiDriverController.validateFiscalCode()){
@@ -265,6 +263,8 @@ public class HandlerController {
                             alert.setContentText("Inserisci un codice fiscale con lunghezza pari a 16");
 
                             Optional<ButtonType> result = alert.showAndWait();
+                            System.out.println(result);
+
 
                             event.consume();
                         }else if (addTaxiDriverController.existYet()){
@@ -273,6 +273,7 @@ public class HandlerController {
                             alert.setContentText("Hai inserito un utente o auto già inserito");
 
                             Optional<ButtonType> result = alert.showAndWait();
+                            System.out.println(result);
 
                             event.consume();
                         }
@@ -370,6 +371,7 @@ public class HandlerController {
                             alert.setContentText("Hai inserito un parcheggio già inserito");
 
                             Optional<ButtonType> result = alert.showAndWait();
+                            System.out.println(result);
 
                             event.consume();
                         }
@@ -467,6 +469,7 @@ public class HandlerController {
                             alert.setContentText("Hai inserito una postazione già inserito");
 
                             Optional<ButtonType> result = alert.showAndWait();
+                            System.out.println(result);
 
                             event.consume();
                         }
@@ -482,26 +485,50 @@ public class HandlerController {
             }
         });
 
+        //==================================================
+        //                 Rimuovi Postazione
+        //==================================================
+
         // Aggiungiamo un'azione quando viene cliccato rimuovi parcheggio
         removeWaitingStation.setOnAction(actionEvent -> {
+            // creiamo un nuovo dialog da visualizzare
+            Dialog<ButtonType> dialog = new Dialog<>();
+
+            // inizializziamo il proprietario
+            dialog.initOwner(this.vBoxContainer.getScene().getWindow());
+
+            // Impostiamo il titolo del dialog
+            dialog.setTitle("Rimuovi una Postazione");
+
+            // Carichiamo il file di iterfaccia per il dialog
+            FXMLLoader loader = new FXMLLoader();
+
             try{
-                UtilityController.showDialog(this.vBoxContainer.getScene().getWindow(),
-                        "Rimuovere una postazione",
-                        removeParkingControllerFile,
-                        "errore durante il caricamento del dialog",
-                        ()->{
-                            System.out.println("Callable chiamata su OK");
-                        },ButtonType.OK, ButtonType.CANCEL);
-            }catch (Exception e){
+                Parent root = loader.load(new FileInputStream(removeWaitingStationControllerFile));
+                dialog.getDialogPane().setContent(root);
+            }catch (IOException e){
+                System.out.println("Errore di caricamento dialog");
                 e.printStackTrace();
+            }
+
+            // Aggiungiamo il bottone OK e CANCEL al dialogPane
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
+
+            // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+            Optional<ButtonType> result = dialog.showAndWait();
+
+            RemoveWaitingStationController removeWaitingStationController = loader.getController();
+
+            // Gestiamo il caso in cui l'utente abbia premuto OK
+            if (result.isPresent() && result.get() == ButtonType.APPLY){
+                removeWaitingStationController.processRemoveWaitingStation();
+                this.tableWaitingStation.getSelectionModel().selectFirst();
             }
         });
 
         // Aggiungiamo un'azione quando Logout viene premuto
-        exitLabel.setOnMouseClicked(actionEvent -> {
-            UtilityController.changeStageTo(mainControllerFile, "Taxi Finder",
-                                      "Errore reperimento interfaccia", exitLabel);
-        });
+        exitLabel.setOnMouseClicked(actionEvent -> UtilityController.changeStageTo(mainControllerFile, "Taxi Finder",
+                                  "Errore reperimento interfaccia", exitLabel));
 
         return menuBar;
     }
@@ -522,9 +549,7 @@ public class HandlerController {
         toolBar.getItems().addAll(visualizeTaxiDriver, visualizeParking, visualizeWaitingStations);
 
         // Aggiungiamo un'azione quando visualizza tassisti viene premuto
-        visualizeTaxiDriver.setOnAction(actionEvent -> {
-            changeVisibility(this.tableTaxiDriver, this.tableParking, this.tableWaitingStation);
-        });
+        visualizeTaxiDriver.setOnAction(actionEvent -> changeVisibility(this.tableTaxiDriver, this.tableParking, this.tableWaitingStation));
 
         //Aggiungiamo un'azione quando visualizza parcheggi viene premuto
         visualizeParking.setOnAction(actionEvent -> {
@@ -620,18 +645,15 @@ public class HandlerController {
         // Impostiamo una larghezza base
         this.tableTaxiDriver.setPrefWidth(2048);
 
-        tableTaxiDriver.setRowFactory(new Callback<TableView<TaxiDriver>, TableRow<TaxiDriver>>() {
-            @Override
-            public TableRow<TaxiDriver> call(TableView<TaxiDriver> taxiDriverTableView) {
-                final TableRow<TaxiDriver> row = new TableRow<>();
-                // Impostiamo il contextmenu su di una row, ma usiamo il binding solo se non è vuota
-                row.contextMenuProperty().bind(
-                        Bindings.when(row.emptyProperty())
-                                .then((ContextMenu)null)
-                                .otherwise(contextMenu)
-                );
-                return row ;
-            }
+        tableTaxiDriver.setRowFactory(taxiDriverTableView -> {
+            final TableRow<TaxiDriver> row = new TableRow<>();
+            // Impostiamo il contextmenu su di una row, ma usiamo il binding solo se non è vuota
+            row.contextMenuProperty().bind(
+                    Bindings.when(row.emptyProperty())
+                            .then((ContextMenu)null)
+                            .otherwise(contextMenu)
+            );
+            return row ;
         });
 
         // Impostiamo gli item da visualizzare
@@ -1129,5 +1151,6 @@ public class HandlerController {
 
         // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
         Optional<ButtonType> result = dialog.showAndWait();
+        System.out.println(result);
     }
 }

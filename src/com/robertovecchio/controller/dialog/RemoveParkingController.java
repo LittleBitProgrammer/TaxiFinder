@@ -88,7 +88,6 @@ public class RemoveParkingController {
         this.parkingComboBox.getSelectionModel().selectFirst();
 
         // Popoliamo i diversi campi con i valori del primo selezionato
-
         populateFields(taxiFinderData.getParkings().get(0));
 
         // Popoliamo i diversi campi diversamente ad ogni nuovo taxi driver selezionato
@@ -120,6 +119,7 @@ public class RemoveParkingController {
         Parking parking = this.parkingComboBox.getSelectionModel().getSelectedItem();
 
         taxiFinderData.removeParking(parking);
+        taxiFinderData.getGraph().removeNode(parking);
 
         try {
             taxiFinderData.storeParkings();
