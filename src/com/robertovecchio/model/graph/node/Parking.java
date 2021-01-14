@@ -42,11 +42,11 @@ public class Parking extends WaitingStation{
      * @see Queue
      * @see Taxi
      * */
-    public Parking(Coordinates coordinates, String streetNumber,
+    public Parking(Coordinates coordinates, String streetName, String streetNumber,
                    String stationName, int parkingCapacity, Queue<Taxi> taxis){
 
         // Richiamo il costruttore della classe astratta UserAccount
-        super(coordinates, streetNumber, stationName);
+        super(coordinates, streetName, streetNumber, stationName);
 
         // Inizializzo le variabili d'istanza
         this.parkingCapacity = parkingCapacity;
@@ -61,9 +61,10 @@ public class Parking extends WaitingStation{
      * @param parkingCapacity Capacità del parcheggio in termini di posti auto
      * @see Coordinates
      * */
-    public Parking(Coordinates coordinates, String streetNumber, String stationName, int parkingCapacity){
+    public Parking(Coordinates coordinates, String streetName, String streetNumber,
+                   String stationName, int parkingCapacity){
         // Richiamo il costruttore della classe astratta UserAccount
-        super(coordinates, streetNumber, stationName);
+        super(coordinates, streetName, streetNumber, stationName);
 
         // Inizializzo le variabili d'istanza
         this.parkingCapacity = parkingCapacity;

@@ -28,11 +28,12 @@ public class WaitingStation extends Node{
      * @param stationName Nome della stazione di attesa
      * @see Coordinates
      * */
-    public WaitingStation(Coordinates coordinates, String streetNumber, String stationName){
+    public WaitingStation(Coordinates coordinates, String streetName, String streetNumber, String stationName){
         // Richiamo il costruttore della classe astratta Node
         super(coordinates);
 
         // Inizializzo le variabili d'istanza
+        this.streetName = streetName;
         this.streetNumber = streetNumber;
         this.stationName = stationName;
     }

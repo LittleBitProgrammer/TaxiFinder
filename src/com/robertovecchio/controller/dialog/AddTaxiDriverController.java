@@ -46,6 +46,9 @@ public class AddTaxiDriverController {
     // Taxi
     private Taxi newTaxi;
 
+    // DB
+    TaxiFinderData taxiFinderData = TaxiFinderData.getInstance();
+
     //==================================================
     //               Variabili Statiche
     //==================================================
@@ -78,12 +81,6 @@ public class AddTaxiDriverController {
     TextField licenseField;
     @FXML
     Button addAutoButton;
-
-    //==================================================
-    //                  Attributi
-    //==================================================
-
-    TaxiFinderData taxiFinderData = TaxiFinderData.getInstance();
 
     //==================================================
     //               Inizializzazione

@@ -1,5 +1,6 @@
 package com.robertovecchio.controller;
 
+import com.robertovecchio.controller.dialog.AddParkingController;
 import com.robertovecchio.controller.dialog.AddTaxiDriverController;
 import com.robertovecchio.controller.dialog.RemoveTaxiDriverController;
 import com.robertovecchio.model.db.TaxiFinderData;
@@ -304,18 +305,45 @@ public class HandlerController {
             }
         });
 
+        //==================================================
+        //                 Aggiungi Parcheggio
+        //==================================================
+
         // Aggiungiamo un'azione quando viene cliccato aggiungi parcheggio
         addParking.setOnAction(actionEvent -> {
+            // creiamo un nuovo dialog da visualizzare
+            Dialog<ButtonType> dialog = new Dialog<>();
+
+            // inizializziamo il proprietario
+            dialog.initOwner(this.vBoxContainer.getScene().getWindow());
+
+            // Impostiamo il titolo del dialog
+            dialog.setTitle("Aggiungi un Parcheggio");
+
+            // Carichiamo il file di iterfaccia per il dialog
+            FXMLLoader loader = new FXMLLoader();
+
             try{
-                UtilityController.showDialog(this.vBoxContainer.getScene().getWindow(),
-                        "Aggiungi un parcheggio",
-                        addParkingControllerFile,
-                        "errore durante il caricamento del dialog",
-                        ()->{
-                            System.out.println("Callable chiamata su OK");
-                        },ButtonType.OK, ButtonType.CANCEL);
-            }catch (Exception e){
+                Parent root = loader.load(new FileInputStream(addParkingControllerFile));
+                dialog.getDialogPane().setContent(root);
+            }catch (IOException e){
+                System.out.println("Errore di caricamento dialog");
                 e.printStackTrace();
+            }
+
+            // Aggiungiamo il bottone OK e CANCEL al dialogPane
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
+
+            AddParkingController addParkingController = loader.getController();
+            dialog.getDialogPane().lookupButton(ButtonType.APPLY).disableProperty().bind(addParkingController.invalidInputProperty());
+
+            // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+            Optional<ButtonType> result = dialog.showAndWait();
+
+            // Gestiamo il caso in cui l'utente abbia premuto OK
+            if (result.isPresent() && result.get() == ButtonType.APPLY){
+                Parking newParking = addParkingController.processAddParking();
+                this.tableParking.getSelectionModel().select(newParking);
             }
         });
 
