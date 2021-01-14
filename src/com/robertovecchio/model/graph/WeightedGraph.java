@@ -20,7 +20,7 @@ public class WeightedGraph<T, W> {
         }
     }
 
-    public void addEgde(T source, T destination, W weight, double lengthWeight) {
+    public void addEdge(T source, T destination, W weight, double lengthWeight) {
         Edge<T, W> edge = new Edge<>(source, destination, weight, lengthWeight);
         adjacencylist.get(adjacencylist.indexOf(source)).addFirst(edge); //for directed graph
     }

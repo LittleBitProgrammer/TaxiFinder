@@ -1,6 +1,8 @@
 package com.robertovecchio.model.db;
 
 import com.robertovecchio.model.db.error.HandlerNotFoundException;
+import com.robertovecchio.model.graph.node.Parking;
+import com.robertovecchio.model.graph.node.WaitingStation;
 import com.robertovecchio.model.user.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,9 +29,12 @@ public class TaxiFinderData {
 
     // Singleton - versione Eager
     private final static TaxiFinderData instance = new TaxiFinderData();
-    private final static String customerFileName = "files/customer.txt";        // Percorso file dei clienti
-    private final static String handlerFileName = "files/handler.txt";          // Percorso file dei gestori
-    private final static String taxiDriverFileName = "files/taxiDriver.txt";    // Percorso file dei tassisti
+    private final static String customerFileName = "files/customer.txt";             // Percorso file dei clienti
+    private final static String handlerFileName = "files/handler.txt";               // Percorso file dei gestori
+    private final static String taxiDriverFileName = "files/taxiDriver.txt";         // Percorso file dei tassisti
+    private final static String parkingDriverFileName = "files/parking.txt";         // Percorso file dei parcheggi
+    private final static String waitingStationFileName = "files/waitingStation.txt"; // Percorso file delle postazioni
+
     /**
      * Map utile ad associare ad ogni Stringa un enum
      * @see Map
@@ -54,6 +59,18 @@ public class TaxiFinderData {
      */
     private final ObservableList<TaxiDriver> taxiDrivers;
     /**
+     * lista osservabile di parcheggi
+     * @see ObservableList
+     * @see Parking
+     */
+    private final ObservableList<Parking> parkings;
+    /**
+     * lista osservabile di postazioni di attesa
+     * @see ObservableList
+     * @see WaitingStation
+     */
+    private final ObservableList<WaitingStation> waitingStations;
+    /**
      * lista osservabile di gestori
      * @see List
      * @see Handler
@@ -72,6 +89,8 @@ public class TaxiFinderData {
         // Inizializzo le collections
         this.customers = FXCollections.observableArrayList();
         this.taxiDrivers = FXCollections.observableArrayList();
+        this.parkings = FXCollections.observableArrayList();
+        this.waitingStations = FXCollections.observableArrayList();
         this.handlers = new HashSet<>();
         this.genders = new HashMap<>();
 
@@ -119,7 +138,7 @@ public class TaxiFinderData {
      * @see Customer
      * */
     public void setCustomers(ObservableList<Customer> customers){
-        this.customers.addAll(customers);
+        this.customers.setAll(customers);
     }
 
     /**
@@ -129,7 +148,27 @@ public class TaxiFinderData {
      * @see TaxiDriver
      * */
     public void setTaxiDrivers(ObservableList<TaxiDriver> taxiDrivers){
-        this.taxiDrivers.addAll(taxiDrivers);
+        this.taxiDrivers.setAll(taxiDrivers);
+    }
+
+    /**
+     * Metodo setter dei parcheggi
+     * @param parkings Parcheggi da importare
+     * @see ObservableList
+     * @see Parking
+     */
+    public void setParkings(ObservableList<Parking> parkings){
+        this.parkings.setAll(parkings);
+    }
+
+    /**
+     * Metodo setter delle postazioni di attesa
+     * @param waitingStations postazioni di attesa da importare
+     * @see ObservableList
+     * @see WaitingStation
+     */
+    public void setWaitingStation(ObservableList<WaitingStation> waitingStations){
+        this.waitingStations.setAll(waitingStations);
     }
 
     /**
@@ -184,6 +223,26 @@ public class TaxiFinderData {
     }
 
     /**
+     * Metodo getter dei parcheggi
+     * @return La lista dei parcheggi
+     * @see ObservableList
+     * @see Parking
+     */
+    public ObservableList<Parking> getParkings(){
+        return this.parkings;
+    }
+
+    /**
+     * Metodo getter delle postazioni di attesa
+     * @return La lista delle postazioni
+     * @see ObservableList
+     * @see WaitingStation
+     */
+    public ObservableList<WaitingStation> getWaitingStations(){
+        return this.waitingStations;
+    }
+
+    /**
      * Metodo Getter degli handler
      * @return la lista dei gestori
      * @see Set
@@ -225,6 +284,24 @@ public class TaxiFinderData {
     }
 
     /**
+     * Metodo che aggiunge un parcheggio all'ObservableList di parcheggi
+     * @param parking Parcheggio da aggiungere
+     * @see Parking
+     */
+    public void addParking(Parking parking){
+        this.parkings.add(parking);
+    }
+
+    /**
+     * Metodo che aggiunge una postazione all'ObservableList delle postazioni
+     * @param waitingStation Postazione da aggiungere
+     * @see WaitingStation
+     */
+    public void addWaitingStation(WaitingStation waitingStation){
+        this.waitingStations.add(waitingStation);
+    }
+
+    /**
      * Metodo che aggiunge un handler alla lista diegli handler
      * @param handler Gestore da aggiungere
      * @see Handler
@@ -247,12 +324,30 @@ public class TaxiFinderData {
     }
 
     /**
-     * Metodo che rimuove un tassista dall'observablelist di tassisti
+     * Metodo che rimuove un tassista dall'Observablelist di tassisti
      * @param taxiDriver Tassista da rimuovere
      * @see TaxiDriver
      */
     public void removeTaxiDriver(TaxiDriver taxiDriver){
         this.taxiDrivers.remove(taxiDriver);
+    }
+
+    /**
+     * Metodo che rimuove un parcheggio dall'ObservableList di Parcheggi
+     * @param parking Parcheggio da rimuovere
+     * @see Parking
+     */
+    public void removeParking(Parking parking){
+        this.parkings.remove(parking);
+    }
+
+    /**
+     * Metodo che rimuove una postazione dall'ObservableList delle postazioni
+     * @param waitingStation Postazione di attesa da rimuovere
+     * @see WaitingStation
+     */
+    public void removeWaitingStation(WaitingStation waitingStation){
+        this.waitingStations.remove(waitingStation);
     }
 
     /**
@@ -292,6 +387,30 @@ public class TaxiFinderData {
         }
     }
 
+    /**
+     * Metodo atto alla memorizzazione dei parcheggi
+     * @throws IOException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di input/output
+     */
+    public void storeParkings() throws IOException{
+        // try with resources viene sfruttato per chiamare automaticamente il metodo close
+        // Creiamo uno stream serializzato di risorse
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(parkingDriverFileName))){
+            oos.writeObject(new ArrayList<>(this.parkings));
+        }
+    }
+
+    /**
+     * Metodo atto alla memorizzazione delle postazioni
+     * @throws IOException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di input/output
+     */
+    public void storeWaitingStations() throws IOException{
+        // try with resources viene sfruttato per chiamare automaticamente il metodo close
+        // Creiamo uno stream serializzato di risorse
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(waitingStationFileName))){
+            oos.writeObject(new ArrayList<>(this.waitingStations));
+        }
+    }
+
     //==================================================
     //                 Metodi LOADER
     //==================================================
@@ -317,6 +436,7 @@ public class TaxiFinderData {
      * @exception ClassNotFoundException questo metodo potrebbe non trovare la classe richiesta
      * @exception IOException Questo metodo potrebbe generare errori di input/output
      * */
+    @SuppressWarnings("unchecked")
     public void loadTaxiDrivers() throws ClassNotFoundException, IOException{
         // try with resources viene sfruttato per chiamare automaticamente il metodo close
         // sfruttiamo uno stream per deserializzare risorse
@@ -324,6 +444,38 @@ public class TaxiFinderData {
             this.taxiDrivers.setAll((ArrayList<TaxiDriver>) ois.readObject());
         } catch (EOFException e){
             System.out.println("Taxi Drivers Non presenti");
+        }
+    }
+
+    /**
+     * Metodo atto a popolare la lista dei parcheggi
+     * @exception  ClassNotFoundException questo metodo potrebbe non trovare la classe richiesta
+     * @exception IOException Questo metodo potrebbe generare errori di input/output
+     */
+    @SuppressWarnings("unchecked")
+    public void loadParkings() throws ClassNotFoundException, IOException{
+        // try with resources viene sfruttato per chiamare automaticamente il metodo close
+        // sfruttiamo uno stream per deserializzare risorse
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(parkingDriverFileName))){
+            this.parkings.setAll((ArrayList<Parking>) ois.readObject());
+        } catch (EOFException e){
+            System.out.println("Parcheggi non presenti");
+        }
+    }
+
+    /**
+     * Metodo atto a popolare la lista delle postazioni
+     * @exception  ClassNotFoundException questo metodo potrebbe non trovare la classe richiesta
+     * @exception IOException Questo metodo potrebbe generare errori di input/output
+     */
+    @SuppressWarnings("unchecked")
+    public void loadWaitingStations() throws ClassNotFoundException, IOException{
+        // try with resources viene sfruttato per chiamare automaticamente il metodo close
+        // sfruttiamo uno stream per deserializzare risorse
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(waitingStationFileName))){
+            this.waitingStations.setAll((ArrayList<WaitingStation>) ois.readObject());
+        } catch (EOFException e){
+            System.out.println("Postazioni non trovate non presenti");
         }
     }
 
