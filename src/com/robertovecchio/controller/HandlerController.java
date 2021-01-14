@@ -158,11 +158,16 @@ public class HandlerController {
         MenuItem addWaitingStation = new MenuItem("Aggiungi postazione");
         MenuItem removeWaitingStation = new MenuItem("Rimuovi Postazione");
 
+        // Inizializziamo i menuItem dei collegamenti
+        MenuItem addConnection = new MenuItem("Aggiungi collegamento");
+        MenuItem removeConnection = new MenuItem("Rimuovi Collegamento");
+
         // Inizializzo i diversi menu
         Menu home = new Menu();
         Menu taxiDriver = new Menu("Tassista");
         Menu parking = new Menu("Parcheggio");
         Menu waitingStation = new Menu("Postazione");
+        Menu connections = new Menu("Collegamento");
         Menu exit = new Menu();
 
         // Creo delle Label da inserire nei menu home e logout
@@ -189,8 +194,11 @@ public class HandlerController {
         // Incapsuliamo i menuItem di postazione nel suo menu
         waitingStation.getItems().addAll(addWaitingStation, removeWaitingStation);
 
+        // Incapsulo i menuItem di collegamento nel suo menu
+        connections.getItems().addAll(addConnection,removeConnection);
+
         // incapsuliamo i diversi menu nel menuBar
-        menuBar.getMenus().addAll(home, taxiDriver, parking, waitingStation,exit);
+        menuBar.getMenus().addAll(home, taxiDriver, parking, waitingStation, connections, exit);
 
         // Aggiungiamo un'azione quando viene premuto home
         homeLabel.setOnMouseClicked(actionEvent -> System.out.println("Home premuto"));
