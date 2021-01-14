@@ -96,11 +96,6 @@ public class AddParkingController {
                 this.capacityField.textProperty());
     }
 
-    /**
-     * Metodo che ha lo scopo di processare i dati recuperati all'interno dei vari controlli mostrati su
-     * Interfaccia utente, con l'obiettivo di aggiungere un nuovo parcheggio con associazione ai nodi annessi
-     * @return Tassista aggiunto
-     * @see TaxiDriver*/
     public Parking processAddParking(){
         String streetName = streetNameField.getText().trim().substring(0,1).toUpperCase() + streetNameField.getText().trim().substring(1);
         String streetNumber = streetNameField.getText().trim().toUpperCase();
@@ -113,13 +108,11 @@ public class AddParkingController {
                                          streetNumber, parkingName, capacity);
 
         taxiFinderData.addParking(newParking);
-        System.out.println(newParking);
 
         try {
             taxiFinderData.storeParkings();
             taxiFinderData.getGraph().addNode();
         }catch (IOException e){
-            e.printStackTrace();
             // Mostro l'errore
             Alert alert = new Alert(Alert.AlertType.ERROR, "Memorizzazione impossibile", ButtonType.OK);
             alert.setHeaderText("Impossibile memorizzare");
@@ -130,5 +123,12 @@ public class AddParkingController {
         }
 
         return newParking;
+    }
+
+    public boolean existYet(){
+        Parking parking = new Parking(new Coordinates(Double.parseDouble(latitudeField.getText().trim()),
+                                      Double.parseDouble(longitudeField.getText().trim())));
+
+        return taxiFinderData.getParkings().contains(parking);
     }
 }

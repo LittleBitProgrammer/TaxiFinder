@@ -1,8 +1,6 @@
 package com.robertovecchio.controller;
 
-import com.robertovecchio.controller.dialog.AddParkingController;
-import com.robertovecchio.controller.dialog.AddTaxiDriverController;
-import com.robertovecchio.controller.dialog.RemoveTaxiDriverController;
+import com.robertovecchio.controller.dialog.*;
 import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.graph.node.Parking;
 import com.robertovecchio.model.graph.node.WaitingStation;
@@ -73,6 +71,7 @@ public class HandlerController {
     // Observable List
     ObservableList<TaxiDriver> drivers;
     ObservableList<Parking> parkings;
+    ObservableList<WaitingStation> waitingStations;
 
 
     //==================================================
@@ -109,6 +108,7 @@ public class HandlerController {
         // Inizializziamo la collections
         this.drivers = taxiFinderData.getTaxiDrivers();
         this.parkings = taxiFinderData.getParkings();
+        this.waitingStations = taxiFinderData.getWaitingStations();
 
         // Inizializzo le TableView
         compositeTaxiDriverTableView();
@@ -339,6 +339,20 @@ public class HandlerController {
             AddParkingController addParkingController = loader.getController();
             dialog.getDialogPane().lookupButton(ButtonType.APPLY).disableProperty().bind(addParkingController.invalidInputProperty());
 
+            // Gestione Errori
+            dialog.getDialogPane().lookupButton(ButtonType.APPLY).addEventFilter(ActionEvent.ACTION,
+                    event->{
+                        if (addParkingController.existYet()){
+                            Alert alert = new Alert(Alert.AlertType.WARNING, "Già esistente", ButtonType.OK);
+                            alert.setHeaderText("Parcheggio esistente");
+                            alert.setContentText("Hai inserito un parcheggio già inserito");
+
+                            Optional<ButtonType> result = alert.showAndWait();
+
+                            event.consume();
+                        }
+            });
+
             // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
             Optional<ButtonType> result = dialog.showAndWait();
 
@@ -349,33 +363,100 @@ public class HandlerController {
             }
         });
 
+        //==================================================
+        //                 Rimuovi Parcheggio
+        //==================================================
+
         // Aggiungiamo un'azione quando viene cliccato rimuovi parcheggio
         removeParking.setOnAction(actionEvent -> {
+            // creiamo un nuovo dialog da visualizzare
+            Dialog<ButtonType> dialog = new Dialog<>();
+
+            // inizializziamo il proprietario
+            dialog.initOwner(this.vBoxContainer.getScene().getWindow());
+
+            // Impostiamo il titolo del dialog
+            dialog.setTitle("Rimuovi un Parcheggio");
+
+            // Carichiamo il file di iterfaccia per il dialog
+            FXMLLoader loader = new FXMLLoader();
+
             try{
-                UtilityController.showDialog(this.vBoxContainer.getScene().getWindow(),
-                        "Rimuovi un parcheggio",
-                        removeParkingControllerFile,
-                        "errore durante il caricamento del dialog",
-                        ()->{
-                            System.out.println("Callable chiamata su OK");
-                        },ButtonType.OK, ButtonType.CANCEL);
-            }catch (Exception e){
+                Parent root = loader.load(new FileInputStream(removeParkingControllerFile));
+                dialog.getDialogPane().setContent(root);
+            }catch (IOException e){
+                System.out.println("Errore di caricamento dialog");
                 e.printStackTrace();
+            }
+
+            // Aggiungiamo il bottone OK e CANCEL al dialogPane
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
+
+            // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+            Optional<ButtonType> result = dialog.showAndWait();
+
+            RemoveParkingController removeParkingController = loader.getController();
+
+            // Gestiamo il caso in cui l'utente abbia premuto OK
+            if (result.isPresent() && result.get() == ButtonType.APPLY){
+                removeParkingController.processRemoveParking();
+                this.tableParking.getSelectionModel().selectFirst();
             }
         });
 
+        //==================================================
+        //                 Aggiungi Postazione
+        //==================================================
+
         // Aggiungiamo un'azione quando viene cliccato aggiungi postazione
         addWaitingStation.setOnAction(actionEvent -> {
+            // creiamo un nuovo dialog da visualizzare
+            Dialog<ButtonType> dialog = new Dialog<>();
+
+            // inizializziamo il proprietario
+            dialog.initOwner(this.vBoxContainer.getScene().getWindow());
+
+            // Impostiamo il titolo del dialog
+            dialog.setTitle("Aggiungi un Postazione");
+
+            // Carichiamo il file di iterfaccia per il dialog
+            FXMLLoader loader = new FXMLLoader();
+
             try{
-                UtilityController.showDialog(this.vBoxContainer.getScene().getWindow(),
-                        "Aggiungi una postazione",
-                        addWaitingStationControllerFile,
-                        "errore durante il caricamento del dialog",
-                        ()->{
-                            System.out.println("Callable chiamata su OK");
-                        },ButtonType.OK, ButtonType.CANCEL);
-            }catch (Exception e){
+                Parent root = loader.load(new FileInputStream(addWaitingStationControllerFile));
+                dialog.getDialogPane().setContent(root);
+            }catch (IOException e){
+                System.out.println("Errore di caricamento dialog");
                 e.printStackTrace();
+            }
+
+            // Aggiungiamo il bottone OK e CANCEL al dialogPane
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
+
+            AddWaitingStationController addWaitingStationController = loader.getController();
+            dialog.getDialogPane().lookupButton(ButtonType.APPLY).disableProperty().bind(addWaitingStationController.invalidInputProperty());
+
+            // Gestione Errori
+            dialog.getDialogPane().lookupButton(ButtonType.APPLY).addEventFilter(ActionEvent.ACTION,
+                    event->{
+                        if (addWaitingStationController.existYet()){
+                            Alert alert = new Alert(Alert.AlertType.WARNING, "Già esistente", ButtonType.OK);
+                            alert.setHeaderText("Postazione esistente");
+                            alert.setContentText("Hai inserito una postazione già inserito");
+
+                            Optional<ButtonType> result = alert.showAndWait();
+
+                            event.consume();
+                        }
+                    });
+
+            // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+            Optional<ButtonType> result = dialog.showAndWait();
+
+            // Gestiamo il caso in cui l'utente abbia premuto OK
+            if (result.isPresent() && result.get() == ButtonType.APPLY){
+                WaitingStation newWaiting = addWaitingStationController.processAddWaitingStation();
+                this.tableWaitingStation.getSelectionModel().select(newWaiting);
             }
         });
 
@@ -631,6 +712,9 @@ public class HandlerController {
 
         // Impostiamo altezza base
         this.tableWaitingStation.setPrefHeight(3096);
+
+        // Impostiamo gli item da visualizzare
+        this.tableWaitingStation.setItems(this.waitingStations);
     }
 
     //==================================================

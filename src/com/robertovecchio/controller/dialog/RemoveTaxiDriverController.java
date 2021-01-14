@@ -94,7 +94,9 @@ public class RemoveTaxiDriverController {
 
         // Popoliamo i diversi campi diversamente ad ogni nuovo taxi driver selezionato
         this.taxiDriverComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            populateFields(newValue);
+            if (newValue != null){
+                populateFields(newValue);
+            }
         });
     }
 

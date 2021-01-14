@@ -76,6 +76,10 @@ public class Parking extends WaitingStation implements Serializable {
         this.taxis = new PriorityQueue<>();
     }
 
+    public Parking(Coordinates coordinates){
+        super(coordinates);
+    }
+
     //==================================================
     //                      Setter
     //==================================================

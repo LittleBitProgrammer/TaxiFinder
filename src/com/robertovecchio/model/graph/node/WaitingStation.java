@@ -44,6 +44,10 @@ public class WaitingStation extends Node implements Serializable {
         this.stationName = stationName;
     }
 
+    public WaitingStation(Coordinates coordinates){
+        super(coordinates);
+    }
+
     //==================================================
     //                      Setter
     //==================================================

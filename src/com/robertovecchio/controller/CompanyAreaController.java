@@ -120,6 +120,7 @@ public class CompanyAreaController {
                 // Carichiamo le liste inerenti all'admin su di un nuovo Thread
                 taxiFinderData.loadTaxiDrivers();
                 taxiFinderData.loadParkings();
+                taxiFinderData.loadWaitingStations();
                 taxiFinderData.setCurrentUser(handler);
 
                 // Cambiamo Stage
