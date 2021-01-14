@@ -124,7 +124,7 @@ public class CompanyAreaController {
                 taxiFinderData.setCurrentUser(handler);
 
                 // Cambiamo Stage
-                UtilityController.changeStageTo(handlerControllerFile,
+                UtilityController.navigateTo(handlerControllerFile,
                                                 String.format("%s %s - %s", handler.getFirstName(),
                                                                             handler.getLastName(),
                                                                             handler.getUsername()),

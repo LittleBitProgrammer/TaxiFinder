@@ -527,7 +527,7 @@ public class HandlerController {
         });
 
         // Aggiungiamo un'azione quando Logout viene premuto
-        exitLabel.setOnMouseClicked(actionEvent -> UtilityController.changeStageTo(mainControllerFile, "Taxi Finder",
+        exitLabel.setOnMouseClicked(actionEvent -> UtilityController.navigateTo(mainControllerFile, "Taxi Finder",
                                   "Errore reperimento interfaccia", exitLabel));
 
         return menuBar;
