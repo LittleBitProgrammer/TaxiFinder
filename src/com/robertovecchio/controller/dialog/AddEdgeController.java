@@ -135,7 +135,7 @@ public class AddEdgeController {
 
    public boolean validateFields(){
         WaitingStation first = fromComboBox.getSelectionModel().getSelectedItem();
-        WaitingStation second = fromComboBox.getSelectionModel().getSelectedItem();
+        WaitingStation second = toComboBox.getSelectionModel().getSelectedItem();
 
         DistanceHandler distanceHandler = new DistanceHandler(first.getCoordinates(), second.getCoordinates());
 
@@ -146,18 +146,16 @@ public class AddEdgeController {
 
     public void processAddEdge(){
         WaitingStation first = fromComboBox.getSelectionModel().getSelectedItem();
-        WaitingStation second = fromComboBox.getSelectionModel().getSelectedItem();
+        WaitingStation second = toComboBox.getSelectionModel().getSelectedItem();
 
         DistanceHandler distanceHandler = new DistanceHandler(first.getCoordinates(), second.getCoordinates());
 
-        //taxiFinderData.getGraph().addEdge(first, second, 10, distanceHandler.calculateDistance());
+        taxiFinderData.getGraph().getEdges().add(new Edge(first, second, distanceHandler.calculateDistance()));
 
         try {
             taxiFinderData.storeGraph();
-            taxiFinderData.getGraph().printGraph();
         }catch (IOException e){
-            //e.printStackTrace();
-            // Mostro l'errore
+            // Mostriamo l'errore
             Alert alert = new Alert(Alert.AlertType.ERROR, "Memorizzazione impossibile", ButtonType.OK);
             alert.setHeaderText("Impossibile memorizzare");
             alert.setContentText("C'è Stato un'errore durante la memorizzazione, forse non hai opportunamente inserito" +

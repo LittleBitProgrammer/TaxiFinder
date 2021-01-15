@@ -36,7 +36,7 @@ public class TaxiFinderData {
     private final static String taxiDriverFileName = "files/taxiDriver.txt";         // Percorso file dei tassisti
     private final static String parkingDriverFileName = "files/parking.txt";         // Percorso file dei parcheggi
     private final static String waitingStationFileName = "files/waitingStation.txt"; // Percorso file delle postazioni
-    private final static String graphFileName = "files/graph.txt";                    // Percorso file del grafo
+    private final static String graphFileName = "files/graph.txt";                   // Percorso file del grafo
 
     /**
      * Map utile ad associare ad ogni Stringa un enum
@@ -79,7 +79,15 @@ public class TaxiFinderData {
      * @see Handler
      */
     private Set<Handler> handlers;
+    /**
+     * Variabile che cappresenta l'utente corrente
+     * @see UserAccount
+     */
     private UserAccount currentUser;
+    /**
+     * Variabile che rappresenta il grafo
+     * @see WeightedGraph
+     */
     private WeightedGraph graph;
 
     //==================================================
