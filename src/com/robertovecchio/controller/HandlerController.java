@@ -76,6 +76,8 @@ public class HandlerController {
 
     // ContextMenu
     private ContextMenu contextMenu;
+    private ContextMenu roadContextMenu;
+    private ContextMenu roadWaitingContextMenu;
 
 
     //==================================================
@@ -100,6 +102,7 @@ public class HandlerController {
     private static final String showVehicleControllerFile = "src/com/robertovecchio/view/fxml/dialog/showVehicle.fxml";
     private static final String addConnectionControllerFile = "src/com/robertovecchio/view/fxml/dialog/addEdge.fxml";
     private static final String removeConnectionControllerFile = "src/com/robertovecchio/view/fxml/dialog/removeEdge.fxml";
+    private static final String showConnectionsControllerFile = "src/com/robertovecchio/view/fxml/dialog/showConnections.fxml";
 
     //==================================================
     //               Inizializzazione
@@ -114,17 +117,35 @@ public class HandlerController {
 
         // Inizializziamo un contextMenu
         contextMenu = new ContextMenu();
+        roadContextMenu = new ContextMenu();
+        roadWaitingContextMenu = new ContextMenu();
 
         // Inizializziamo un menu Item
         MenuItem menuItem = new MenuItem("Mostra veicolo");
+        MenuItem showItem = new MenuItem("Mostra Collegamenti parcheggio");
+        MenuItem showRoadItem = new MenuItem("Mostra Collegamenti postazione");
 
         menuItem.setOnAction(actionEvent -> {
             TaxiDriver taxiDriver = tableTaxiDriver.getSelectionModel().getSelectedItem();
             this.showVehicle(taxiDriver);
         });
 
+        showItem.setOnAction(actionEvent -> {
+            WaitingStation waitingStation = tableParking.getSelectionModel().getSelectedItem();
+            this.showConnections(waitingStation);
+        });
+
+        showRoadItem.setOnAction(actionEvent -> {
+            WaitingStation waitingStation = tableWaitingStation.getSelectionModel().getSelectedItem();
+            this.showConnections(waitingStation);
+        });
+
+
+
         // Aggiungiamo i menuItem al contextMenu
         contextMenu.getItems().add(menuItem);
+        roadContextMenu.getItems().add(showItem);
+        roadWaitingContextMenu.getItems().add(showRoadItem);
 
         // Inizializziamo la collections
         this.drivers = taxiFinderData.getTaxiDrivers();
@@ -856,6 +877,17 @@ public class HandlerController {
         // Impostiamo una larghezza base
         this.tableParking.setPrefWidth(2048);
 
+        tableParking.setRowFactory(taxiDriverTableView -> {
+            final TableRow<Parking> row = new TableRow<>();
+            // Impostiamo il contextmenu su di una row, ma usiamo il binding solo se non è vuota
+            row.contextMenuProperty().bind(
+                    Bindings.when(row.emptyProperty())
+                            .then((ContextMenu)null)
+                            .otherwise(roadContextMenu)
+            );
+            return row ;
+        });
+
         // Impostiamo gli item da visualizzare
         this.tableParking.setItems(this.parkings);
     }
@@ -912,6 +944,17 @@ public class HandlerController {
 
         // Impostiamo altezza base
         this.tableWaitingStation.setPrefHeight(3096);
+
+        tableWaitingStation.setRowFactory(taxiDriverTableView -> {
+            final TableRow<WaitingStation> row = new TableRow<>();
+            // Impostiamo il contextmenu su di una row, ma usiamo il binding solo se non è vuota
+            row.contextMenuProperty().bind(
+                    Bindings.when(row.emptyProperty())
+                            .then((ContextMenu)null)
+                            .otherwise(roadWaitingContextMenu)
+            );
+            return row ;
+        });
 
         // Impostiamo gli item da visualizzare
         this.tableWaitingStation.setItems(this.waitingStations);
@@ -1262,6 +1305,38 @@ public class HandlerController {
                 }
             }
         });
+    }
+
+    private void showConnections(WaitingStation waitingStation){
+        // creiamo un nuovo dialog da visualizzare
+        Dialog<ButtonType> dialog = new Dialog<>();
+
+        // inizializziamo il proprietario
+        dialog.initOwner(this.vBoxContainer.getScene().getWindow());
+
+        // Impostiamo il titolo del dialog
+        dialog.setTitle(String.format("Postazione %s", waitingStation.getStationName()));
+
+        // Carichiamo il file di iterfaccia per il dialog
+        FXMLLoader loader = new FXMLLoader();
+
+        try{
+            Parent root = loader.load(new FileInputStream(showConnectionsControllerFile));
+            dialog.getDialogPane().setContent(root);
+        }catch (IOException e){
+            System.out.println("Errore di caricamento dialog");
+            e.printStackTrace();
+        }
+
+        ShowConnectionsController showConnectionsController = loader.getController();
+        showConnectionsController.initData(waitingStation);
+
+        // Aggiungiamo il bottone OK e CANCEL al dialogPane
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK);
+
+        // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+        Optional<ButtonType> result = dialog.showAndWait();
+        System.out.println(result);
     }
 
     private void showVehicle(TaxiDriver taxiDriver){
