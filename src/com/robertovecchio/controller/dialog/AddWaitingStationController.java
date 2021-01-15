@@ -98,7 +98,7 @@ public class AddWaitingStationController {
 
         try {
             taxiFinderData.storeWaitingStations();
-            //taxiFinderData.getGraph().addNode();
+            taxiFinderData.getGraph().getVertexes().add(waitingStation);
             taxiFinderData.storeGraph();
         }catch (IOException e){
             // Mostro l'errore
@@ -108,6 +108,7 @@ public class AddWaitingStationController {
                     "i dati");
 
             Optional<ButtonType> result = alert.showAndWait();
+            System.out.println(result);
         }
         return waitingStation;
     }

@@ -116,12 +116,11 @@ public class RemoveWaitingStationController {
         WaitingStation waitingStation = this.waitingStationComboBox.getSelectionModel().getSelectedItem();
 
         taxiFinderData.removeWaitingStation(waitingStation);
-        //taxiFinderData.getGraph().removeNode(waitingStation);
+        taxiFinderData.getGraph().getVertexes().remove(waitingStation);
 
         try {
             taxiFinderData.storeWaitingStations();
             taxiFinderData.storeGraph();
-            taxiFinderData.getGraph().printGraph();
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Operazione impossibile", ButtonType.OK);
             alert.setHeaderText("Il parcheggio non può essere eliminato");

@@ -110,7 +110,7 @@ public class AddParkingController {
 
         try {
             taxiFinderData.storeParkings();
-            //taxiFinderData.getGraph().addNode();
+            taxiFinderData.getGraph().getVertexes().add(newParking);
             taxiFinderData.storeGraph();
         }catch (IOException e){
             // Mostro l'errore
