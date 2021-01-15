@@ -80,7 +80,7 @@ public class TaxiFinderData {
      */
     private Set<Handler> handlers;
     private UserAccount currentUser;
-    private WeightedGraph<Node> graph;
+    private WeightedGraph graph;
 
     //==================================================
     //                   Costruttori
@@ -98,8 +98,8 @@ public class TaxiFinderData {
         this.handlers = new HashSet<>();
         this.genders = new HashMap<>();
 
-        // Inizializziamo il grafo
-        graph = new WeightedGraph<>();
+
+        graph = new WeightedGraph(new ArrayList<>(), new ArrayList<>());
 
         // Popolo l'hasmap
         genders.put("UOMO", GenderType.MALE);
@@ -203,7 +203,7 @@ public class TaxiFinderData {
      * @see WeightedGraph
      * @see Node
      */
-    public void setGraph(WeightedGraph<Node> graph){
+    public void setGraph(WeightedGraph graph){
         this.graph = graph;
     }
 
@@ -284,7 +284,7 @@ public class TaxiFinderData {
      * @see WeightedGraph
      * @see Node
      */
-    public WeightedGraph<Node> getGraph(){
+    public WeightedGraph getGraph(){
         return this.graph;
     }
 
@@ -527,7 +527,7 @@ public class TaxiFinderData {
         // try with resources viene sfruttato per chiamare automaticamente il metodo close
         // sfruttiamo uno stream per deserializzare risorse
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(graphFileName))){
-            this.setGraph((WeightedGraph<Node>) ois.readObject());
+            this.setGraph((WeightedGraph) ois.readObject());
         } catch (EOFException e){
             System.out.println("Grafo non presente");
         }

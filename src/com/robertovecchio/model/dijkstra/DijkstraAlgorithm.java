@@ -1,4 +1,4 @@
-package com.robertovecchio.model.dijkstra.templateMethod;
+package com.robertovecchio.model.dijkstra;
 
 import com.robertovecchio.model.graph.Graphable;
 import com.robertovecchio.model.graph.edge.observer.Edge;
@@ -97,7 +97,7 @@ public class DijkstraAlgorithm {
      * @see Node
      * @see Integer
      */
-    private Map<Node, Integer> distance;
+    private Map<Node, Double> distance;
 
     //==================================================
     //                 Costruttori
@@ -131,7 +131,7 @@ public class DijkstraAlgorithm {
         predecessors = new HashMap<>();
 
         // Inizializziamo la distanza dalla sorgente a 0 come descritto nell'algoritmo
-        distance.put(source,0);
+        distance.put(source,0D);
 
         // Inseriamo la sorgente negli unsettled come da algoritmo
         unsettledNode.add(source);
@@ -187,13 +187,13 @@ public class DijkstraAlgorithm {
      * @return distanza dal nodo
      * @see Node
      */
-    private int getShortestDistance(Node destination){
+    private double getShortestDistance(Node destination){
         // Inizializziamo d con la distanza presa dal valore della chiave presente nell'hashmap distance
-        Integer d = distance.get(destination);
+        Double d = distance.get(destination);
 
         // Se D è nullo ritorna "infinito"
         if (d == null){
-            return Integer.MAX_VALUE;
+            return Double.MAX_VALUE;
         }else {
             // Altrimenti ritorna il valore inizializzato precedentemente
             return d;
@@ -265,7 +265,7 @@ public class DijkstraAlgorithm {
      * @param target Nodo Destinazione
      * @return la distanza tra i due  nodi
      */
-    private int getDistance(Node node, Node target){
+    private double getDistance(Node node, Node target){
         // Per ogni edge nella lista degli edge
         for (Edge edge : edges){
             // Se sorgente e destinazione coincidono

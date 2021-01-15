@@ -42,7 +42,7 @@ public class Edge extends ArchObserver implements Serializable {
     /**
      * Peso del nodo
      */
-    private final int weight;
+    private final double weight;
 
     //==================================================
     //                  Costruttori
@@ -55,7 +55,7 @@ public class Edge extends ArchObserver implements Serializable {
      * @param weight peso dell'edge
      * @see Node
      */
-    public Edge(Node source, Node destination, int weight){
+    public Edge(Node source, Node destination, double weight){
         this.source = source;
         this.destination = destination;
         this.weight = weight;
@@ -89,7 +89,7 @@ public class Edge extends ArchObserver implements Serializable {
      * Metodo Getter del peso di un edge
      * @return Peso dell'edge
      */
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 

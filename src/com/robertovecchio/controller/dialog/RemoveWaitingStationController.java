@@ -116,7 +116,7 @@ public class RemoveWaitingStationController {
         WaitingStation waitingStation = this.waitingStationComboBox.getSelectionModel().getSelectedItem();
 
         taxiFinderData.removeWaitingStation(waitingStation);
-        taxiFinderData.getGraph().removeNode(waitingStation);
+        //taxiFinderData.getGraph().removeNode(waitingStation);
 
         try {
             taxiFinderData.storeWaitingStations();

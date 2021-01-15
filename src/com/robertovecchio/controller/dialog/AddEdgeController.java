@@ -139,7 +139,7 @@ public class AddEdgeController {
 
         DistanceHandler distanceHandler = new DistanceHandler(first.getCoordinates(), second.getCoordinates());
 
-        Edge<WaitingStation> edge = new Edge<>(first, second, 10, distanceHandler.calculateDistance());
+        Edge edge = new Edge(first, second, distanceHandler.calculateDistance());
         return this.fromComboBox.getSelectionModel().getSelectedItem().equals(this.toComboBox.getSelectionModel().getSelectedItem()) ||
                 taxiFinderData.getGraph().contains(edge);
     }
@@ -150,7 +150,7 @@ public class AddEdgeController {
 
         DistanceHandler distanceHandler = new DistanceHandler(first.getCoordinates(), second.getCoordinates());
 
-        taxiFinderData.getGraph().addEdge(first, second, 10, distanceHandler.calculateDistance());
+        //taxiFinderData.getGraph().addEdge(first, second, 10, distanceHandler.calculateDistance());
 
         try {
             taxiFinderData.storeGraph();

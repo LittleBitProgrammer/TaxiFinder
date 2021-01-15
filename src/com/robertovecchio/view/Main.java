@@ -57,11 +57,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        // Debug Grafo
-        System.out.println("Programma Lanciato");
-        System.out.println("\n\nDebug Grafo\n");
-        System.out.println("Numero nodi: " + taxiFinderData.getGraph().getNumberOfNode());
-        System.out.println("\nGrafo: \n");
+        // DEBUG GRAFO
+
+        taxiFinderData.getGraph().printGraph();
 
         /* Parent è il nodo padre ottenuto attraverso il valore di ritorno del metodo statico load, sfruttando
         *  la classe FXML loader */

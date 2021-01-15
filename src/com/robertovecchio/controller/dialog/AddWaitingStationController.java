@@ -98,7 +98,7 @@ public class AddWaitingStationController {
 
         try {
             taxiFinderData.storeWaitingStations();
-            taxiFinderData.getGraph().addNode();
+            //taxiFinderData.getGraph().addNode();
             taxiFinderData.storeGraph();
         }catch (IOException e){
             // Mostro l'errore

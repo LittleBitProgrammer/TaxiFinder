@@ -119,7 +119,7 @@ public class RemoveParkingController {
         Parking parking = this.parkingComboBox.getSelectionModel().getSelectedItem();
 
         taxiFinderData.removeParking(parking);
-        taxiFinderData.getGraph().removeNode(parking);
+        //taxiFinderData.getGraph().removeNode(parking);
 
         try {
             taxiFinderData.storeParkings();
