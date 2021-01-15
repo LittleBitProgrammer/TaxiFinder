@@ -1,6 +1,7 @@
 package com.robertovecchio.controller.dialog;
 
 import com.robertovecchio.model.db.TaxiFinderData;
+import com.robertovecchio.model.graph.edge.observer.Edge;
 import com.robertovecchio.model.graph.node.Parking;
 import com.robertovecchio.model.graph.node.WaitingStation;
 import javafx.fxml.FXML;
@@ -117,6 +118,8 @@ public class RemoveWaitingStationController {
 
         taxiFinderData.removeWaitingStation(waitingStation);
         taxiFinderData.getGraph().getVertexes().remove(waitingStation);
+
+        taxiFinderData.getGraph().getEdges().removeIf(edge -> edge.getSource().equals(waitingStation));
 
         try {
             taxiFinderData.storeWaitingStations();
