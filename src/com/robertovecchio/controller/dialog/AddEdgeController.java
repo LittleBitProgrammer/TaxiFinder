@@ -13,7 +13,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.util.StringConverter;
-
 import java.io.IOException;
 import java.util.Optional;
 

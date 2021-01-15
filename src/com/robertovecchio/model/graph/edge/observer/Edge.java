@@ -1,6 +1,7 @@
 package com.robertovecchio.model.graph.edge.observer;
 
 import com.robertovecchio.model.graph.node.Node;
+import com.robertovecchio.model.graph.node.WaitingStation;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -115,10 +116,6 @@ public class Edge extends ArchObserver implements Serializable {
 
     @Override
     public String toString() {
-        return "Edge{" +
-                "source=" + source +
-                ", destination=" + destination +
-                ", weight=" + weight +
-                '}';
+        return String.format("%s ========================> %s\n", source.getCoordinates(), destination.getCoordinates());
     }
 }
