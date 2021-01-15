@@ -1,4 +1,4 @@
-package com.robertovecchio.model.graph;
+package com.robertovecchio.model.graph.edge;
 
 import com.robertovecchio.model.graph.node.Coordinates;
 

@@ -1,7 +1,9 @@
-package com.robertovecchio.model.graph.observer;
+package com.robertovecchio.model.graph.edge.observer;
 
 import com.robertovecchio.model.graph.node.Node;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -11,31 +13,84 @@ import java.util.Objects;
  * @author robertovecchio
  * @version 1.0
  * @since 14/01/2021
+ * @see ArchObserver
+ * @see Serializable
  */
-public class Edge extends ArchObserver {
-    private Node destination;
-    private int weight;
+public class Edge extends ArchObserver implements Serializable {
 
-    public Edge(T destination, int weight){
+    //==================================================
+    //               Attributi statici
+    //==================================================
+
+    /** Tipo numerico Long utile alla serializzazione*/
+    @Serial
+    private final static long serialVersionUID = 12L;
+
+    //==================================================
+    //               Variabili d'istanza
+    //==================================================
+    /**
+     * Nodo sorgente dell'edge
+     * @see Node
+     */
+    private final Node source;
+    /**
+     * Nodo di destinazione dell'edge
+     * @see Node
+     * */
+    private final Node destination;
+    /**
+     * Peso del nodo
+     */
+    private final int weight;
+
+    //==================================================
+    //                  Costruttori
+    //==================================================
+
+    /**
+     * Metodo Costruttore di un edge
+     * @param source Nodo sorgente
+     * @param destination Nodo Destinazione
+     * @param weight peso dell'edge
+     * @see Node
+     */
+    public Edge(Node source, Node destination, int weight){
+        this.source = source;
         this.destination = destination;
         this.weight = weight;
 
     }
 
-    public T getDestination() {
+    //==================================================
+    //                  Getter
+    //==================================================
+
+
+    /**
+     * Metodo getter del nodo sorgente
+     * @return Nodo Sorgente
+     * @see Node
+     */
+    public Node getSource() {
+        return source;
+    }
+
+    /**
+     * Metodo getter del nodo di destinazione
+     * @return Nodo di destinazione
+     * @see Node
+     */
+    public Node getDestination() {
         return destination;
     }
 
-    public void setDestination(T destination) {
-        this.destination = destination;
-    }
-
+    /**
+     * Metodo Getter del peso di un edge
+     * @return Peso dell'edge
+     */
     public int getWeight() {
         return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
     }
 
     @Override
@@ -47,13 +102,23 @@ public class Edge extends ArchObserver {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Edge)) return false;
-        Edge<?> edge = (Edge<?>) o;
+        Edge edge = (Edge) o;
         return weight == edge.weight &&
-                Objects.equals(destination, edge.destination);
+                source.equals(edge.source) &&
+                destination.equals(edge.destination);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(destination, weight);
+        return Objects.hash(source, destination, weight);
+    }
+
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "source=" + source +
+                ", destination=" + destination +
+                ", weight=" + weight +
+                '}';
     }
 }

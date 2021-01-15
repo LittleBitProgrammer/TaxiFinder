@@ -1,4 +1,4 @@
-package com.robertovecchio.model.graph.observer;
+package com.robertovecchio.model.graph.edge.observer;
 
 public interface Sensorable {
      void attach(ArchObserver archObserver);
