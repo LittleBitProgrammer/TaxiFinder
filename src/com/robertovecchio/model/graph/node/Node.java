@@ -1,12 +1,12 @@
 package com.robertovecchio.model.graph.node;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Questa classe ha la responsabilità di astrarre un nodo generico, quindi astratto, il quale non potrà essere
  * istanziato ma utile a definire attributi comuni alle classi che erediteranno da quest'ultima, andando a definire
- * di fatto un nodo di un grafo.
+ * di fatto un nodo di un grafo, ovvero una posizione discreta.
  * @author robertovecchio
  * @version 1.0
  * @since 07/01/2021
@@ -61,16 +61,9 @@ public abstract class Node implements Serializable {
         return this.coordinates;
     }
 
-    /**
-     * Override del metodo toString atto a generare una stringa dato un oggetto del tipo Node
-     * @return Stringa dell'oggetto di tipo Node
-     * */
-    @Override
-    public String toString() {
-        return "Node{" +
-                "coordinates=" + coordinates +
-                '}';
-    }
+    //==================================================
+    //                      Metodi
+    //==================================================
 
     /**
      * Override del metodo equals atto a constatare l'uguaglianza di due oggetti di tipo Node
@@ -92,4 +85,16 @@ public abstract class Node implements Serializable {
     public int hashCode() {
         return Objects.hash(coordinates);
     }
+
+    /**
+     * Override del metodo toString atto a generare una stringa dato un oggetto del tipo Node
+     * @return Stringa dell'oggetto di tipo Node
+     * */
+    @Override
+    public String toString() {
+        return "Node{" +
+                "coordinates=" + coordinates +
+                '}';
+    }
+
 }

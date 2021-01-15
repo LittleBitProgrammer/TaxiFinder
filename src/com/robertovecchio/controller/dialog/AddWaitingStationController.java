@@ -2,7 +2,6 @@ package com.robertovecchio.controller.dialog;
 
 import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.graph.node.Coordinates;
-import com.robertovecchio.model.graph.node.Parking;
 import com.robertovecchio.model.graph.node.WaitingStation;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanExpression;
@@ -99,6 +98,8 @@ public class AddWaitingStationController {
 
         try {
             taxiFinderData.storeWaitingStations();
+            taxiFinderData.getGraph().addNode();
+            taxiFinderData.storeGraph();
         }catch (IOException e){
             // Mostro l'errore
             Alert alert = new Alert(Alert.AlertType.ERROR, "Memorizzazione impossibile", ButtonType.OK);

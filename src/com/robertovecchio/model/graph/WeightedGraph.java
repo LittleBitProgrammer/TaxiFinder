@@ -1,80 +1,105 @@
 package com.robertovecchio.model.graph;
 
-import com.robertovecchio.model.graph.observer.Edge;
+import com.robertovecchio.model.graph.edge.observer.Edge;
+import com.robertovecchio.model.graph.node.Node;
 
+import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-public class WeightedGraph<T> implements Serializable {
+/**
+ * Questa classe ha il semplice scopo di rappresentare un grafo (nel nostro caso pesato e direzionale). Un grafo
+ * è composto da nodi e linee direzionali che definiscono una connessione tra un nodo e l'altro. La descrizione
+ * matematica per un grafo è G={V,E}. L'ordine di un grafo è il numero di nodi, mentre la sua grandezza rappresenta
+ * il numero di linee.
+ *
+ * @author robertovecchio
+ * @version 1.0
+ * @since 14/01/2020
+ */
+public class WeightedGraph implements Serializable, Graphable {
 
-    // Tipo numerico Long utile alla serializzazione
+    //==================================================
+    //               Attributi statici
+    //==================================================
+
+    /**Tipo numerico Long utile alla serializzazione*/
+    @Serial
     private final static long serialVersionUID = 6L;
 
-    int vertices;  // numero vertici
-    List<LinkedList<Edge<T>>> adjacencylist; // array di linkedList
+    //==================================================
+    //               Variabili d'istanza
+    //==================================================
 
-    public WeightedGraph(int vertices){
-        this.vertices = vertices;
-        adjacencylist = new ArrayList<>();
+    /**
+     * Un Grafo è un aggregato di nodi
+     * @see List
+     * @see Node*/
+    private final List<Node> vertexes;
+    /**
+     * Un Grafo è un aggregato di edge
+     * @see List
+     * @see Edge*/
+    private final List<Edge> edges;
 
-        // Inizializziamo una linked list per ogni vertice
-        for (int i = 0; i <vertices ; i++) {
-            adjacencylist.add(new LinkedList<>());
-        }
+    //==================================================
+    //                 Costruttori
+    //==================================================
+
+    /**
+     * Costruttore di un Grafo
+     * @param vertexes Lista dei nodi presenti un grafo
+     * @param edges Lista dei collegamenti in un grafo
+     * @see List
+     * @see Node
+     * @see Edge
+     */
+    public WeightedGraph(List<Node> vertexes, List<Edge> edges){
+        this.vertexes = vertexes;
+        this.edges = edges;
     }
 
-    public WeightedGraph(){
-        adjacencylist = new ArrayList<>();
+    //==================================================
+    //                   Getter
+    //==================================================
+
+    @Override
+    public List<Node> getVertexes() {
+        return vertexes;
     }
 
-    public int getNumberOfNode(){
-        return this.adjacencylist.size();
+    @Override
+    public List<Edge> getEdges() {
+        return edges;
     }
 
-    public void addNode(){
-        adjacencylist.add(new LinkedList<>());
+
+    //==================================================
+    //                  Metodi
+    //==================================================
+
+    @Override
+    public int getOrder(){
+        return this.vertexes.size();
     }
 
-    public void removeNode(T node){
-        for (int i = 0; i < adjacencylist.size(); i++) {
-            LinkedList<Edge<T>> linked = adjacencylist.get(i);
-            if (!linked.isEmpty() && linked.get(i).getSource().equals(node)) {
-                this.adjacencylist.remove(i);
-                break;
-            }
-        }
+    @Override
+    public int getLength(){
+        return this.edges.size();
     }
 
-    public void addEdge(T source, T destination, int weight, double lengthWeight) {
-        boolean isContained = false;
-
-        Edge<T> edge = new Edge<>(source, destination, weight, lengthWeight);
-        for (int i = 0; i < adjacencylist.size(); i++){
-            LinkedList<Edge<T>> linked = adjacencylist.get(i);
-            if (linked.get(i).getSource().equals(source)){
-                linked.addFirst(edge);
-                isContained = true;
-                break;
-            }
-        }
-
-        if (!isContained){
-            for (LinkedList<Edge<T>> linked : adjacencylist) {
-                if (linked.isEmpty()) {
-                    linked.addFirst(edge);
-                }
-            }
-        }
+    @Override
+    public boolean contains(Node node){
+        return this.vertexes.contains(node);
     }
 
+    @Override
+    public boolean contains(Edge edge){
+        return this.edges.contains(edge);
+    }
+
+    @Override
     public void printGraph(){
-        for (LinkedList<Edge<T>> linkedList : this.adjacencylist){
-            for (Edge<T> edge: linkedList){
-                System.out.println("Vertex " + edge.getSource() + "is connected to " + edge.getDestination() +
-                        " With weight " + edge.getWeight());
-            }
-        }
+        System.out.println("Grafo: \n" + "Vertici:\n" + this.vertexes + "\nCollegamenti:\n" + this.edges);
     }
 }

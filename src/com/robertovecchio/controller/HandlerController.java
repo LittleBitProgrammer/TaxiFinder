@@ -98,6 +98,8 @@ public class HandlerController {
     private static final String addWaitingStationControllerFile = "src/com/robertovecchio/view/fxml/dialog/addWaitingstation.fxml";
     private static final String removeWaitingStationControllerFile = "src/com/robertovecchio/view/fxml/dialog/removeWaitingStation.fxml";
     private static final String showVehicleControllerFile = "src/com/robertovecchio/view/fxml/dialog/showVehicle.fxml";
+    private static final String addConnectionControllerFile = "src/com/robertovecchio/view/fxml/dialog/addEdge.fxml";
+    private static final String removeConnectionControllerFile = "src/com/robertovecchio/view/fxml/dialog/removeEdge.fxml";
 
     //==================================================
     //               Inizializzazione
@@ -531,6 +533,102 @@ public class HandlerController {
             if (result.isPresent() && result.get() == ButtonType.APPLY){
                 removeWaitingStationController.processRemoveWaitingStation();
                 this.tableWaitingStation.getSelectionModel().selectFirst();
+            }
+        });
+
+        //==================================================
+        //                 Aggiungi Collegamento
+        //==================================================
+
+        // Aggiungiamo un'azione quando viene cliccato aggiungi postazione
+        addConnection.setOnAction(actionEvent -> {
+            // creiamo un nuovo dialog da visualizzare
+            Dialog<ButtonType> dialog = new Dialog<>();
+
+            // inizializziamo il proprietario
+            dialog.initOwner(this.vBoxContainer.getScene().getWindow());
+
+            // Impostiamo il titolo del dialog
+            dialog.setTitle("Aggiungi Collegamento");
+
+            // Carichiamo il file di iterfaccia per il dialog
+            FXMLLoader loader = new FXMLLoader();
+
+            try{
+                Parent root = loader.load(new FileInputStream(addConnectionControllerFile));
+                dialog.getDialogPane().setContent(root);
+            }catch (IOException e){
+                System.out.println("Errore di caricamento dialog");
+                e.printStackTrace();
+            }
+
+            // Aggiungiamo il bottone OK e CANCEL al dialogPane
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
+
+            AddEdgeController addEdgeController = loader.getController();
+
+            // Gestione Errori
+            dialog.getDialogPane().lookupButton(ButtonType.APPLY).addEventFilter(ActionEvent.ACTION,
+                    event->{
+                        if (addEdgeController.validateFields()){
+                            Alert alert = new Alert(Alert.AlertType.WARNING, "Già esistente", ButtonType.OK);
+                            alert.setHeaderText("Collegamento esistente");
+                            alert.setContentText("Hai inserito un Collegamento già inserito");
+
+                            Optional<ButtonType> result = alert.showAndWait();
+                            System.out.println(result);
+
+                            event.consume();
+                        }
+                    });
+
+            // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+            Optional<ButtonType> result = dialog.showAndWait();
+
+            // Gestiamo il caso in cui l'utente abbia premuto OK
+            if (result.isPresent() && result.get() == ButtonType.APPLY){
+                addEdgeController.processAddEdge();
+            }
+        });
+
+        //==================================================
+        //                 Rimuovi Postazione
+        //==================================================
+
+        // Aggiungiamo un'azione quando viene cliccato rimuovi parcheggio
+        removeConnection.setOnAction(actionEvent -> {
+            // creiamo un nuovo dialog da visualizzare
+            Dialog<ButtonType> dialog = new Dialog<>();
+
+            // inizializziamo il proprietario
+            dialog.initOwner(this.vBoxContainer.getScene().getWindow());
+
+            // Impostiamo il titolo del dialog
+            dialog.setTitle("Rimuovi un Collegamento");
+
+            // Carichiamo il file di iterfaccia per il dialog
+            FXMLLoader loader = new FXMLLoader();
+
+            try{
+                Parent root = loader.load(new FileInputStream(removeConnectionControllerFile));
+                dialog.getDialogPane().setContent(root);
+            }catch (IOException e){
+                System.out.println("Errore di caricamento dialog");
+                e.printStackTrace();
+            }
+
+            // Aggiungiamo il bottone OK e CANCEL al dialogPane
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
+
+            // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+            Optional<ButtonType> result = dialog.showAndWait();
+
+            //RemoveWaitingStationController removeWaitingStationController = loader.getController();
+
+            // Gestiamo il caso in cui l'utente abbia premuto OK
+            if (result.isPresent() && result.get() == ButtonType.APPLY){
+                //removeWaitingStationController.processRemoveWaitingStation();
+                //this.tableWaitingStation.getSelectionModel().selectFirst();
             }
         });
 
