@@ -87,7 +87,7 @@ public class AddWaitingStationController {
 
     public WaitingStation processAddWaitingStation(){
         String streetName = streetNameField.getText().trim().substring(0,1).toUpperCase() + streetNameField.getText().trim().substring(1);
-        String streetNumber = streetNameField.getText().trim().toUpperCase();
+        String streetNumber = streetNumberField.getText().trim().toUpperCase();
         double latitude = Double.parseDouble(latitudeField.getText().trim());
         double longitude = Double.parseDouble(longitudeField.getText().trim());
         String waitingPositionName = waitingStationNameField.getText().trim().substring(0,1).toUpperCase() + waitingStationNameField.getText().trim().substring(1);

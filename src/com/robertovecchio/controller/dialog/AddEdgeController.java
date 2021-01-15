@@ -120,7 +120,7 @@ public class AddEdgeController {
 
         // Selezioniamo il primo
         this.fromComboBox.getSelectionModel().selectFirst();
-        this.toComboBox.getSelectionModel().selectFirst();
+        this.toComboBox.getSelectionModel().select(1);
     }
 
     //==================================================

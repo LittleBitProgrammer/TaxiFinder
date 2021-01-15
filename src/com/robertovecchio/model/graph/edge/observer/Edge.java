@@ -116,6 +116,8 @@ public class Edge extends ArchObserver implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%s ========================> %s\n", source.getCoordinates(), destination.getCoordinates());
+        WaitingStation from = (WaitingStation) source;
+        WaitingStation to = (WaitingStation) destination;
+        return String.format("\n%s ========================> %s\n", from.getStationName(), to.getStationName());
     }
 }

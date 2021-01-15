@@ -659,12 +659,11 @@ public class HandlerController {
                 // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
                 Optional<ButtonType> result = dialog.showAndWait();
 
-                //RemoveWaitingStationController removeWaitingStationController = loader.getController();
+                RemoveEdgeController removeEdgeController = loader.getController();
 
                 // Gestiamo il caso in cui l'utente abbia premuto OK
                 if (result.isPresent() && result.get() == ButtonType.APPLY){
-                    //removeWaitingStationController.processRemoveWaitingStation();
-                    //this.tableWaitingStation.getSelectionModel().selectFirst();
+                    removeEdgeController.processRemoveEdge();
                 }
             }
         });
@@ -1231,28 +1230,10 @@ public class HandlerController {
 
     private void setStreetNumberWaitingStationColumnProperty(){
         this.streetNumberWaitingStationColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
-                streetStringCellDataFeatures.getValue().getStationName()));
-
-        // Personalizziamo la cella e quello che vogliamo vedere
-        this.streetNumberWaitingStationColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
-            @Override
-            protected void updateItem(String stationName, boolean empty){
-                super.updateItem(stationName, empty);
-                if(empty || stationName == null){
-                    setText(null);
-                } else {
-                    setText(stationName);
-                }
-            }
-        });
-    }
-
-    private void setStationNameWaitingStationColumnProperty(){
-        this.stationNameWaitingStationColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
                 streetStringCellDataFeatures.getValue().getStreetNumber()));
 
         // Personalizziamo la cella e quello che vogliamo vedere
-        this.stationNameWaitingStationColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
+        this.streetNumberWaitingStationColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
             @Override
             protected void updateItem(String streetNumber, boolean empty){
                 super.updateItem(streetNumber, empty);
@@ -1260,6 +1241,24 @@ public class HandlerController {
                     setText(null);
                 } else {
                     setText(streetNumber);
+                }
+            }
+        });
+    }
+
+    private void setStationNameWaitingStationColumnProperty(){
+        this.stationNameWaitingStationColumn.setCellValueFactory(streetStringCellDataFeatures -> new SimpleStringProperty(
+                streetStringCellDataFeatures.getValue().getStationName()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.stationNameWaitingStationColumn.setCellFactory(streetStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String stationName, boolean empty){
+                super.updateItem(stationName, empty);
+                if(empty || stationName == null){
+                    setText(null);
+                } else {
+                    setText(stationName);
                 }
             }
         });
