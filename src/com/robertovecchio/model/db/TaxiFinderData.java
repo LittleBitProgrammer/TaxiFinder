@@ -98,8 +98,10 @@ public class TaxiFinderData {
         this.handlers = new HashSet<>();
         this.genders = new HashMap<>();
 
-
+        // Inizializzazione grafo
         graph = new WeightedGraph(new ArrayList<>(), new ArrayList<>());
+        graph.getVertexes().addAll(this.parkings);
+        graph.getVertexes().addAll(this.waitingStations);
 
         // Popolo l'hasmap
         genders.put("UOMO", GenderType.MALE);
