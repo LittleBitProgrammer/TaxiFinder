@@ -1,6 +1,8 @@
 package com.robertovecchio.model.booking;
 
 import com.robertovecchio.model.graph.node.Node;
+import com.robertovecchio.model.user.Customer;
+import com.robertovecchio.model.user.TaxiDriver;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -9,13 +11,20 @@ import java.util.Objects;
 public class Booking {
     private LocalDate orderDate;
     private LocalTime orderTime;
-    private Node station;
+    private Node from;
+    private Node to;
+    private Customer customer;
+    private TaxiDriver driver;
     private ArrivalModality arrivalModality;
 
-    public Booking(LocalDate orderDate, LocalTime orderTime, Node station, ArrivalModality arrivalModality){
+    public Booking(LocalDate orderDate, LocalTime orderTime, Node from, Node to,
+                   Customer customer, TaxiDriver driver, ArrivalModality arrivalModality) {
         this.orderDate = orderDate;
         this.orderTime = orderTime;
-        this.station = station;
+        this.from = from;
+        this.to = to;
+        this.customer = customer;
+        this.driver = driver;
         this.arrivalModality = arrivalModality;
     }
 
@@ -35,12 +44,36 @@ public class Booking {
         this.orderTime = orderTime;
     }
 
-    public Node getStation() {
-        return station;
+    public Node getFrom() {
+        return from;
     }
 
-    public void setStation(Node station) {
-        this.station = station;
+    public void setFrom(Node from) {
+        this.from = from;
+    }
+
+    public Node getTo() {
+        return to;
+    }
+
+    public void setTo(Node to) {
+        this.to = to;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public TaxiDriver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(TaxiDriver driver) {
+        this.driver = driver;
     }
 
     public ArrivalModality getArrivalModality() {
@@ -49,20 +82,5 @@ public class Booking {
 
     public void setArrivalModality(ArrivalModality arrivalModality) {
         this.arrivalModality = arrivalModality;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Booking)) return false;
-        Booking booking = (Booking) o;
-        return Objects.equals(orderDate, booking.orderDate) &&
-                Objects.equals(orderTime, booking.orderTime) &&
-                Objects.equals(station, booking.station);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(orderDate, orderTime, station);
     }
 }

@@ -1,5 +1,6 @@
 package com.robertovecchio.model.db;
 
+import com.robertovecchio.model.booking.Booking;
 import com.robertovecchio.model.db.error.CustomerNotFoundException;
 import com.robertovecchio.model.db.error.HandlerNotFoundException;
 import com.robertovecchio.model.db.error.TaxiDriverNotFoundException;
@@ -10,6 +11,8 @@ import com.robertovecchio.model.graph.node.WaitingStation;
 import com.robertovecchio.model.user.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -39,6 +42,7 @@ public class TaxiFinderData {
     private final static String parkingDriverFileName = "files/parking.txt";         // Percorso file dei parcheggi
     private final static String waitingStationFileName = "files/waitingStation.txt"; // Percorso file delle postazioni
     private final static String graphFileName = "files/graph.txt";                   // Percorso file del grafo
+    private final static String bookingFileName = "files/booking.txt";               // Percorso file delle prenotazioni
 
     /**
      * Map utile ad associare ad ogni Stringa un enum
@@ -76,6 +80,12 @@ public class TaxiFinderData {
      */
     private final ObservableList<WaitingStation> waitingStations;
     /**
+     * lista osservabile di prenotazioni
+     * @see ObservableList
+     * @see Booking
+     */
+    private final ObservableList<Booking> bookings;
+    /**
      * lista osservabile di gestori
      * @see List
      * @see Handler
@@ -105,6 +115,7 @@ public class TaxiFinderData {
         this.taxiDrivers = FXCollections.observableArrayList();
         this.parkings = FXCollections.observableArrayList();
         this.waitingStations = FXCollections.observableArrayList();
+        this.bookings = FXCollections.observableArrayList();
         this.handlers = new HashSet<>();
         this.genders = new HashMap<>();
 
@@ -191,6 +202,16 @@ public class TaxiFinderData {
     }
 
     /**
+     * Metodo setter delle prenotazioni
+     * @param bookings Lista delle prenotazioni
+     * @see ObservableList
+     * @see Booking
+     */
+    public void setBookings(ObservableList<Booking> bookings){
+        this.bookings.setAll(bookings);
+    }
+
+    /**
      * Metodo setter degli handlers
      * @param handlers Gestori da impostare
      * @see Set
@@ -272,6 +293,16 @@ public class TaxiFinderData {
     }
 
     /**
+     * Metodo getter delle prenotazioni
+     * @return La lista delle prenotazioni
+     * @see ObservableList
+     * @see Booking
+     */
+    public ObservableList<Booking> getBookings(){
+        return this.bookings;
+    }
+
+    /**
      * Metodo Getter degli handler
      * @return la lista dei gestori
      * @see Set
@@ -338,6 +369,16 @@ public class TaxiFinderData {
      */
     public void addWaitingStation(WaitingStation waitingStation){
         this.waitingStations.add(waitingStation);
+    }
+
+    /**
+     * Metodo che aggiunge una prenotazione all'ObservableMap delle prenotazioni
+     * @param booking Prenotazione
+     * @see ObservableList
+     * @see Booking
+     */
+    public void addBooking(Booking booking){
+        this.bookings.add(booking);
     }
 
     /**
@@ -451,7 +492,19 @@ public class TaxiFinderData {
     }
 
     /**
-     * Metodo atto alla memorizzazione del grafo
+     * Metodo atto alla memorizzazione delle prenptazioni
+     * @throws IOException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di input/output
+     */
+    public void storeBookings() throws IOException{
+        // try with resources viene sfruttato per chiamare automaticamente il metodo close
+        // Creiamo uno stream serializzato di risorse
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(bookingFileName))){
+            oos.writeObject(new ArrayList<>(this.bookings));
+        }
+    }
+
+    /**
+     * Metodo atto alla memorizzazione delle prenotazioni
      * @throws IOException Questo metodo può lanciare una exception nel caso in cui vi sia un errore di input/output
      */
     public void storeGraph() throws IOException{
@@ -527,6 +580,22 @@ public class TaxiFinderData {
             this.waitingStations.setAll((ArrayList<WaitingStation>) ois.readObject());
         } catch (EOFException e){
             System.out.println("Postazioni non trovate non presenti");
+        }
+    }
+
+    /**
+     * Metodo atto a popolare la lista delle prenotazioni
+     * @exception  ClassNotFoundException questo metodo potrebbe non trovare la classe richiesta
+     * @exception IOException Questo metodo potrebbe generare errori di input/output
+     */
+    @SuppressWarnings("unchecked")
+    public void loadBookings() throws ClassNotFoundException, IOException{
+        // try with resources viene sfruttato per chiamare automaticamente il metodo close
+        // sfruttiamo uno stream per deserializzare risorse
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(bookingFileName))){
+            this.bookings.setAll((ArrayList<Booking>) ois.readObject());
+        } catch (EOFException e){
+            System.out.println("Prenotazioni non trovate non presenti");
         }
     }
 

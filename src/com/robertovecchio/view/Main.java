@@ -45,6 +45,7 @@ public class Main extends Application {
             taxiFinderData.loadCustomers();
             taxiFinderData.loadHandlers();
             taxiFinderData.loadTaxiDrivers();
+            taxiFinderData.loadBookings();
             taxiFinderData.loadGraph();
         } catch (IOException | ClassNotFoundException e){
             System.out.println("Reperimento dati non riuscito");
