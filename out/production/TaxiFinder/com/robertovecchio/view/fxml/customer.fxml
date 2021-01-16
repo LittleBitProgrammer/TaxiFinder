@@ -12,6 +12,8 @@
         </VBox>
     </top>
     <center>
-        <Label text="Customer"/>
+        <StackPane fx:id="stackContainer">
+
+        </StackPane>
     </center>
 </BorderPane>
