@@ -120,9 +120,6 @@ public class CompanyAreaController {
                 // Inizializzo L'handler con i dati di login
                 Handler handler = taxiFinderData.loginHandler(new Handler(username,password));
                 // Carichiamo le liste inerenti all'admin
-                taxiFinderData.loadTaxiDrivers();
-                taxiFinderData.loadParkings();
-                taxiFinderData.loadWaitingStations();
                 taxiFinderData.setCurrentUser(handler);
 
                 // Cambiamo Scene
@@ -136,8 +133,6 @@ public class CompanyAreaController {
                 // Stampo l'errore
                 System.out.println(e.getMessage());
                 errorHandler.setVisible(true);
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
             }
         });
 

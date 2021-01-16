@@ -1,18 +1,27 @@
 package com.robertovecchio.controller;
 
+import com.robertovecchio.controller.dialog.AddTaxiDriverController;
+import com.robertovecchio.controller.dialog.OrderController;
 import com.robertovecchio.model.booking.Booking;
 import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.graph.node.WaitingStation;
+import com.robertovecchio.model.user.TaxiDriver;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.skin.TableHeaderRow;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Classe che gestisce la main View del Cliente
@@ -46,6 +55,7 @@ public class CustomerController {
     //==================================================
 
     private static final String mainControllerFile = "src/com/robertovecchio/view/fxml/main.fxml";
+    private static final String orderControllerFile = "src/com/robertoVecchio/view/fxml/dialog/order.fxml";
 
     //==================================================
     //               Variabili FXML
@@ -110,7 +120,42 @@ public class CustomerController {
         homeLabel.setOnMouseClicked(actionEvent -> System.out.println("Home premuto"));
 
         // Aggiungiamo un'azione quando viene premuto Prenota una corsa
-        addBooking.setOnAction(actionEvent -> System.out.println("Prenotazione premuto"));
+        addBooking.setOnAction(actionEvent -> {
+            // creiamo un nuovo dialog da visualizzare
+            Dialog<ButtonType> dialog = new Dialog<>();
+
+            // inizializziamo il proprietario
+            dialog.initOwner(this.vBoxTopContainer.getScene().getWindow());
+
+            // Impostiamo il titolo del dialog
+            dialog.setTitle("Prenota una corsa");
+
+            // Carichiamo il file di iterfaccia per il dialog
+            FXMLLoader loader = new FXMLLoader();
+
+            try{
+                Parent root = loader.load(new FileInputStream(orderControllerFile));
+                dialog.getDialogPane().setContent(root);
+            }catch (IOException e){
+                System.out.println("Errore di caricamento dialog");
+                e.printStackTrace();
+            }
+
+            // Aggiungiamo il bottone OK e CANCEL al dialogPane
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
+
+            OrderController orderController = loader.getController();
+            //dialog.getDialogPane().lookupButton(ButtonType.APPLY).disableProperty().bind(addTaxiDriverController.invalidInputProperty());
+
+            // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+            Optional<ButtonType> result = dialog.showAndWait();
+
+            // Gestiamo il caso in cui l'utente abbia premuto OK
+            if (result.isPresent() && result.get() == ButtonType.APPLY){
+                //TaxiDriver newTaxiDriver = addTaxiDriverController.processAddTaxiDriver();
+                //this.tableTaxiDriver.getSelectionModel().select(newTaxiDriver);
+            }
+        });
 
         // Aggiungiamo un'azione quando Logout viene premuto
         exitLabel.setOnMouseClicked(actionEvent -> UtilityController.navigateTo(mainControllerFile, "Taxi Finder",
