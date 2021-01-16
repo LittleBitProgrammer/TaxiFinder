@@ -1,6 +1,7 @@
 package com.robertovecchio.model.user;
 
 //Import
+import com.robertovecchio.model.mediator.Colleague;
 import com.robertovecchio.model.veichle.builderTaxi.Taxi;
 
 import java.time.LocalDate;
@@ -11,7 +12,7 @@ import java.time.LocalDate;
  * @author robertovecchio
  * @version 1.0
  * @since 7/01/2021*/
-public class TaxiDriver extends UserAccount{
+public class TaxiDriver extends UserAccount implements Colleague {
     //==================================================
     //               Variabili d'istanza
     //==================================================
@@ -133,4 +134,8 @@ public class TaxiDriver extends UserAccount{
     }
 
 
+    @Override
+    public void send() {
+        // stub
+    }
 }

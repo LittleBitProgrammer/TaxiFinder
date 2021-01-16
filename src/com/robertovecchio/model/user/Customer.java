@@ -1,6 +1,8 @@
 package com.robertovecchio.model.user;
 
 //Import
+import com.robertovecchio.model.mediator.Colleague;
+
 import java.time.LocalDate;
 
 /**
@@ -11,7 +13,7 @@ import java.time.LocalDate;
  * @since 7/01/2021
  * @see UserAccount
  * */
-public class Customer extends UserAccount{
+public class Customer extends UserAccount implements Colleague {
 
     private final static long serialVersionUID = 1L;
 
@@ -97,5 +99,10 @@ public class Customer extends UserAccount{
         return super.toString() + "\nCustomer{" +
                 "phoneNumber='" + phoneNumber + '\'' +
                 '}';
+    }
+
+    @Override
+    public void send() {
+
     }
 }
