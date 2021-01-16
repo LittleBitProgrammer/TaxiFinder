@@ -2,7 +2,9 @@ package com.robertovecchio.controller;
 
 import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.db.error.HandlerNotFoundException;
+import com.robertovecchio.model.db.error.TaxiDriverNotFoundException;
 import com.robertovecchio.model.user.Handler;
+import com.robertovecchio.model.user.TaxiDriver;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanExpression;
 import javafx.fxml.FXML;
@@ -141,7 +143,28 @@ public class CompanyAreaController {
 
         // Impostiamo un'azione da effettuare quando il bottono di login del taxiDriver viene premuto
         taxiDriverLoginButton.setOnAction(actionEvent -> {
-            System.out.println("Login taxi Driver premuto");
+            // Inizializzo le credenziali con quanto è stato inserito dall'utente
+            String username = this.taxiDriverUsernameField.getText().trim();
+            String password = this.taxiDriverPasswordField.getText().trim();
+
+            try {
+                // Inizializzo L'handler con i dati di login
+                TaxiDriver taxiDriver = taxiFinderData.loginTaxiDriver(new TaxiDriver(username,password));
+
+                taxiFinderData.setCurrentUser(taxiDriver);
+
+                // Cambiamo Stage
+                UtilityController.navigateTo(handlerControllerFile,
+                        String.format("%s %s - %s", taxiDriver.getFirstName(),
+                                taxiDriver.getLastName(),
+                                taxiDriver.getUsername()),
+                        "Errore di navigazione, alcuni file non sono stati trovati",
+                        handlerLoginButton);
+            }catch (TaxiDriverNotFoundException e){
+                // Stampo l'errore
+                System.out.println(e.getMessage());
+                errorTaxiDriver.setVisible(true);
+            }
         });
     }
 

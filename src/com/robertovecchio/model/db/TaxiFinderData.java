@@ -1,6 +1,8 @@
 package com.robertovecchio.model.db;
 
+import com.robertovecchio.model.db.error.CustomerNotFoundException;
 import com.robertovecchio.model.db.error.HandlerNotFoundException;
+import com.robertovecchio.model.db.error.TaxiDriverNotFoundException;
 import com.robertovecchio.model.graph.WeightedGraph;
 import com.robertovecchio.model.graph.node.Node;
 import com.robertovecchio.model.graph.node.Parking;
@@ -604,5 +606,45 @@ public class TaxiFinderData {
             }
         }
         throw new HandlerNotFoundException();
+    }
+
+    /**
+     * Metodo dedito all'accesso di un Tassista
+     * @param taxiDriver Tassista con cui si vuole effettuare l'accesso
+     * @return Un Tassista nel caso in cui vi ci sia, altrimenti lancia un errore
+     * @see TaxiDriver
+     * @exception TaxiDriverNotFoundException Nel caso in cui non venga trovato un Tassista permette di utilizzare
+     * getMessage() per intrpretare l'errore con maggiore dettaglio
+     * @see TaxiDriverNotFoundException
+     * */
+    public TaxiDriver loginTaxiDriver(TaxiDriver taxiDriver) throws TaxiDriverNotFoundException {
+        if (this.taxiDrivers.contains(taxiDriver)){
+            for (TaxiDriver driver : this.taxiDrivers){
+                if(driver.equals(taxiDriver)){
+                    return taxiDriver;
+                }
+            }
+        }
+        throw new TaxiDriverNotFoundException();
+    }
+
+    /**
+     * Metodo dedito all'accesso di un Cliente
+     * @param customer Cliente con cui si vuole effettuare l'accesso
+     * @return Un liente nel caso in cui vi ci sia, altrimenti lancia un errore
+     * @see Customer
+     * @exception CustomerNotFoundException Nel caso in cui non venga trovato un Cliente permette di utilizzare
+     * getMessage() per intrpretare l'errore con maggiore dettaglio
+     * @see CustomerNotFoundException
+     * */
+    public Customer loginCustomer(Customer customer) throws CustomerNotFoundException{
+        if (this.customers.contains(customer)){
+            for (Customer tempCustomer : this.customers){
+                if (tempCustomer.equals(customer)){
+                    return tempCustomer;
+                }
+            }
+        }
+        throw new CustomerNotFoundException();
     }
 }

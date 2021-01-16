@@ -60,8 +60,6 @@ public class TaxiDriver extends UserAccount{
      * @param username username utente
      * @param password password utente
      * @param taxi Taxi del tassista
-     * @see LocalDate
-     * @see GenderType
      * @see Taxi
      * */
     public TaxiDriver(String username, String password, Taxi taxi){
@@ -71,6 +69,17 @@ public class TaxiDriver extends UserAccount{
 
         // inizializzazione delle variabili d'istanza
         this.taxi = taxi;
+    }
+
+    /**
+     * Costruttore di un Tassista
+     * @param username username utente
+     * @param password password utente
+     * */
+    public TaxiDriver(String username, String password){
+
+        // Richiamo il costruttore della classe astratta UserAccount
+        super(username, password);
     }
 
     //==================================================
