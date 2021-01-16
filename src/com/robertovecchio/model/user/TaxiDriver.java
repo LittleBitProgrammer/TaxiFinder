@@ -21,6 +21,7 @@ public class TaxiDriver extends UserAccount implements Colleague {
     /**Taxi associato al tassista
      * @see Taxi*/
     private Taxi taxi;
+    private State state;
 
     //==================================================
     //                   Costruttori
@@ -54,6 +55,7 @@ public class TaxiDriver extends UserAccount implements Colleague {
         // inizializzazione delle variabili d'istanza
         this.licenseNumber = licenseNumber;
         this.taxi = taxi;
+        state = State.FREE;
     }
 
     /**
@@ -103,6 +105,10 @@ public class TaxiDriver extends UserAccount implements Colleague {
         this.taxi = taxi;
     }
 
+    public void setState(State state) {
+        this.state = state;
+    }
+
     //==================================================
     //                      Getter
     //==================================================
@@ -120,6 +126,10 @@ public class TaxiDriver extends UserAccount implements Colleague {
      * */
     public Taxi getTaxi(){
         return this.taxi;
+    }
+
+    public State getState() {
+        return state;
     }
 
     //==================================================

@@ -53,6 +53,7 @@ public class HandlerController {
     private TableColumn<TaxiDriver, String> emailColumn;
     private TableColumn<TaxiDriver, String> taxiColumn;
     private TableColumn<TaxiDriver, String> licenseNumberColumn;
+    private TableColumn<TaxiDriver, String> stateColumn;
 
     // Columns - tableParking
     private TableColumn<Parking, String> latitudeColumn;
@@ -760,6 +761,7 @@ public class HandlerController {
         this.emailColumn = new TableColumn<>("Email");
         this.taxiColumn = new TableColumn<>("Targa Taxi");
         this.licenseNumberColumn = new TableColumn<>("Nr. Licensa");
+        this.stateColumn = new TableColumn<>("Stato");
 
         // Inizializziamo la TableView
         this.tableTaxiDriver = new TableView<>();
@@ -773,17 +775,19 @@ public class HandlerController {
         this.tableTaxiDriver.getColumns().add(emailColumn);
         this.tableTaxiDriver.getColumns().add(taxiColumn);
         this.tableTaxiDriver.getColumns().add(licenseNumberColumn);
+        this.tableTaxiDriver.getColumns().add(stateColumn);
 
         // Impostiamo la grandezza massima della tabella per ogni colonna
         this.tableTaxiDriver.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        this.fiscalCodeColumn.setMaxWidth(Integer.MAX_VALUE * 12.5);      // 12,5%
-        this.firstNameColumn.setMaxWidth(Integer.MAX_VALUE * 12.5D);      // 12,5%
-        this.lastNameColumn.setMaxWidth(Integer.MAX_VALUE * 12.5D);       // 12,5%
-        this.dateOfBirthColumn.setMaxWidth(Integer.MAX_VALUE * 12.5D);    // 12,5%
-        this.genderColumn.setMaxWidth(Integer.MAX_VALUE * 12.5D);         // 12,5%
-        this.emailColumn.setMaxWidth(Integer.MAX_VALUE * 12.5D);          // 12,5%
-        this.taxiColumn.setMaxWidth(Integer.MAX_VALUE * 12.5D);           // 12,5%
-        this.licenseNumberColumn.setMaxWidth(Integer.MAX_VALUE * 12.5D);  // 12,5%
+        this.fiscalCodeColumn.setMaxWidth(Integer.MAX_VALUE * 11.11);      // 11.11%
+        this.firstNameColumn.setMaxWidth(Integer.MAX_VALUE * 11.11);       // 11.11%
+        this.lastNameColumn.setMaxWidth(Integer.MAX_VALUE * 11.11);        // 11.11%
+        this.dateOfBirthColumn.setMaxWidth(Integer.MAX_VALUE * 11.11);     // 11.11%
+        this.genderColumn.setMaxWidth(Integer.MAX_VALUE * 11.11);          // 11.11%
+        this.emailColumn.setMaxWidth(Integer.MAX_VALUE * 11.11);           // 11.11%
+        this.taxiColumn.setMaxWidth(Integer.MAX_VALUE * 11.11);            // 11.11%
+        this.licenseNumberColumn.setMaxWidth(Integer.MAX_VALUE * 11.11);   // 11.11%
+        this.stateColumn.setMaxWidth(Integer.MAX_VALUE * 11.11);           // 11.11%
 
         // Impediamo che le tabelle possano essere riordinate dall'utente
         this.tableTaxiDriver.skinProperty().addListener((observableValue, oldWidth, newWidth) ->{
@@ -804,6 +808,7 @@ public class HandlerController {
         setEmailColumnProperty();
         setTaxiColumnProperty();
         setLicenseNumberColumnProperty();
+        setStateColumnProperty();
 
         // Impostiamo una larghezza base
         this.tableTaxiDriver.setPrefWidth(2048);
@@ -1103,6 +1108,24 @@ public class HandlerController {
                     setText(null);
                 } else {
                     setText(licenseNumber);
+                }
+            }
+        });
+    }
+
+    private void setStateColumnProperty(){
+        this.stateColumn.setCellValueFactory(taxiDriverStringCellDataFeatures -> new SimpleStringProperty(
+                taxiDriverStringCellDataFeatures.getValue().getState().getTranslation()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.stateColumn.setCellFactory(taxiStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String state, boolean empty){
+                super.updateItem(state, empty);
+                if(empty || state == null){
+                    setText(null);
+                } else {
+                    setText(state);
                 }
             }
         });

@@ -16,6 +16,7 @@
                    GridPane.columnIndex="0"/>
 
             <TextField fx:id="streetNameField"
+                       promptText="es. Via Chiaia"
                        GridPane.rowIndex="0"
                        GridPane.columnIndex="1"/>
 
@@ -24,6 +25,7 @@
                    GridPane.columnIndex="0"/>
 
             <TextField fx:id="streetNumberField"
+                       promptText="es. 12A"
                        GridPane.rowIndex="1"
                        GridPane.columnIndex="1"/>
 
@@ -32,6 +34,7 @@
                    GridPane.columnIndex="0"/>
 
             <TextField fx:id="latitudeField"
+                       promptText="es. 12.1234"
                        GridPane.rowIndex="2"
                        GridPane.columnIndex="1"/>
 
@@ -40,6 +43,7 @@
                    GridPane.columnIndex="0"/>
 
             <TextField fx:id="longitudeField"
+                       promptText="es. 14.5678"
                        GridPane.rowIndex="3"
                        GridPane.columnIndex="1"/>
 
@@ -48,6 +52,7 @@
                    GridPane.columnIndex="0"/>
 
             <TextField fx:id="waitingStationNameField"
+                       promptText="es. Chiaia"
                        GridPane.rowIndex="4"
                        GridPane.columnIndex="1"/>
         </GridPane>
