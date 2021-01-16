@@ -217,7 +217,7 @@ public class HandlerController {
         // Incapsuliamo i menuItem di postazione nel suo menu
         waitingStation.getItems().addAll(addWaitingStation, removeWaitingStation);
 
-        // Incapsulo i menuItem di collegamento nel suo menu
+        // Incapsuliamo i menuItem di collegamento nel suo menu
         connections.getItems().addAll(addConnection,removeConnection);
 
         // incapsuliamo i diversi menu nel menuBar
