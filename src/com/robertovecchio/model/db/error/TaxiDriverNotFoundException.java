@@ -16,6 +16,6 @@ public class TaxiDriverNotFoundException extends Exception{
      * */
     @Override
     public String getMessage(){
-        return "Customer non Trovato";
+        return "Tassista non Trovato";
     }
 }

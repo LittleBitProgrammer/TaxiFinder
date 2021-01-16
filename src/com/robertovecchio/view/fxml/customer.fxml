@@ -2,9 +2,11 @@
 
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<?import javafx.scene.control.Label?>
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.robertovecchio.controller.TaxiDriverController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+            fx:controller="com.robertovecchio.controller.TaxiDriverController">
+    <center>
+        <Label text="Customer"/>
+    </center>
+</BorderPane>

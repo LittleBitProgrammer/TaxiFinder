@@ -62,6 +62,7 @@ public class CompanyAreaController {
 
     private final static String controllerFile = "src/com/robertovecchio/view/fxml/main.fxml";
     private final static String handlerControllerFile = "src/com/robertovecchio/view/fxml/handler.fxml";
+    private final static String taxiDriverController = "src/com/robertovecchio/view/fxml/taxiDriver.fxml";
     private final static String adminLogo = "Assets/admin.png";
     private final static String driverLogo = "Assets/driver.png";
     private final static String fontFamily = "Helvetica";
@@ -154,12 +155,12 @@ public class CompanyAreaController {
                 taxiFinderData.setCurrentUser(taxiDriver);
 
                 // Cambiamo Stage
-                UtilityController.navigateTo(handlerControllerFile,
+                UtilityController.navigateTo(taxiDriverController,
                         String.format("%s %s - %s", taxiDriver.getFirstName(),
                                 taxiDriver.getLastName(),
                                 taxiDriver.getUsername()),
                         "Errore di navigazione, alcuni file non sono stati trovati",
-                        handlerLoginButton);
+                        taxiDriverLoginButton);
             }catch (TaxiDriverNotFoundException e){
                 // Stampo l'errore
                 System.out.println(e.getMessage());
