@@ -2,6 +2,9 @@ package com.robertovecchio.controller.dialog;
 
 import com.robertovecchio.controller.UtilityController;
 import com.robertovecchio.model.db.TaxiFinderData;
+import com.robertovecchio.model.graph.node.Node;
+import com.robertovecchio.model.graph.node.Parking;
+import com.robertovecchio.model.graph.node.WaitingStation;
 import com.robertovecchio.model.user.GenderType;
 import com.robertovecchio.model.user.TaxiDriver;
 import com.robertovecchio.model.veichle.builderTaxi.Taxi;
@@ -184,10 +187,29 @@ public class AddTaxiDriverController {
                                                   dateOfBirth, genderType,
                                                   email, username,
                                                   password, licenseNumber, newTaxi);
-        taxiFinderData.addTaxiDriver(newTaxiDriver);
-
         try {
-            taxiFinderData.storeTaxiDrivers();
+            boolean isFull = true;
+            for (Node parking : taxiFinderData.getGraph().getVertexes()){
+                if (parking instanceof Parking){
+                    Parking park = (Parking) parking;
+                    if (park.getFreeParkingSpaces() > 0)
+                    taxiFinderData.addTaxiDriver(newTaxiDriver);
+                    taxiFinderData.storeTaxiDrivers();
+                    this.insertTaxiDriverIn(newTaxi, park);
+                    taxiFinderData.storeGraph();
+                    isFull = false;
+                    break;
+                }
+            }
+
+            if (isFull){
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Parcheggi pieni", ButtonType.OK);
+                alert.setHeaderText("Assunzione impossibile");
+                alert.setContentText("Non puoi assumere altri dipendenti, i tuoi parcheggi sono pieni");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                System.out.println(result);
+            }
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -452,5 +474,10 @@ public class AddTaxiDriverController {
                 }
             }
         });
+    }
+
+    private void insertTaxiDriverIn(Taxi taxi, Parking parking){
+        parking.setTaxis(new LinkedList<>());
+        parking.getTaxis().add(taxi);
     }
 }
