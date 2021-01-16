@@ -5,6 +5,9 @@ import com.robertovecchio.model.user.Customer;
 import com.robertovecchio.model.user.GenderType;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanExpression;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -17,8 +20,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.EnumSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -156,6 +159,67 @@ public class CustomerRegistrationController {
             }
         });
 
+        // Impostiamo che la textfield potrà accettare solo valori numerici
+        this.phoneField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                if (!t1.matches("\\d{0,12}")){
+                    phoneField.setText(s);
+                }
+            }
+        });
+
+        // Aggiungiamo degli avvisi nel caso in cui alcuni elementi non siano validi
+        this.registerButton.addEventFilter(ActionEvent.ACTION, actionEvent -> {
+            if (UtilityController.getYears(this.dateOfBirthField.getValue()) < 18){
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Età errata", ButtonType.OK);
+                alert.setHeaderText("L'utente non può essere un minore");
+                alert.setContentText("Hai inserito un utente con età inferiore ai 18 anni");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                System.out.println(result);
+
+                actionEvent.consume();
+            }else if (!UtilityController.isValidEmailAddress(this.emailField.getText().trim())){
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Email errata", ButtonType.OK);
+                alert.setHeaderText("Hai inserito una email utente errata");
+                alert.setContentText("Inserisci una email valida");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                System.out.println(result);
+
+                actionEvent.consume();
+            }else if (!UtilityController.isValidPassword(this.passwordField.getText().trim())){
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Password errata", ButtonType.OK);
+                alert.setHeaderText("Hai inserito una password utente errata");
+                alert.setContentText("Inserisci una password con lunghezza maggiore di 3 e minore di 15");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                System.out.println(result);
+
+                actionEvent.consume();
+            }else if (!(this.fiscalCodeField.getText().length() == 16)){
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Codice Fiscale errato", ButtonType.OK);
+                alert.setHeaderText("Hai inserito un codice fiscale errato");
+                alert.setContentText("Inserisci un codice fiscale con lunghezza pari a 16");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                System.out.println(result);
+
+
+                actionEvent.consume();
+            }else if (this.existYet()){
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Già esistente", ButtonType.OK);
+                alert.setHeaderText("Utente o un auto esistente");
+                alert.setContentText("Hai inserito un utente già inserito");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                System.out.println(result);
+
+                actionEvent.consume();
+            }
+        });
+
         // impostiamo il bottone registrati a disabilitato quando l'input utente non corrisponde ai criteri richiesti
         registerButton.disableProperty().bind(invalidInputProperty());
     }
@@ -179,9 +243,9 @@ public class CustomerRegistrationController {
     @FXML
     private void handleRegistration(){
         //TODO:// fare controlli consistenza dei dati
-        String fiscalCode = fiscalCodeField.getText().trim();
-        String name = nameField.getText().trim();
-        String surname = surnameField.getText().trim();
+        String fiscalCode = fiscalCodeField.getText().trim().toUpperCase();
+        String name = nameField.getText().trim().substring(0,1).toUpperCase() + nameField.getText().trim().substring(1);
+        String surname = surnameField.getText().trim().substring(0,1).toUpperCase() + nameField.getText().trim().substring(1);
         LocalDate dateOfBirth = dateOfBirthField.getValue();
         GenderType genderType = genreField.getValue();
         String email = emailField.getText().trim();
@@ -195,6 +259,14 @@ public class CustomerRegistrationController {
                                                 password, phoneNumber));
         try {
             taxiFinderData.storeCustomers();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Utente Registrato", ButtonType.OK);
+            alert.setHeaderText("Registrazione Avvenuta con successo");
+            alert.setContentText("Complimenti ti sei registrato come cliente, ora verrai rimandato in area di login");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            System.out.println(result);
+
+            UtilityController.navigateTo(loginController, "Taxi Finder", "Errore di navigazione",this.registerButton);
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -230,5 +302,10 @@ public class CustomerRegistrationController {
                                                    this.passwordField.textProperty(),
                                                    this.phoneField.textProperty(),
                                                    this.informationField.selectedProperty());
+    }
+
+    private boolean existYet(){
+        Customer customer = new Customer(this.usernameField.getText().trim(), this.passwordField.getText().trim());
+        return taxiFinderData.getCustomers().contains(customer);
     }
 }

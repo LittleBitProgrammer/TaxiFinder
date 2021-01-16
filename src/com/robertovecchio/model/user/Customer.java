@@ -53,6 +53,18 @@ public class Customer extends UserAccount{
         this.phoneNumber = phoneNumber;
     }
 
+    /**
+     * @param username username utente
+     * @param password password utente
+     * @see LocalDate
+     * @see GenderType
+     * */
+    public Customer(String username, String password){
+
+        // Richiamo il costruttore della classe astratta UserAccount
+        super(username, password);
+    }
+
     //==================================================
     //                      Setter
     //==================================================
