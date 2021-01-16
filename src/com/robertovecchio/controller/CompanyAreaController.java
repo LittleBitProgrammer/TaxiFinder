@@ -87,7 +87,6 @@ public class CompanyAreaController {
             Image logo = new Image(new FileInputStream(adminLogo));
             Image secondLogo = new Image(new FileInputStream(driverLogo));
 
-
             adminImage.setImage(logo); //Impostiamo l'immagine
             adminImage.setFitHeight(80); // impostiamo altezza
             adminImage.setPreserveRatio(true); // impostiamo la conservazione delle proporzioni originali
@@ -120,13 +119,13 @@ public class CompanyAreaController {
             try {
                 // Inizializzo L'handler con i dati di login
                 Handler handler = taxiFinderData.loginHandler(new Handler(username,password));
-                // Carichiamo le liste inerenti all'admin su di un nuovo Thread
+                // Carichiamo le liste inerenti all'admin
                 taxiFinderData.loadTaxiDrivers();
                 taxiFinderData.loadParkings();
                 taxiFinderData.loadWaitingStations();
                 taxiFinderData.setCurrentUser(handler);
 
-                // Cambiamo Stage
+                // Cambiamo Scene
                 UtilityController.navigateTo(handlerControllerFile,
                                                 String.format("%s %s - %s", handler.getFirstName(),
                                                                             handler.getLastName(),

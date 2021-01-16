@@ -1,14 +1,20 @@
 package com.robertovecchio.controller;
 
+import com.robertovecchio.model.db.TaxiFinderData;
+import com.robertovecchio.model.db.error.CustomerNotFoundException;
+import com.robertovecchio.model.user.Customer;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanExpression;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -19,6 +25,13 @@ import java.io.FileNotFoundException;
  * @since 08/01/2021
  * */
 public class CustomerLoginController {
+
+    //==================================================
+    //               Variabili d'istanza
+    //==================================================
+
+    TaxiFinderData taxiFinderData = TaxiFinderData.getInstance();
+
     //==================================================
     //               Variabili FXML
     //==================================================
@@ -29,6 +42,14 @@ public class CustomerLoginController {
     ImageView userImage;
     @FXML
     VBox vboxUser;
+    @FXML
+    TextField usernameField;
+    @FXML
+    TextField passwordField;
+    @FXML
+    Button loginButton;
+    @FXML
+    Label errorCustomer;
 
     //==================================================
     //               Variabili Statiche
@@ -36,6 +57,7 @@ public class CustomerLoginController {
 
     private final static String controllerFile = "src/com/robertovecchio/view/fxml/main.fxml";
     private final static String registrationFile = "src/com/robertovecchio/view/fxml/customerRegistration.fxml";
+    private final static String customerControllerFile = "src/com/robertovecchio/view/fxml/customer.fxml";
     private final static String customerRegistrationStyle = "com/robertovecchio/view/fxml/style/customerRegistration.css";
     private final static String userLogo = "Assets/user.png";
     private final static String fontFamily = "Helvetica";
@@ -91,6 +113,9 @@ public class CustomerLoginController {
         registrationTextSecondPart.setOnMouseClicked(mouseEvent -> {
             handleRegistrationButton();
         });
+
+        // impostiamo il bottone login a disabilitato quando l'input utente non corrisponde ai criteri richiesti
+        this.loginButton.disableProperty().bind(invalidCustomerLoginField());
     }
 
     //==================================================
@@ -103,6 +128,25 @@ public class CustomerLoginController {
                 "Errore di caricamento file interfaccia main", backButton);
     }
 
+    @FXML
+    private void handleLogin(){
+        // Inizializzo le credenziali con quanto è stato inserito dall'utente
+        String username = this.usernameField.getText().trim();
+        String password = this.passwordField.getText();
+
+        // Cambiamo Scente
+        try {
+            Customer customer = taxiFinderData.loginCustomer(new Customer(username, password));
+
+            UtilityController.navigateTo(customerControllerFile,
+                                         String.format("Cliente - %s %s", customer.getFirstName(), customer.getLastName()),
+                                         "Errore di navigazione", this.loginButton);
+        }catch (CustomerNotFoundException e){
+            System.out.println(e.getMessage());
+            errorCustomer.setVisible(true);
+        }
+    }
+
     //==================================================
     //                     Metodi
     //==================================================
@@ -110,5 +154,12 @@ public class CustomerLoginController {
         UtilityController.navigateTo(registrationFile,"Registra Cliente",
                                "Interfaccia di registrazione di un cliente non trovata", backButton,
                                      customerRegistrationStyle);
+    }
+
+    private BooleanExpression invalidCustomerLoginField(){
+        return Bindings.createBooleanBinding(() -> this.usernameField.getText().trim().isEmpty() ||
+                                                   this.passwordField.getText().trim().isEmpty(),
+                                                   this.usernameField.textProperty(),
+                                                   this.passwordField.textProperty());
     }
 }
