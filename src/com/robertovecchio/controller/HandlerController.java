@@ -104,6 +104,8 @@ public class HandlerController {
     private static final String addConnectionControllerFile = "src/com/robertovecchio/view/fxml/dialog/addEdge.fxml";
     private static final String removeConnectionControllerFile = "src/com/robertovecchio/view/fxml/dialog/removeEdge.fxml";
     private static final String showConnectionsControllerFile = "src/com/robertovecchio/view/fxml/dialog/showConnections.fxml";
+    private static final String showTaxisControllerFile = "src/com/robertovecchio/view/fxml/dialog/showTaxis.fxml";
+    private static final String showWaitingParkingControllerFile = "src/com/robertovecchio/view/fxml/dialog/showWaitingPArking.fxml";
 
     //==================================================
     //               Inizializzazione
@@ -123,7 +125,9 @@ public class HandlerController {
 
         // Inizializziamo un menu Item
         MenuItem menuItem = new MenuItem("Mostra veicolo");
+        MenuItem waitingItem = new MenuItem("Mostra dove sosta");
         MenuItem showItem = new MenuItem("Mostra Collegamenti parcheggio");
+        MenuItem showTaxis = new MenuItem("Mostra Tassisti nel parcheggio");
         MenuItem showRoadItem = new MenuItem("Mostra Collegamenti postazione");
 
         menuItem.setOnAction(actionEvent -> {
@@ -141,11 +145,21 @@ public class HandlerController {
             this.showConnections(waitingStation);
         });
 
+        showTaxis.setOnAction(actionEvent -> {
+            Parking parking = tableParking.getSelectionModel().getSelectedItem();
+            this.showTaxis(parking);
+        });
+
+        waitingItem.setOnAction(actionEvent -> {
+            TaxiDriver taxiDriver = tableTaxiDriver.getSelectionModel().getSelectedItem();
+            this.showWaiting(taxiDriver);
+        });
+
 
 
         // Aggiungiamo i menuItem al contextMenu
-        contextMenu.getItems().add(menuItem);
-        roadContextMenu.getItems().add(showItem);
+        contextMenu.getItems().addAll(menuItem, waitingItem);
+        roadContextMenu.getItems().addAll(showItem, showTaxis);
         roadWaitingContextMenu.getItems().add(showRoadItem);
 
         // Inizializziamo la collections
@@ -1385,6 +1399,70 @@ public class HandlerController {
 
         VehicleController vehicleController = loader.getController();
         vehicleController.initData(taxiDriver);
+
+        // Aggiungiamo il bottone OK e CANCEL al dialogPane
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK);
+
+        // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+        Optional<ButtonType> result = dialog.showAndWait();
+        System.out.println(result);
+    }
+
+    private void showTaxis(Parking parking){
+        // creiamo un nuovo dialog da visualizzare
+        Dialog<ButtonType> dialog = new Dialog<>();
+
+        // inizializziamo il proprietario
+        dialog.initOwner(this.vBoxContainer.getScene().getWindow());
+
+        // Impostiamo il titolo del dialog
+        dialog.setTitle(String.format("Parcheggio di %s", parking.getStationName()));
+
+        // Carichiamo il file di iterfaccia per il dialog
+        FXMLLoader loader = new FXMLLoader();
+
+        try{
+            Parent root = loader.load(new FileInputStream(showTaxisControllerFile));
+            dialog.getDialogPane().setContent(root);
+        }catch (IOException e){
+            System.out.println("Errore di caricamento dialog");
+            e.printStackTrace();
+        }
+
+        ShowTaxisController showTaxisController = loader.getController();
+        showTaxisController.initData(parking);
+
+        // Aggiungiamo il bottone OK e CANCEL al dialogPane
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK);
+
+        // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+        Optional<ButtonType> result = dialog.showAndWait();
+        System.out.println(result);
+    }
+
+    public void showWaiting(TaxiDriver taxiDriver){
+        // creiamo un nuovo dialog da visualizzare
+        Dialog<ButtonType> dialog = new Dialog<>();
+
+        // inizializziamo il proprietario
+        dialog.initOwner(this.vBoxContainer.getScene().getWindow());
+
+        // Impostiamo il titolo del dialog
+        dialog.setTitle(String.format("È in sosta nel seguente parcheggio"));
+
+        // Carichiamo il file di iterfaccia per il dialog
+        FXMLLoader loader = new FXMLLoader();
+
+        try{
+            Parent root = loader.load(new FileInputStream(showWaitingParkingControllerFile));
+            dialog.getDialogPane().setContent(root);
+        }catch (IOException e){
+            System.out.println("Errore di caricamento dialog");
+            e.printStackTrace();
+        }
+
+        ShowWaitingParkingController showWaitingParkingController = loader.getController();
+        showWaitingParkingController.initData(taxiDriver);
 
         // Aggiungiamo il bottone OK e CANCEL al dialogPane
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK);
