@@ -10,11 +10,13 @@ public class Booking {
     private LocalDate orderDate;
     private LocalTime orderTime;
     private Node station;
+    private ArrivalModality arrivalModality;
 
-    public Booking(LocalDate orderDate, LocalTime orderTime, Node station){
+    public Booking(LocalDate orderDate, LocalTime orderTime, Node station, ArrivalModality arrivalModality){
         this.orderDate = orderDate;
         this.orderTime = orderTime;
         this.station = station;
+        this.arrivalModality = arrivalModality;
     }
 
     public LocalDate getOrderDate() {
@@ -39,6 +41,14 @@ public class Booking {
 
     public void setStation(Node station) {
         this.station = station;
+    }
+
+    public ArrivalModality getArrivalModality() {
+        return arrivalModality;
+    }
+
+    public void setArrivalModality(ArrivalModality arrivalModality) {
+        this.arrivalModality = arrivalModality;
     }
 
     @Override
