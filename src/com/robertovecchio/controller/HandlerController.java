@@ -80,10 +80,6 @@ public class HandlerController {
     private ContextMenu roadContextMenu;
     private ContextMenu roadWaitingContextMenu;
 
-
-    //==================================================
-    //               Variabili FXML
-    //==================================================
     @FXML
     VBox vBoxContainer;
     @FXML

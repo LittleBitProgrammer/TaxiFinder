@@ -1,6 +1,7 @@
 package com.robertovecchio.model.user;
 
 //Import
+import com.robertovecchio.model.booking.Booking;
 import com.robertovecchio.model.mediator.Colleague;
 import com.robertovecchio.model.mediator.TaxiCenter;
 
@@ -24,7 +25,7 @@ public class Customer extends UserAccount implements Colleague {
 
     /**Numero telefonico utente*/
     private String phoneNumber;
-    transient private final TaxiCenter taxiCenter;
+    private final TaxiCenter taxiCenter = new TaxiCenter();
 
     //==================================================
     //                   Costruttori
@@ -55,7 +56,6 @@ public class Customer extends UserAccount implements Colleague {
 
         // inizializzazione delle variabili d'istanza
         this.phoneNumber = phoneNumber;
-        taxiCenter = new TaxiCenter();
     }
 
     /**
@@ -68,7 +68,6 @@ public class Customer extends UserAccount implements Colleague {
 
         // Richiamo il costruttore della classe astratta UserAccount
         super(username, password);
-        taxiCenter = new TaxiCenter();
     }
 
     //==================================================
@@ -106,12 +105,7 @@ public class Customer extends UserAccount implements Colleague {
     }
 
     @Override
-    public void send() {
-
-    }
-
-    @Override
-    public void receive() {
-
+    public void send(Booking booking) {
+        taxiCenter.sendTaxiDriver(booking);
     }
 }

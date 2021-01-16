@@ -1,6 +1,7 @@
 package com.robertovecchio.model.user;
 
 //Import
+import com.robertovecchio.model.booking.Booking;
 import com.robertovecchio.model.mediator.Colleague;
 import com.robertovecchio.model.mediator.TaxiCenter;
 import com.robertovecchio.model.veichle.builderTaxi.Taxi;
@@ -23,7 +24,7 @@ public class TaxiDriver extends UserAccount implements Colleague {
      * @see Taxi*/
     private Taxi taxi;
     private State state;
-    transient private TaxiCenter taxiCenter;
+    private final TaxiCenter taxiCenter;
 
     //==================================================
     //                   Costruttori
@@ -150,12 +151,7 @@ public class TaxiDriver extends UserAccount implements Colleague {
 
 
     @Override
-    public void send() {
+    public void send(Booking booking) {
         // stub
-    }
-
-    @Override
-    public void receive() {
-
     }
 }

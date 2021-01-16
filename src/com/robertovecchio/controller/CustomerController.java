@@ -1,14 +1,13 @@
 package com.robertovecchio.controller;
 
-import com.robertovecchio.controller.dialog.AddTaxiDriverController;
 import com.robertovecchio.controller.dialog.OrderController;
 import com.robertovecchio.model.booking.Booking;
 import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.graph.node.WaitingStation;
-import com.robertovecchio.model.user.TaxiDriver;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,11 +16,11 @@ import javafx.scene.control.skin.TableHeaderRow;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * Classe che gestisce la main View del Cliente
@@ -76,8 +75,17 @@ public class CustomerController {
     public void initialize(){
         vBoxTopContainer.getChildren().addAll(compositeCustomerMenu());
 
-        // Inizializziamo le collections
-        this.bookings = taxiFinderData.getBookings();
+        Predicate<Booking> filterdBooking = new Predicate<Booking>() {
+            @Override
+            public boolean test(Booking booking) {
+                return booking.getCustomer().equals(taxiFinderData.getCurrentUser());
+            }
+        };
+
+        FilteredList<Booking> filteredList = new FilteredList<>(taxiFinderData.getBookings());
+        filteredList.setPredicate(filterdBooking);
+
+        this.bookings = filteredList;
 
         // Inizializzo le TableView
         compositeCustomerTable();
@@ -290,15 +298,21 @@ public class CustomerController {
     }
 
     private void setDriverColumnProperty(){
-        this.driverColumn.setCellValueFactory( bookingStringCellDataFeatures -> new SimpleStringProperty(
-                bookingStringCellDataFeatures.getValue().getDriver().getTaxi().getLicensePlate()));
+        this.driverColumn.setCellValueFactory( bookingStringCellDataFeatures -> {
+            if (bookingStringCellDataFeatures.getValue().getDriver() != null){
+                return new SimpleStringProperty(
+                        bookingStringCellDataFeatures.getValue().getDriver().getTaxi().getLicensePlate());
+            }else {
+                return new SimpleStringProperty("Attendere");
+            }
+        });
 
         // Personalizziamo la cella e quello che vogliamo vedere
         this.driverColumn.setCellFactory(bookingStringTableColumn -> new TableCell<>(){
             @Override
             protected void updateItem(String licensePlate, boolean empty){
                 super.updateItem(licensePlate, empty);
-                setText(Objects.requireNonNullElse(licensePlate, "null"));
+                setText(Objects.requireNonNullElse(licensePlate, ""));
             }
         });
     }

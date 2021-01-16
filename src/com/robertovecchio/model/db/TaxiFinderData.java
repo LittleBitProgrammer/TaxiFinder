@@ -11,8 +11,6 @@ import com.robertovecchio.model.graph.node.WaitingStation;
 import com.robertovecchio.model.user.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;

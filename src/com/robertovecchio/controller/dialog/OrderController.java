@@ -130,5 +130,9 @@ public class OrderController {
         WaitingStation second = toComboBox.getSelectionModel().getSelectedItem();
 
         Booking booking = new Booking(LocalDate.now(), LocalTime.now(), first, second, (Customer) taxiFinderData.getCurrentUser());
+        Customer customer = (Customer) taxiFinderData.getCurrentUser();
+
+        // Mediator Pattern
+        customer.send(booking);
     }
 }
