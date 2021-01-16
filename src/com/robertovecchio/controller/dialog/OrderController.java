@@ -1,14 +1,19 @@
 package com.robertovecchio.controller.dialog;
 
+import com.robertovecchio.model.booking.Booking;
 import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.graph.node.Parking;
 import com.robertovecchio.model.graph.node.WaitingStation;
+import com.robertovecchio.model.user.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.util.StringConverter;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class OrderController {
     //==================================================
@@ -118,5 +123,12 @@ public class OrderController {
     private String generateString(WaitingStation waitingStation){
         return String.format("%d - %s",  this.stations.indexOf(waitingStation) + 1,
                 waitingStation.getStationName());
+    }
+
+    public void processOrder(){
+        WaitingStation first = fromComboBox.getSelectionModel().getSelectedItem();
+        WaitingStation second = toComboBox.getSelectionModel().getSelectedItem();
+
+        Booking booking = new Booking(LocalDate.now(), LocalTime.now(), first, second, (Customer) taxiFinderData.getCurrentUser());
     }
 }

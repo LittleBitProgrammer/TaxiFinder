@@ -152,7 +152,7 @@ public class CustomerController {
 
             // Gestiamo il caso in cui l'utente abbia premuto OK
             if (result.isPresent() && result.get() == ButtonType.APPLY){
-                //TaxiDriver newTaxiDriver = addTaxiDriverController.processAddTaxiDriver();
+                orderController.processOrder();
                 //this.tableTaxiDriver.getSelectionModel().select(newTaxiDriver);
             }
         });

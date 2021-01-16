@@ -1,6 +1,6 @@
 package com.robertovecchio.model.mediator;
 
-public class ConcreteRadioTaxiCallCenter implements RadioTaxiCallCenter {
+public class TaxiCenter implements RadioTaxiCallCenter {
     @Override
     public void sendTaxiDriver() {
 

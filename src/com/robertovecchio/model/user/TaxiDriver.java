@@ -2,6 +2,7 @@ package com.robertovecchio.model.user;
 
 //Import
 import com.robertovecchio.model.mediator.Colleague;
+import com.robertovecchio.model.mediator.TaxiCenter;
 import com.robertovecchio.model.veichle.builderTaxi.Taxi;
 
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ public class TaxiDriver extends UserAccount implements Colleague {
      * @see Taxi*/
     private Taxi taxi;
     private State state;
+    transient private TaxiCenter taxiCenter;
 
     //==================================================
     //                   Costruttori
@@ -56,6 +58,7 @@ public class TaxiDriver extends UserAccount implements Colleague {
         this.licenseNumber = licenseNumber;
         this.taxi = taxi;
         state = State.FREE;
+        taxiCenter = new TaxiCenter();
     }
 
     /**
@@ -72,6 +75,7 @@ public class TaxiDriver extends UserAccount implements Colleague {
 
         // inizializzazione delle variabili d'istanza
         this.taxi = taxi;
+        taxiCenter = new TaxiCenter();
     }
 
     /**
@@ -83,6 +87,7 @@ public class TaxiDriver extends UserAccount implements Colleague {
 
         // Richiamo il costruttore della classe astratta UserAccount
         super(username, password);
+        taxiCenter = new TaxiCenter();
     }
 
     //==================================================
@@ -147,5 +152,10 @@ public class TaxiDriver extends UserAccount implements Colleague {
     @Override
     public void send() {
         // stub
+    }
+
+    @Override
+    public void receive() {
+
     }
 }

@@ -4,10 +4,14 @@ import com.robertovecchio.model.graph.node.Node;
 import com.robertovecchio.model.user.Customer;
 import com.robertovecchio.model.user.TaxiDriver;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Booking {
+public class Booking implements Serializable {
+
+    private final static long serialVersionUID = 13L;
+
     private LocalDate orderDate;
     private LocalTime orderTime;
     private Node from;
@@ -25,6 +29,11 @@ public class Booking {
         this.customer = customer;
         this.driver = driver;
         this.arrivalModality = arrivalModality;
+    }
+
+    public Booking(LocalDate orderDate, LocalTime orderTime, Node from, Node to,
+                   Customer customer) {
+        this(orderDate, orderTime, from, to, customer,null, ArrivalModality.NONE);
     }
 
     public LocalDate getOrderDate() {

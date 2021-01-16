@@ -137,6 +137,7 @@ public class CustomerLoginController {
         // Cambiamo Scente
         try {
             Customer customer = taxiFinderData.loginCustomer(new Customer(username, password));
+            taxiFinderData.setCurrentUser(customer);
 
             UtilityController.navigateTo(customerControllerFile,
                                          String.format("Cliente - %s %s", customer.getFirstName(), customer.getLastName()),
