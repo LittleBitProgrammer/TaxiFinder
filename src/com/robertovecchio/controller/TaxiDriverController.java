@@ -10,6 +10,7 @@ import com.robertovecchio.model.dijkstra.DijkstraAlgorithm;
 import com.robertovecchio.model.graph.node.Node;
 import com.robertovecchio.model.graph.node.Parking;
 import com.robertovecchio.model.graph.node.WaitingStation;
+import com.robertovecchio.model.user.State;
 import com.robertovecchio.model.user.TaxiDriver;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
@@ -57,6 +58,10 @@ public class TaxiDriverController {
 
     private Booking currentOrder;
 
+    private Circle circle;
+    private Button newOrder;
+    private Menu state;
+
     //==================================================
     //               Variabili FXML
     //==================================================
@@ -93,7 +98,7 @@ public class TaxiDriverController {
         // Aggiungiamo il menuBar al vBox
         this.vBoxTopContainer.getChildren().addAll(compositeHandlerMEnuBar(), compositeToolBar());
 
-        Predicate<Booking> filteredBooking = booking -> booking.getCustomer().equals(taxiFinderData.getCurrentUser()) && (booking.getOrderState() == OrderState.ACCEPTED);
+        Predicate<Booking> filteredBooking = booking -> booking.getDriver().equals(taxiFinderData.getCurrentUser()) && (booking.getOrderState() == OrderState.ACCEPTED);
         FilteredList<Booking> filteredList = new FilteredList<>(taxiFinderData.getBookings());
         filteredList.setPredicate(filteredBooking);
 
@@ -229,14 +234,14 @@ public class TaxiDriverController {
 
         TaxiDriver user = (TaxiDriver) taxiFinderData.getCurrentUser();
 
-        Circle circle = new Circle(6,6, 6);
+        this.circle = new Circle(6,6, 6);
 
         switch (user.getState()){
             case FREE -> circle.setFill(Color.LIGHTGREEN);
             case OCCUPIED -> circle.setFill(Color.RED);
         }
 
-        Menu state = new Menu(user.getState().getTranslation(), circle);
+        state = new Menu(user.getState().getTranslation(), circle);
 
         // Aggiungiamo un nuovo menu al menu bar di destra
         rightBar.getMenus().addAll(state);
@@ -271,7 +276,7 @@ public class TaxiDriverController {
 
         // inizializzo i Button
         Button orders = new Button("Visualizza ordini effettuattuati");
-        Button newOrder = new Button("Nuovo ordine in pendenza");
+        newOrder = new Button("Nuovo ordine in pendenza");
 
         // Impostiamo un'azione quando orders viene premuto
         orders.setOnAction(actionEvent -> UtilityController.changeVisibility(this.bookingTableView, this.gridContainer));
@@ -499,10 +504,28 @@ public class TaxiDriverController {
         // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
         Optional<ButtonType> result = dialog.showAndWait();
 
-        System.out.println(result);
+        // Gestiamo il caso in cui l'utente abbia premuto OK
+        if (result.isPresent() && result.get() == ButtonType.OK){
+            this.circle.setFill(Color.LIGHTGREEN);
+            this.currentOrder.getDriver().setState(State.FREE);
+
+            assert currentParking != null;
+            currentParking.getTaxis().poll();
+            currentParking.getTaxis().add(user.getTaxi());
+
+            UtilityController.changeVisibility(this.bookingTableView, this.gridContainer, this.newOrder);
+            state.setText(user.getState().getTranslation());
+
+            try {
+                TaxiFinderData.getInstance().storeGraph();
+                TaxiFinderData.getInstance().storeTaxiDrivers();
+                TaxiFinderData.getInstance().loadBookings();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void sendTaxiWithLessTraffic(){
-
     }
 }
