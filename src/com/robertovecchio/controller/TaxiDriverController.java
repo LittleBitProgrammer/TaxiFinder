@@ -1,10 +1,14 @@
 package com.robertovecchio.controller;
 
 import com.robertovecchio.controller.dialog.ChangeParkingController;
-import com.robertovecchio.controller.dialog.OrderController;
+import com.robertovecchio.controller.dialog.ShowPathController;
+import com.robertovecchio.model.booking.ArrivalModality;
 import com.robertovecchio.model.booking.Booking;
 import com.robertovecchio.model.booking.OrderState;
 import com.robertovecchio.model.db.TaxiFinderData;
+import com.robertovecchio.model.dijkstra.DijkstraAlgorithm;
+import com.robertovecchio.model.graph.node.Node;
+import com.robertovecchio.model.graph.node.Parking;
 import com.robertovecchio.model.graph.node.WaitingStation;
 import com.robertovecchio.model.user.TaxiDriver;
 import javafx.beans.property.SimpleStringProperty;
@@ -21,6 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -50,6 +55,8 @@ public class TaxiDriverController {
     // ObservableList
     private ObservableList<Booking> bookings;
 
+    private Booking currentOrder;
+
     //==================================================
     //               Variabili FXML
     //==================================================
@@ -73,6 +80,7 @@ public class TaxiDriverController {
 
     private static final String mainControllerFile = "src/com/robertovecchio/view/fxml/main.fxml";
     private static final String changeParkingControllerFile = "src/com/robertovecchio/view/fxml/dialog/changeParking.fxml";
+    private static final String showPathControllerFile = "src/com/robertoVecchio/view/fxml/dialog/showPath.fxml";
 
     //==================================================
     //               Inizializzazione
@@ -94,7 +102,13 @@ public class TaxiDriverController {
         compositeBookingsTable();
 
         streetChoice.setOnAction(actionEvent -> {
-            System.out.println("Scelto strada");
+            this.currentOrder.setArrivalModality(ArrivalModality.LENGTH);
+            this.currentOrder.setOrderState(OrderState.ACCEPTED);
+            TaxiDriver taxiDriver = (TaxiDriver) taxiFinderData.getCurrentUser();
+
+            taxiDriver.send(currentOrder);
+
+            this.sendTaxiWithShortestPath();
         });
 
         timeChoice.setOnAction(actionEvent -> {
@@ -250,6 +264,7 @@ public class TaxiDriverController {
         for (Booking booking : taxiFinderData.getBookings()){
             if (booking.getDriver().equals(taxiFinderData.getCurrentUser()) && (booking.getOrderState() == OrderState.WAITING)) {
                 thereIsNewOrder = true;
+                currentOrder = booking;
                 break;
             }
         }
@@ -431,6 +446,63 @@ public class TaxiDriverController {
         });
     }
 
-    private void compositeNewOrder(){
+    private void sendTaxiWithShortestPath(){
+        // Inializzo la classe per l'algoritmo di Dijkstra
+        DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(taxiFinderData.getGraph());
+
+        Parking currentParking = null;
+        TaxiDriver user = (TaxiDriver) taxiFinderData.getCurrentUser();
+
+        // Recuperiamo il parcheggio corrente
+        for (Node node : taxiFinderData.getGraph().getVertexes()){
+            if (node instanceof Parking){
+                Parking parking = (Parking) node;
+                if (parking.getTaxis().contains(user.getTaxi())){
+                    currentParking = parking;
+                }
+            }
+        }
+
+        // Eseguo l'algoritmo di Dijkstra dalla sorgente
+        dijkstraAlgorithm.execute(currentParking);
+
+        // Inizializziamo il path
+        LinkedList<Node> path = dijkstraAlgorithm.getPath(this.currentOrder.getFrom());
+        System.out.println(path);
+
+        // Mostriamo un dialog per il percorso
+        Dialog<ButtonType> dialog = new Dialog<>();
+
+        // inizializziamo il proprietario
+        dialog.initOwner(this.vBoxTopContainer.getScene().getWindow());
+
+        // Impostiamo il titolo del dialog
+        dialog.setTitle("Percorso");
+
+        // Carichiamo il file di iterfaccia per il dialog
+        FXMLLoader loader = new FXMLLoader();
+
+        try{
+            Parent root = loader.load(new FileInputStream(showPathControllerFile));
+            dialog.getDialogPane().setContent(root);
+        }catch (IOException e){
+            System.out.println("Errore di caricamento dialog");
+            e.printStackTrace();
+        }
+
+        // Aggiungiamo il bottone OK e CANCEL al dialogPane
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        ShowPathController showPathController = loader.getController();
+        showPathController.init(path);
+
+        // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+        Optional<ButtonType> result = dialog.showAndWait();
+
+        System.out.println(result);
+    }
+
+    private void sendTaxiWithLessTraffic(){
+
     }
 }

@@ -4,5 +4,5 @@ import com.robertovecchio.model.booking.Booking;
 
 public interface RadioTaxiCallCenter {
     void sendTaxiDriver(Booking booking);
-    void notifyCustomer();
+    void notifyCustomer(Booking booking);
 }

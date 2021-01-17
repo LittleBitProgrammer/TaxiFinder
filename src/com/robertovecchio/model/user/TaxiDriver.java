@@ -153,6 +153,6 @@ public class TaxiDriver extends UserAccount implements Colleague {
 
     @Override
     public void send(Booking booking) {
-        // stub
+        taxiCenter.notifyCustomer(booking);
     }
 }

@@ -52,8 +52,8 @@ public class TaxiCenter implements RadioTaxiCallCenter, Serializable {
     }
 
     @Override
-    public void notifyCustomer() {
-
+    public void notifyCustomer(Booking booking) {
+        memorizeBooking();
     }
 
     private void memorizeBooking(){
@@ -107,7 +107,7 @@ public class TaxiCenter implements RadioTaxiCallCenter, Serializable {
         }
 
         assert min != null;
-        return takeTaxiDriverFrom(min.getTaxis().poll());
+        return takeTaxiDriverFrom(min.getTaxis().peek());
     }
 
     private TaxiDriver takeTaxiDriverFrom(Taxi taxi) throws TaxiDriverNotFoundException {
