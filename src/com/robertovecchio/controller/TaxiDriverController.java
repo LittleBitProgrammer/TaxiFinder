@@ -31,9 +31,6 @@ public class TaxiDriverController {
     //DB
     private final TaxiFinderData taxiFinderData = TaxiFinderData.getInstance();
 
-    // TableView
-    private TableView<Booking> bookingTableView;
-
     // TableColumn
     private TableColumn<Booking, String> orderDateColumn;
     private TableColumn<Booking, String> orderTimeColumn;
@@ -52,6 +49,14 @@ public class TaxiDriverController {
     VBox vBoxTopContainer;
     @FXML
     StackPane stackContainer;
+    @FXML
+    private TableView<Booking> bookingTableView;
+    @FXML
+    private GridPane gridContainer;
+    @FXML
+    private Button streetChoice;
+    @FXML
+    private Button timeChoice;
 
 
     //==================================================
@@ -78,9 +83,16 @@ public class TaxiDriverController {
         this.bookings = filteredList;
 
         compositeBookingsTable();
-        //TODO// composizione scelta percorso
 
-        this.stackContainer.getChildren().addAll(this.bookingTableView);
+        streetChoice.setOnAction(actionEvent -> {
+            System.out.println("Scelto strada");
+        });
+
+        timeChoice.setOnAction(actionEvent -> {
+            System.out.println("Scelto meno traffico");
+        });
+
+        UtilityController.changeVisibility(this.bookingTableView, this.gridContainer);
     }
 
     private HBox compositeHandlerMEnuBar(){
@@ -161,13 +173,31 @@ public class TaxiDriverController {
         // Inizializzo la toolBar
         ToolBar toolBar = new ToolBar();
 
+        boolean thereIsNewOrder = false;
+
+        for (Booking booking : taxiFinderData.getBookings()){
+            if (booking.getDriver().equals(taxiFinderData.getCurrentUser()) && (booking.getOrderState() == OrderState.WAITING)) {
+                thereIsNewOrder = true;
+                break;
+            }
+        }
+
         // inizializzo i Button
         Button orders = new Button("Visualizza ordini effettuattuati");
         Button newOrder = new Button("Nuovo ordine in pendenza");
 
+        // Impostiamo un'azione quando orders viene premuto
+        orders.setOnAction(actionEvent -> UtilityController.changeVisibility(this.bookingTableView, this.gridContainer));
+
+        // Impostiamo un'azione quando newOrderVienePremuto
+        newOrder.setOnAction(actionEvent -> UtilityController.changeVisibility(this.gridContainer, this.bookingTableView));
+
         // Aggiungiamo i button alla toolbar
         toolBar.getItems().addAll(orders, newOrder);
 
+        newOrder.setVisible(thereIsNewOrder);
+
+        System.out.println(thereIsNewOrder);
         return toolBar;
     }
 
@@ -179,9 +209,6 @@ public class TaxiDriverController {
         this.toColumn = new TableColumn<>("A");
         this.customerColumn = new TableColumn<>("Cliente");
         this.customerReachment = new TableColumn<>("Tipo Raggiungimento");
-
-        // Inizializziamo la tableView
-        this.bookingTableView = new TableView<>();
 
         // Aggiungiamo le colonne alla tabella
         this.bookingTableView.getColumns().add(this.orderDateColumn);

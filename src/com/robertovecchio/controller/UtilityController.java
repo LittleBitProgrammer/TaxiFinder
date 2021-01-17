@@ -2,12 +2,10 @@ package com.robertovecchio.controller;
 
 import com.robertovecchio.controller.dialog.DialogAction;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import java.io.FileInputStream;
@@ -179,5 +177,14 @@ public class UtilityController {
      * @return Ritorna true se e compresa nel range 4-14, altrimenti false*/
     public static boolean isValidPassword(String password){
         return !(password.length() < 4 || password.length() > 15);
+    }
+
+    public static void changeVisibility(Node visible, Node... invisibles){
+        visible.setVisible(true);
+        for (Node invisible : invisibles){
+            if (invisible != null){
+                invisible.setVisible(false);
+            }
+        }
     }
 }
