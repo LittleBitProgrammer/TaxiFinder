@@ -1,20 +1,21 @@
 package com.robertovecchio.controller;
 
 import com.robertovecchio.model.booking.Booking;
+import com.robertovecchio.model.booking.OrderState;
 import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.graph.node.WaitingStation;
 import com.robertovecchio.model.user.TaxiDriver;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.skin.TableHeaderRow;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * Classe che gestisce la main View del Tassista
@@ -70,8 +71,11 @@ public class TaxiDriverController {
         // Aggiungiamo il menuBar al vBox
         this.vBoxTopContainer.getChildren().addAll(compositeHandlerMEnuBar(), compositeToolBar());
 
-        //TODO:// filtrare le liste
-        this.bookings = taxiFinderData.getBookings();
+        Predicate<Booking> filteredBooking = booking -> booking.getCustomer().equals(taxiFinderData.getCurrentUser()) && (booking.getOrderState() == OrderState.ACCEPTED);
+        FilteredList<Booking> filteredList = new FilteredList<>(taxiFinderData.getBookings());
+        filteredList.setPredicate(filteredBooking);
+
+        this.bookings = filteredList;
 
         compositeBookingsTable();
         //TODO// composizione scelta percorso
@@ -328,5 +332,8 @@ public class TaxiDriverController {
                 setText(Objects.requireNonNullElse(name, ""));
             }
         });
+    }
+
+    private void compositeNewOrder(){
     }
 }
