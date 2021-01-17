@@ -140,52 +140,69 @@ public class TaxiDriverController {
 
         // Aggiungiamo un'azione quando moveToParking viene premuto
         moveToPerking.setOnAction(actionEvent -> {
-            // creiamo un nuovo dialog da visualizzare
-            Dialog<ButtonType> dialog = new Dialog<>();
+            boolean thereIsNewOrder = false;
 
-            // inizializziamo il proprietario
-            dialog.initOwner(this.vBoxTopContainer.getScene().getWindow());
-
-            // Impostiamo il titolo del dialog
-            dialog.setTitle("Cambia Parcheggio");
-
-            // Carichiamo il file di iterfaccia per il dialog
-            FXMLLoader loader = new FXMLLoader();
-
-            try{
-                Parent root = loader.load(new FileInputStream(changeParkingControllerFile));
-                dialog.getDialogPane().setContent(root);
-            }catch (IOException e){
-                System.out.println("Errore di caricamento dialog");
-                e.printStackTrace();
+            for (Booking booking : taxiFinderData.getBookings()){
+                if (booking.getDriver().equals(taxiFinderData.getCurrentUser()) && (booking.getOrderState() == OrderState.WAITING)) {
+                    thereIsNewOrder = true;
+                    break;
+                }
             }
+            if (thereIsNewOrder){
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Spostamento impossibile", ButtonType.OK);
+                alert.setHeaderText("C'è un ordine in corso");
+                alert.setContentText("Non puoi spostarti di parcheggio durante un ordine");
 
-            // Aggiungiamo il bottone OK e CANCEL al dialogPane
-            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
+                Optional<ButtonType> result = alert.showAndWait();
+                System.out.println(result);
+            }else{
+                // creiamo un nuovo dialog da visualizzare
+                Dialog<ButtonType> dialog = new Dialog<>();
 
-            ChangeParkingController changeParkingController = loader.getController();
+                // inizializziamo il proprietario
+                dialog.initOwner(this.vBoxTopContainer.getScene().getWindow());
 
-            // Gestione Errori
-            dialog.getDialogPane().lookupButton(ButtonType.APPLY).addEventFilter(ActionEvent.ACTION,
-                    event->{
-                        if (!changeParkingController.validateField()){
-                            Alert alert = new Alert(Alert.AlertType.WARNING, "Spostamento impossibile", ButtonType.OK);
-                            alert.setHeaderText("Già sei nel parcheggio");
-                            alert.setContentText("È inutile segnalare che sei in questo parcheggio");
+                // Impostiamo il titolo del dialog
+                dialog.setTitle("Cambia Parcheggio");
 
-                            Optional<ButtonType> result = alert.showAndWait();
-                            System.out.println(result);
+                // Carichiamo il file di iterfaccia per il dialog
+                FXMLLoader loader = new FXMLLoader();
 
-                            event.consume();
-                        }
-                    });
+                try{
+                    Parent root = loader.load(new FileInputStream(changeParkingControllerFile));
+                    dialog.getDialogPane().setContent(root);
+                }catch (IOException e){
+                    System.out.println("Errore di caricamento dialog");
+                    e.printStackTrace();
+                }
 
-            // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
-            Optional<ButtonType> result = dialog.showAndWait();
+                // Aggiungiamo il bottone OK e CANCEL al dialogPane
+                dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
 
-            // Gestiamo il caso in cui l'utente abbia premuto OK
-            if (result.isPresent() && result.get() == ButtonType.APPLY){
-                changeParkingController.processChangeParking();
+                ChangeParkingController changeParkingController = loader.getController();
+
+                // Gestione Errori
+                dialog.getDialogPane().lookupButton(ButtonType.APPLY).addEventFilter(ActionEvent.ACTION,
+                        event->{
+                            if (!changeParkingController.validateField()){
+                                Alert alert = new Alert(Alert.AlertType.WARNING, "Spostamento impossibile", ButtonType.OK);
+                                alert.setHeaderText("Già sei nel parcheggio");
+                                alert.setContentText("È inutile segnalare che sei in questo parcheggio");
+
+                                Optional<ButtonType> result = alert.showAndWait();
+                                System.out.println(result);
+
+                                event.consume();
+                            }
+                        });
+
+                // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+                Optional<ButtonType> result = dialog.showAndWait();
+
+                // Gestiamo il caso in cui l'utente abbia premuto OK
+                if (result.isPresent() && result.get() == ButtonType.APPLY){
+                    changeParkingController.processChangeParking();
+                }
             }
         });
 
@@ -251,8 +268,6 @@ public class TaxiDriverController {
         toolBar.getItems().addAll(orders, newOrder);
 
         newOrder.setVisible(thereIsNewOrder);
-
-        System.out.println(thereIsNewOrder);
         return toolBar;
     }
 
