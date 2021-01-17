@@ -119,7 +119,7 @@ public class TaxiDriverController {
         });
 
         timeChoice.setOnAction(actionEvent -> {
-            System.out.println("Scelto meno traffico");
+            this.sendTaxiWithLessTraffic();
         });
 
         UtilityController.changeVisibility(this.bookingTableView, this.gridContainer);
@@ -475,7 +475,6 @@ public class TaxiDriverController {
 
         // Inizializziamo il path
         LinkedList<Node> path = dijkstraAlgorithm.getPath(this.currentOrder.getFrom());
-        System.out.println(path);
 
         // Mostriamo un dialog per il percorso
         Dialog<ButtonType> dialog = new Dialog<>();
@@ -529,6 +528,75 @@ public class TaxiDriverController {
     }
 
     private void sendTaxiWithLessTraffic(){
+        DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(taxiFinderData.getTrafficGraph());
 
+        Parking currentParking = null;
+        TaxiDriver user = (TaxiDriver) taxiFinderData.getCurrentUser();
+
+        // Recuperiamo il parcheggio corrente
+        for (Node node : taxiFinderData.getGraph().getVertexes()){
+            if (node instanceof Parking){
+                Parking parking = (Parking) node;
+                if (parking.getTaxis().contains(user.getTaxi())){
+                    currentParking = parking;
+                }
+            }
+        }
+
+        // Eseguo l'algoritmo di Dijkstra dalla sorgente
+        dijkstraAlgorithm.execute(currentParking);
+
+        // Inizializziamo il path
+        LinkedList<Node> path = dijkstraAlgorithm.getPath(this.currentOrder.getFrom());
+
+        // Mostriamo un dialog per il percorso
+        Dialog<ButtonType> dialog = new Dialog<>();
+
+        // inizializziamo il proprietario
+        dialog.initOwner(this.vBoxTopContainer.getScene().getWindow());
+
+        // Impostiamo il titolo del dialog
+        dialog.setTitle("Percorso");
+
+        // Carichiamo il file di iterfaccia per il dialog
+        FXMLLoader loader = new FXMLLoader();
+
+        try{
+            Parent root = loader.load(new FileInputStream(showPathControllerFile));
+            dialog.getDialogPane().setContent(root);
+        }catch (IOException e){
+            System.out.println("Errore di caricamento dialog");
+            e.printStackTrace();
+        }
+
+        // Aggiungiamo il bottone OK e CANCEL al dialogPane
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        ShowPathController showPathController = loader.getController();
+        showPathController.init(path);
+
+        // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+        Optional<ButtonType> result = dialog.showAndWait();
+
+        // Gestiamo il caso in cui l'utente abbia premuto OK
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            this.circle.setFill(Color.LIGHTGREEN);
+            this.currentOrder.getDriver().setState(State.FREE);
+
+            assert currentParking != null;
+            currentParking.getTaxis().poll();
+            currentParking.getTaxis().add(user.getTaxi());
+
+            UtilityController.changeVisibility(this.bookingTableView, this.gridContainer, this.newOrder);
+            state.setText(user.getState().getTranslation());
+
+            try {
+                TaxiFinderData.getInstance().storeGraph();
+                TaxiFinderData.getInstance().storeTaxiDrivers();
+                TaxiFinderData.getInstance().loadBookings();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
