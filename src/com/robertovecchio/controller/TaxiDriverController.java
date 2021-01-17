@@ -1,13 +1,20 @@
 package com.robertovecchio.controller;
 
+import com.robertovecchio.model.booking.Booking;
 import com.robertovecchio.model.db.TaxiFinderData;
+import com.robertovecchio.model.graph.node.WaitingStation;
 import com.robertovecchio.model.user.TaxiDriver;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.skin.TableHeaderRow;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+
+import java.util.Objects;
 
 /**
  * Classe che gestisce la main View del Tassista
@@ -22,6 +29,20 @@ public class TaxiDriverController {
 
     //DB
     private final TaxiFinderData taxiFinderData = TaxiFinderData.getInstance();
+
+    // TableView
+    private TableView<Booking> bookingTableView;
+
+    // TableColumn
+    private TableColumn<Booking, String> orderDateColumn;
+    private TableColumn<Booking, String> orderTimeColumn;
+    private TableColumn<Booking, String> fromColumn;
+    private TableColumn<Booking, String> toColumn;
+    private TableColumn<Booking, String> customerColumn;
+    private TableColumn<Booking, String> customerReachment;
+
+    // ObservableList
+    private ObservableList<Booking> bookings;
 
     //==================================================
     //               Variabili FXML
@@ -48,6 +69,14 @@ public class TaxiDriverController {
     public void initialize() {
         // Aggiungiamo il menuBar al vBox
         this.vBoxTopContainer.getChildren().addAll(compositeHandlerMEnuBar(), compositeToolBar());
+
+        //TODO:// filtrare le liste
+        this.bookings = taxiFinderData.getBookings();
+
+        compositeBookingsTable();
+        //TODO// composizione scelta percorso
+
+        this.stackContainer.getChildren().addAll(this.bookingTableView);
     }
 
     private HBox compositeHandlerMEnuBar(){
@@ -119,10 +148,8 @@ public class TaxiDriverController {
         // Impostiamo alcune proprietà dell'hbox
         HBox.setHgrow(spacer, Priority.SOMETIMES);
 
-        // aggiungiamo elementi all'hbox
-        HBox menubars = new HBox(menuBar, spacer, rightBar);
-
-        return menubars;
+        // Aggiungiamo elementi all'hbox e ritorniamo tale nodo
+        return new HBox(menuBar, spacer, rightBar);
     }
 
     private ToolBar compositeToolBar() {
@@ -138,5 +165,168 @@ public class TaxiDriverController {
         toolBar.getItems().addAll(orders, newOrder);
 
         return toolBar;
+    }
+
+    private void compositeBookingsTable(){
+        // Creiamo le colonne della tableView
+        this.orderDateColumn = new TableColumn<>("Data");
+        this.orderTimeColumn = new TableColumn<>("Orario");
+        this.fromColumn = new TableColumn<>("Da");
+        this.toColumn = new TableColumn<>("A");
+        this.customerColumn = new TableColumn<>("Cliente");
+        this.customerReachment = new TableColumn<>("Tipo Raggiungimento");
+
+        // Inizializziamo la tableView
+        this.bookingTableView = new TableView<>();
+
+        // Aggiungiamo le colonne alla tabella
+        this.bookingTableView.getColumns().add(this.orderDateColumn);
+        this.bookingTableView.getColumns().add(this.orderTimeColumn);
+        this.bookingTableView.getColumns().add(this.fromColumn);
+        this.bookingTableView.getColumns().add(this.toColumn);
+        this.bookingTableView.getColumns().add(this.customerColumn);
+        this.bookingTableView.getColumns().add(this.customerReachment);
+
+        // Impostiamo la grandezza massima della tabella per ogni colonna
+        this.bookingTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        this.orderDateColumn.setMaxWidth(Integer.MAX_VALUE * 16.6);      // 16.6%
+        this.orderTimeColumn.setMaxWidth(Integer.MAX_VALUE * 16.6);      // 16.6%
+        this.fromColumn.setMaxWidth(Integer.MAX_VALUE * 16.6);           // 16.6%
+        this.toColumn.setMaxWidth(Integer.MAX_VALUE * 16.6);             // 16.6%
+        this.customerColumn.setMaxWidth(Integer.MAX_VALUE * 16.6);       // 16.6%
+        this.customerReachment.setMaxWidth(Integer.MAX_VALUE * 16.6);    // 16.6%
+
+        // Impediamo che le tabelle possano essere riordinate dall'utente
+        this.bookingTableView.skinProperty().addListener((observableValue, oldWidth, newWidth) ->{
+            final TableHeaderRow header = (TableHeaderRow) bookingTableView.lookup("TableHeaderRow");
+
+            header.reorderingProperty().addListener((obs, oldValue, newValue) -> header.setReordering(false));
+        });
+
+        // Rendiamo la tableView non editabile
+        this.bookingTableView.setEditable(false);
+
+        // Impostiamo le proprietà delle colonne
+        setOrderDateColumnProperty();
+        setOrderTimeColumnProperty();
+        setFromColumnProperty();
+        setToColumnProperty();
+        setCustomerColumnProperty();
+        setCustomerReachmentColumnProperty();
+
+        // Impostiamo una larghezza base
+        this.bookingTableView.setPrefWidth(2048);
+
+        // Impostiamo gli item da visualizzare
+        this.bookingTableView.setItems(this.bookings);
+    }
+
+    private void setOrderDateColumnProperty(){
+        this.orderDateColumn.setCellValueFactory( bookingStringCellDataFeatures -> new SimpleStringProperty(
+                bookingStringCellDataFeatures.getValue().getOrderDate().format(taxiFinderData.getDateTimeFormatter())));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.orderDateColumn.setCellFactory(bookingStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String date, boolean empty){
+                super.updateItem(date, empty);
+                if(empty || date == null){
+                    setText(null);
+                } else {
+                    setText(date);
+                }
+            }
+        });
+    }
+
+    private void setOrderTimeColumnProperty(){
+        this.orderTimeColumn.setCellValueFactory( bookingStringCellDataFeatures -> new SimpleStringProperty(
+                bookingStringCellDataFeatures.getValue().getOrderTime().format(taxiFinderData.getTimeFormatter())));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.orderTimeColumn.setCellFactory(bookingStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String time, boolean empty){
+                super.updateItem(time, empty);
+                if(empty || time == null){
+                    setText(null);
+                } else {
+                    setText(time);
+                }
+            }
+        });
+    }
+
+    private void setFromColumnProperty(){
+        this.fromColumn.setCellValueFactory( bookingStringCellDataFeatures -> new SimpleStringProperty(
+                ((WaitingStation) bookingStringCellDataFeatures.getValue().getFrom()).getStationName()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.fromColumn.setCellFactory(bookingStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String stationFrom, boolean empty){
+                super.updateItem(stationFrom, empty);
+                if(empty || stationFrom == null){
+                    setText(null);
+                } else {
+                    setText(stationFrom);
+                }
+            }
+        });
+    }
+
+    private void setToColumnProperty(){
+        this.toColumn.setCellValueFactory( bookingStringCellDataFeatures -> new SimpleStringProperty(
+                ((WaitingStation) bookingStringCellDataFeatures.getValue().getTo()).getStationName()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.toColumn.setCellFactory(bookingStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String stationTo, boolean empty){
+                super.updateItem(stationTo, empty);
+                if(empty || stationTo == null){
+                    setText(null);
+                } else {
+                    setText(stationTo);
+                }
+            }
+        });
+    }
+
+    private void setCustomerColumnProperty(){
+        this.customerColumn.setCellValueFactory( bookingStringCellDataFeatures -> {
+            return new SimpleStringProperty(
+                        bookingStringCellDataFeatures.getValue().getCustomer().getFirstName() + " "  +
+                                bookingStringCellDataFeatures.getValue().getCustomer().getLastName());
+
+        });
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.customerColumn.setCellFactory(bookingStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String name, boolean empty){
+                super.updateItem(name, empty);
+                setText(Objects.requireNonNullElse(name, ""));
+            }
+        });
+    }
+
+    private void setCustomerReachmentColumnProperty(){
+        this.customerReachment.setCellValueFactory( bookingStringCellDataFeatures -> {
+
+            if (bookingStringCellDataFeatures.getValue().getArrivalModality() != null){
+                return new SimpleStringProperty(bookingStringCellDataFeatures.getValue().getArrivalModality().toString());
+            }
+            return new SimpleStringProperty("");
+        });
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.customerReachment.setCellFactory(bookingStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String name, boolean empty){
+                super.updateItem(name, empty);
+                setText(Objects.requireNonNullElse(name, ""));
+            }
+        });
     }
 }
