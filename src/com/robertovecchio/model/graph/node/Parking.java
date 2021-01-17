@@ -4,7 +4,7 @@ package com.robertovecchio.model.graph.node;
 import com.robertovecchio.model.veichle.builderTaxi.Taxi;
 
 import java.io.Serializable;
-import java.util.PriorityQueue;
+import java.util.LinkedList;
 import java.util.Queue;
 
 /**
@@ -73,7 +73,7 @@ public class Parking extends WaitingStation implements Serializable {
 
         // Inizializzo le variabili d'istanza
         this.parkingCapacity = parkingCapacity;
-        this.taxis = new PriorityQueue<>();
+        this.taxis = new LinkedList<>();
     }
 
     public Parking(Coordinates coordinates){

@@ -87,8 +87,8 @@ public class RemoveEdgeController {
     //==================================================
 
     private String generateString(Edge edge){
-        WaitingStation from = (WaitingStation) edge.getDestination();
-        WaitingStation to = (WaitingStation) edge.getSource();
+        WaitingStation from = (WaitingStation) edge.getSource();
+        WaitingStation to = (WaitingStation) edge.getDestination();
 
         return String.format("%d - %s => %s",  this.taxiFinderData.getGraph().getEdges().indexOf(edge) + 1,
                                                from.getStationName(),

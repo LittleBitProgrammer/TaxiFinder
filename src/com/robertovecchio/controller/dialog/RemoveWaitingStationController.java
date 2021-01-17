@@ -119,7 +119,7 @@ public class RemoveWaitingStationController {
         taxiFinderData.removeWaitingStation(waitingStation);
         taxiFinderData.getGraph().getVertexes().remove(waitingStation);
 
-        taxiFinderData.getGraph().getEdges().removeIf(edge -> edge.getSource().equals(waitingStation));
+        taxiFinderData.getGraph().getEdges().removeIf(edge -> edge.getSource().equals(waitingStation) || edge.getDestination().equals(waitingStation));
 
         try {
             taxiFinderData.storeWaitingStations();

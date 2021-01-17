@@ -121,7 +121,7 @@ public class RemoveParkingController {
         taxiFinderData.removeParking(parking);
         taxiFinderData.getGraph().getVertexes().remove(parking);
 
-        taxiFinderData.getGraph().getEdges().removeIf(edge -> edge.getSource().equals(parking));
+        taxiFinderData.getGraph().getEdges().removeIf(edge -> edge.getSource().equals(parking) || edge.getDestination().equals(parking));
 
         try {
             taxiFinderData.storeParkings();

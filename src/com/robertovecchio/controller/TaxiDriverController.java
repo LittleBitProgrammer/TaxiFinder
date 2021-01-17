@@ -1,5 +1,7 @@
 package com.robertovecchio.controller;
 
+import com.robertovecchio.controller.dialog.ChangeParkingController;
+import com.robertovecchio.controller.dialog.OrderController;
 import com.robertovecchio.model.booking.Booking;
 import com.robertovecchio.model.booking.OrderState;
 import com.robertovecchio.model.db.TaxiFinderData;
@@ -8,13 +10,19 @@ import com.robertovecchio.model.user.TaxiDriver;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.skin.TableHeaderRow;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
@@ -64,6 +72,7 @@ public class TaxiDriverController {
     //==================================================
 
     private static final String mainControllerFile = "src/com/robertovecchio/view/fxml/main.fxml";
+    private static final String changeParkingControllerFile = "src/com/robertovecchio/view/fxml/dialog/changeParking.fxml";
 
     //==================================================
     //               Inizializzazione
@@ -131,7 +140,53 @@ public class TaxiDriverController {
 
         // Aggiungiamo un'azione quando moveToParking viene premuto
         moveToPerking.setOnAction(actionEvent -> {
-            System.out.println("muoviti premuto");
+            // creiamo un nuovo dialog da visualizzare
+            Dialog<ButtonType> dialog = new Dialog<>();
+
+            // inizializziamo il proprietario
+            dialog.initOwner(this.vBoxTopContainer.getScene().getWindow());
+
+            // Impostiamo il titolo del dialog
+            dialog.setTitle("Cambia Parcheggio");
+
+            // Carichiamo il file di iterfaccia per il dialog
+            FXMLLoader loader = new FXMLLoader();
+
+            try{
+                Parent root = loader.load(new FileInputStream(changeParkingControllerFile));
+                dialog.getDialogPane().setContent(root);
+            }catch (IOException e){
+                System.out.println("Errore di caricamento dialog");
+                e.printStackTrace();
+            }
+
+            // Aggiungiamo il bottone OK e CANCEL al dialogPane
+            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
+
+            ChangeParkingController changeParkingController = loader.getController();
+
+            // Gestione Errori
+            dialog.getDialogPane().lookupButton(ButtonType.APPLY).addEventFilter(ActionEvent.ACTION,
+                    event->{
+                        if (!changeParkingController.validateField()){
+                            Alert alert = new Alert(Alert.AlertType.WARNING, "Spostamento impossibile", ButtonType.OK);
+                            alert.setHeaderText("Già sei nel parcheggio");
+                            alert.setContentText("È inutile segnalare che sei in questo parcheggio");
+
+                            Optional<ButtonType> result = alert.showAndWait();
+                            System.out.println(result);
+
+                            event.consume();
+                        }
+                    });
+
+            // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+            Optional<ButtonType> result = dialog.showAndWait();
+
+            // Gestiamo il caso in cui l'utente abbia premuto OK
+            if (result.isPresent() && result.get() == ButtonType.APPLY){
+                changeParkingController.processChangeParking();
+            }
         });
 
         // Aggiungiamo un'azione quando Logout viene premuto
