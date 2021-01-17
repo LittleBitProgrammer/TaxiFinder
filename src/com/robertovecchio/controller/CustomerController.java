@@ -7,6 +7,7 @@ import com.robertovecchio.model.graph.node.WaitingStation;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -148,7 +149,31 @@ public class CustomerController {
             dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
 
             OrderController orderController = loader.getController();
-            //dialog.getDialogPane().lookupButton(ButtonType.APPLY).disableProperty().bind(addTaxiDriverController.invalidInputProperty());
+
+            // Gestione Errori
+            dialog.getDialogPane().lookupButton(ButtonType.APPLY).addEventFilter(ActionEvent.ACTION,
+                    event->{
+                if (orderController.validateField()){
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "Campi uguali", ButtonType.OK);
+                    alert.setHeaderText("La destinazione è identica");
+                    alert.setContentText("Non puoi scegliere di andare in un luogo in cui sei già locato");
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    System.out.println(result);
+
+                    event.consume();
+                }else if (!orderController.validateOrder()){
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "Numero ordini superato", ButtonType.OK);
+                    alert.setHeaderText("Non puoi effettuare altri ordini");
+                    alert.setContentText("Hai già effettuato un ordine per cui sei in attesa, attendi che il taxi si" +
+                            "rechi sul posto");
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    System.out.println(result);
+
+                    event.consume();
+                }
+            });
 
             // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
             Optional<ButtonType> result = dialog.showAndWait();
@@ -156,7 +181,6 @@ public class CustomerController {
             // Gestiamo il caso in cui l'utente abbia premuto OK
             if (result.isPresent() && result.get() == ButtonType.APPLY){
                 orderController.processOrder();
-                //this.tableTaxiDriver.getSelectionModel().select(newTaxiDriver);
             }
         });
 

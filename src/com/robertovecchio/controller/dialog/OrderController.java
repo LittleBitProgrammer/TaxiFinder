@@ -1,6 +1,7 @@
 package com.robertovecchio.controller.dialog;
 
 import com.robertovecchio.model.booking.Booking;
+import com.robertovecchio.model.booking.OrderState;
 import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.graph.node.Parking;
 import com.robertovecchio.model.graph.node.WaitingStation;
@@ -134,5 +135,19 @@ public class OrderController {
 
         // Mediator Pattern
         customer.send(booking);
+    }
+
+    public boolean validateOrder(){
+        for (Booking booking : taxiFinderData.getBookings()){
+            if (booking.getCustomer().equals(taxiFinderData.getCurrentUser()) && booking.getOrderState() == OrderState.WAITING){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public boolean validateField(){
+        return this.fromComboBox.getValue().equals(this.toComboBox.getValue());
     }
 }
