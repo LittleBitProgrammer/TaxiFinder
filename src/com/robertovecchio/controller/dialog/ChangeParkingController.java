@@ -85,6 +85,7 @@ public class ChangeParkingController {
         for (Node node : taxiFinderData.getGraph().getVertexes()){
             if (node.equals(changedParking)){
                 Parking parking = (Parking) node;
+                changedParking.getTaxis().poll();
                 parking.getTaxis().offer(taxiDriver.getTaxi());
                 break;
             }

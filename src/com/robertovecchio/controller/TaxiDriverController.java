@@ -119,6 +119,11 @@ public class TaxiDriverController {
         });
 
         timeChoice.setOnAction(actionEvent -> {
+            this.currentOrder.setArrivalModality(ArrivalModality.LENGTH);
+            this.currentOrder.setOrderState(OrderState.ACCEPTED);
+            TaxiDriver taxiDriver = (TaxiDriver) taxiFinderData.getCurrentUser();
+
+            taxiDriver.send(currentOrder);
             this.sendTaxiWithLessTraffic();
         });
 
