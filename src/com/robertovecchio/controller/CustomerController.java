@@ -5,7 +5,6 @@ import com.robertovecchio.model.booking.Booking;
 import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.graph.node.WaitingStation;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
@@ -45,6 +44,7 @@ public class CustomerController {
     private TableColumn<Booking, String> fromColumn;
     private TableColumn<Booking, String> toColumn;
     private TableColumn<Booking, String> driverColumn;
+    private TableColumn<Booking, String> stateColumn;
 
     // ObservableList
     private ObservableList<Booking> bookings;
@@ -171,12 +171,14 @@ public class CustomerController {
     }
 
     private void compositeCustomerTable(){
+
         // Creiamo le colonne della tableView
         this.orderDateColumn = new TableColumn<>("Data");
         this.orderTimeColumn = new TableColumn<>("Orario");
         this.fromColumn = new TableColumn<>("Da");
         this.toColumn = new TableColumn<>("A");
         this.driverColumn = new TableColumn<>("Targa Veicolo");
+        this.stateColumn = new TableColumn<>("Stato prenotazione");
 
         // Inizializziamo la tableView
         this.bookingTableView = new TableView<>();
@@ -187,14 +189,16 @@ public class CustomerController {
         this.bookingTableView.getColumns().add(this.fromColumn);
         this.bookingTableView.getColumns().add(this.toColumn);
         this.bookingTableView.getColumns().add(this.driverColumn);
+        this.bookingTableView.getColumns().add(this.stateColumn);
 
         // Impostiamo la grandezza massima della tabella per ogni colonna
         this.bookingTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        this.orderDateColumn.setMaxWidth(Integer.MAX_VALUE * 20D);      // 20%
-        this.orderTimeColumn.setMaxWidth(Integer.MAX_VALUE * 20D);      // 20%
-        this.fromColumn.setMaxWidth(Integer.MAX_VALUE * 20D);           // 20%
-        this.toColumn.setMaxWidth(Integer.MAX_VALUE * 20D);             // 20%
-        this.driverColumn.setMaxWidth(Integer.MAX_VALUE * 20D);         // 20%
+        this.orderDateColumn.setMaxWidth(Integer.MAX_VALUE * 14.28D);      // 14.28%
+        this.orderTimeColumn.setMaxWidth(Integer.MAX_VALUE * 14.28D);      // 14.28%
+        this.fromColumn.setMaxWidth(Integer.MAX_VALUE * 14.28D);           // 14.28%
+        this.toColumn.setMaxWidth(Integer.MAX_VALUE * 14.28D);             // 14.28%
+        this.driverColumn.setMaxWidth(Integer.MAX_VALUE * 14.28D);         // 14.28%
+        this.stateColumn.setMaxWidth(Integer.MAX_VALUE * 14.28D);          // 14.28%
 
         // Impediamo che le tabelle possano essere riordinate dall'utente
         this.bookingTableView.skinProperty().addListener((observableValue, oldWidth, newWidth) ->{
@@ -212,6 +216,7 @@ public class CustomerController {
         setFromColumnProperty();
         setToColumnProperty();
         setDriverColumnProperty();
+        setStateColumnProperty();
 
         // Impostiamo una larghezza base
         this.bookingTableView.setPrefWidth(2048);
@@ -308,6 +313,24 @@ public class CustomerController {
             protected void updateItem(String licensePlate, boolean empty){
                 super.updateItem(licensePlate, empty);
                 setText(Objects.requireNonNullElse(licensePlate, ""));
+            }
+        });
+    }
+
+    private void setStateColumnProperty(){
+        this.stateColumn.setCellValueFactory( bookingStringCellDataFeatures -> new SimpleStringProperty(
+                bookingStringCellDataFeatures.getValue().getOrderState().getTranslation()));
+
+        // Personalizziamo la cella e quello che vogliamo vedere
+        this.stateColumn.setCellFactory(bookingStringTableColumn -> new TableCell<>(){
+            @Override
+            protected void updateItem(String stationTo, boolean empty){
+                super.updateItem(stationTo, empty);
+                if(empty || stationTo == null){
+                    setText(null);
+                } else {
+                    setText(stationTo);
+                }
             }
         });
     }

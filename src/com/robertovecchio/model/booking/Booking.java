@@ -3,7 +3,6 @@ package com.robertovecchio.model.booking;
 import com.robertovecchio.model.graph.node.Node;
 import com.robertovecchio.model.user.Customer;
 import com.robertovecchio.model.user.TaxiDriver;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -20,9 +19,11 @@ public class Booking implements Serializable {
     private Customer customer;
     private TaxiDriver driver;
     private ArrivalModality arrivalModality;
+    private OrderState orderState;
 
     public Booking(LocalDate orderDate, LocalTime orderTime, Node from, Node to,
-                   Customer customer, TaxiDriver driver, ArrivalModality arrivalModality) {
+                   Customer customer, TaxiDriver driver, ArrivalModality arrivalModality,
+                   OrderState orderState) {
         this.orderDate = orderDate;
         this.orderTime = orderTime;
         this.from = from;
@@ -30,11 +31,12 @@ public class Booking implements Serializable {
         this.customer = customer;
         this.driver = driver;
         this.arrivalModality = arrivalModality;
+        this.orderState = orderState;
     }
 
     public Booking(LocalDate orderDate, LocalTime orderTime, Node from, Node to,
                    Customer customer) {
-        this(orderDate, orderTime, from, to, customer,null, ArrivalModality.NONE);
+        this(orderDate, orderTime, from, to, customer,null, null, OrderState.WAITING);
     }
 
     public LocalDate getOrderDate() {
@@ -91,6 +93,14 @@ public class Booking implements Serializable {
 
     public void setArrivalModality(ArrivalModality arrivalModality) {
         this.arrivalModality = arrivalModality;
+    }
+
+    public OrderState getOrderState() {
+        return orderState;
+    }
+
+    public void setOrderState(OrderState orderState) {
+        this.orderState = orderState;
     }
 
     @Override
