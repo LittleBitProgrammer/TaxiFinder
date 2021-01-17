@@ -7,6 +7,7 @@ import com.robertovecchio.model.dijkstra.DijkstraAlgorithm;
 import com.robertovecchio.model.graph.edge.DistanceHandler;
 import com.robertovecchio.model.graph.node.Node;
 import com.robertovecchio.model.graph.node.Parking;
+import com.robertovecchio.model.user.State;
 import com.robertovecchio.model.user.TaxiDriver;
 import com.robertovecchio.model.veichle.builderTaxi.Taxi;
 import javafx.application.Platform;
@@ -30,6 +31,7 @@ public class TaxiCenter implements RadioTaxiCallCenter, Serializable {
                 // Riorniamo il taxi driver/ taxi più vicino alla postazione selezionata
                 TaxiDriver driver = this.retrieveNearestTaxiDriver(getParkingsFromGraph(), booking);
                 booking.setDriver(driver);
+                driver.setState(State.OCCUPIED);
 
                 // Aggiungo in memoria la prenotazione
                 TaxiFinderData.getInstance().addBooking(booking);
@@ -58,6 +60,7 @@ public class TaxiCenter implements RadioTaxiCallCenter, Serializable {
         try {
             TaxiFinderData.getInstance().storeBookings();
             TaxiFinderData.getInstance().storeGraph();
+            TaxiFinderData.getInstance().storeTaxiDrivers();
         } catch (IOException e) {
             System.out.println("Errore memorizzazione");
         }
