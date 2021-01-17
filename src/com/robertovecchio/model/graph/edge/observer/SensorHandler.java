@@ -1,21 +1,21 @@
 package com.robertovecchio.model.graph.edge.observer;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SensorHandler implements Sensorable {
     private final List<ArchObserver> observers = new ArrayList<>();
-    private LocalTime trafficState;
+    private int trafficState;
 
-    public LocalTime getState(){
+    public int getState(){
         return this.trafficState;
     }
 
-    public void setTrafficState(LocalTime trafficState){
+    public void setTrafficState(int trafficState){
         this.trafficState = trafficState;
-        notifyObs();
+        notifyObs(trafficState);
     }
+
     @Override
     public void attach(ArchObserver archObserver) {
         observers.add(archObserver);
@@ -27,9 +27,9 @@ public class SensorHandler implements Sensorable {
     }
 
     @Override
-    public void notifyObs() {
+    public void notifyObs(int trafficState) {
         for (ArchObserver observer : this.observers){
-            observer.update();
+            observer.update(trafficState);
         }
     }
 }

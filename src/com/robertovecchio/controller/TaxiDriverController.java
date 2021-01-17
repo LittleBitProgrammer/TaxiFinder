@@ -7,6 +7,8 @@ import com.robertovecchio.model.booking.Booking;
 import com.robertovecchio.model.booking.OrderState;
 import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.dijkstra.DijkstraAlgorithm;
+import com.robertovecchio.model.graph.edge.DistanceHandler;
+import com.robertovecchio.model.graph.edge.observer.Edge;
 import com.robertovecchio.model.graph.node.Node;
 import com.robertovecchio.model.graph.node.Parking;
 import com.robertovecchio.model.graph.node.WaitingStation;
@@ -527,5 +529,6 @@ public class TaxiDriverController {
     }
 
     private void sendTaxiWithLessTraffic(){
+        
     }
 }

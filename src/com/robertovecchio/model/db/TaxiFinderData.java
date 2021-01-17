@@ -104,6 +104,7 @@ public class TaxiFinderData {
      * @see WeightedGraph
      */
     private WeightedGraph graph;
+    private WeightedGraph trafficGraph;
 
     //==================================================
     //                   Costruttori
@@ -341,6 +342,10 @@ public class TaxiFinderData {
      */
     public WeightedGraph getGraph(){
         return this.graph;
+    }
+
+    public WeightedGraph getTrafficGraph(){
+        return this.trafficGraph;
     }
 
     //==================================================
@@ -621,7 +626,9 @@ public class TaxiFinderData {
         // sfruttiamo uno stream per deserializzare risorse
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(graphFileName))){
             this.setGraph((WeightedGraph) ois.readObject());
-        } catch (EOFException e){
+            this.trafficGraph = this.graph.clone();
+            System.out.println("======>" + trafficGraph.getEdges());
+        } catch (EOFException | CloneNotSupportedException e){
             System.out.println("Grafo non presente");
         }
     }

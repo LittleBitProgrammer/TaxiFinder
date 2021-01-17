@@ -17,7 +17,7 @@ import java.util.List;
  * @version 1.0
  * @since 14/01/2020
  */
-public class WeightedGraph implements Serializable, Graphable {
+public class WeightedGraph implements Serializable, Graphable, Cloneable {
 
     //==================================================
     //               Attributi statici
@@ -101,5 +101,10 @@ public class WeightedGraph implements Serializable, Graphable {
     @Override
     public void printGraph(){
         System.out.println("Grafo: \n" + "Vertici:\n" + this.vertexes + "\nCollegamenti:\n" + this.edges);
+    }
+
+    @Override
+    public WeightedGraph clone() throws CloneNotSupportedException {
+        return (WeightedGraph)super.clone();
     }
 }

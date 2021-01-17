@@ -43,7 +43,7 @@ public class Edge extends ArchObserver implements Serializable {
     /**
      * Peso del nodo
      */
-    private final double weight;
+    private double weight;
 
     //==================================================
     //                  Costruttori
@@ -94,9 +94,13 @@ public class Edge extends ArchObserver implements Serializable {
         return weight;
     }
 
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
     @Override
-    void update() {
-        // stub
+    void update(int trafficState) {
+
     }
 
     @Override
