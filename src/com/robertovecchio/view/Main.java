@@ -2,6 +2,8 @@ package com.robertovecchio.view;
 
 // import javafx necessari
 import com.robertovecchio.model.db.TaxiFinderData;
+import com.robertovecchio.model.graph.edge.observer.Edge;
+import com.robertovecchio.model.graph.edge.observer.SensorHandler;
 import javafx.application.Application; // Gestisce il lifecycle di un'applicazione
 import javafx.fxml.FXMLLoader; // Loader di fxml
 import javafx.scene.Parent; // Nodo Primario
@@ -9,6 +11,9 @@ import javafx.scene.Scene; // Astrae il concetto di View
 import javafx.stage.Stage; // Astrae il concetto di finestra desktop
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * La classe Main ha la responsabilità di lanciare l'applizione in modalità finestra, gestendo alcune responsabilità
@@ -65,6 +70,8 @@ public class Main extends Application {
 
         taxiFinderData.getGraph().printGraph();
 
+        attachSensorToRoad();
+
         /* Parent è il nodo padre ottenuto attraverso il valore di ritorno del metodo statico load, sfruttando
         *  la classe FXML loader */
         FXMLLoader loader = new FXMLLoader();
@@ -102,5 +109,23 @@ public class Main extends Application {
     @Override
     public void stop(){
         System.out.println("Programma in chiusura");
+    }
+
+    private void attachSensorToRoad(){
+        SensorHandler sensorHandler = new SensorHandler();
+
+        for (Edge edge : taxiFinderData.getTrafficGraph().getEdges()){
+            sensorHandler.attach(edge);
+        }
+
+        new Timer().schedule(
+                new TimerTask() {
+
+                    @Override
+                    public void run() {
+                        Random random = new Random();
+                        sensorHandler.setTrafficState(random.nextInt(101));
+                    }
+                }, 0, 30000);
     }
 }

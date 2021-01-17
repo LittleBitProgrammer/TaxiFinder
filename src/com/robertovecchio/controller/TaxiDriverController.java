@@ -529,6 +529,6 @@ public class TaxiDriverController {
     }
 
     private void sendTaxiWithLessTraffic(){
-        
+
     }
 }

@@ -6,6 +6,7 @@ import com.robertovecchio.model.graph.node.WaitingStation;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * Classe utile ad astrarre il concetto di collegamento tra nodi (arco). Inoltre tale classe sarà utile all'algoritmo di
@@ -94,13 +95,12 @@ public class Edge extends ArchObserver implements Serializable {
         return weight;
     }
 
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
     @Override
     void update(int trafficState) {
+        Random random = new Random();
 
+        this.weight = (double) trafficState + random.nextInt(21);
+        System.out.println("\n\nedge = " + this.weight + this.toString() );
     }
 
     @Override
