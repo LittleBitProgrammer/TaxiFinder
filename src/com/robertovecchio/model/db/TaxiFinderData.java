@@ -54,6 +54,11 @@ public class TaxiFinderData {
      * */
     private DateTimeFormatter dateTimeFormatter;
     /**
+     * Formatter per la gestione dell'orario
+     * @see DateTimeFormatter
+     */
+    private DateTimeFormatter timeFormatter;
+    /**
      * lista osservabile di clienti
      * @see ObservableList
      * @see Customer
@@ -127,8 +132,9 @@ public class TaxiFinderData {
         genders.put("DONNA", GenderType.FEMALE);
         genders.put("ALTRO", GenderType.OTHER);
 
-        // Inizializzo il formatter
+        // Inizializzo i formatter
         this.dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        this.timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
         System.out.println("Istanza db creata");
     }
@@ -244,10 +250,18 @@ public class TaxiFinderData {
 
     /**
      * Metodo Getter del dateTimeFormatte
-     * @return Un dateTimeFormatter per data e ora
+     * @return Un DateTimeFormatter per la data
      */
     public DateTimeFormatter getDateTimeFormatter(){
         return this.dateTimeFormatter;
+    }
+
+    /**
+     * Metodo Getter del timeFormatter
+     * @return un DateTimeFormatter per l'orario
+     */
+    public DateTimeFormatter getTimeFormatter(){
+        return this.timeFormatter;
     }
 
     /**

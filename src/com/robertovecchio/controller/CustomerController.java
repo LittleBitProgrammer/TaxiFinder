@@ -75,12 +75,7 @@ public class CustomerController {
     public void initialize(){
         vBoxTopContainer.getChildren().addAll(compositeCustomerMenu());
 
-        Predicate<Booking> filterdBooking = new Predicate<Booking>() {
-            @Override
-            public boolean test(Booking booking) {
-                return booking.getCustomer().equals(taxiFinderData.getCurrentUser());
-            }
-        };
+        Predicate<Booking> filterdBooking = booking -> booking.getCustomer().equals(taxiFinderData.getCurrentUser());
 
         FilteredList<Booking> filteredList = new FilteredList<>(taxiFinderData.getBookings());
         filteredList.setPredicate(filterdBooking);
@@ -245,7 +240,7 @@ public class CustomerController {
 
     private void setOrderTimeColumnProperty(){
         this.orderTimeColumn.setCellValueFactory( bookingStringCellDataFeatures -> new SimpleStringProperty(
-                bookingStringCellDataFeatures.getValue().getOrderTime().toString()));
+                bookingStringCellDataFeatures.getValue().getOrderTime().format(taxiFinderData.getTimeFormatter())));
 
         // Personalizziamo la cella e quello che vogliamo vedere
         this.orderTimeColumn.setCellFactory(bookingStringTableColumn -> new TableCell<>(){

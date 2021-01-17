@@ -7,6 +7,7 @@ import com.robertovecchio.model.user.TaxiDriver;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 public class Booking implements Serializable {
 
@@ -90,5 +91,22 @@ public class Booking implements Serializable {
 
     public void setArrivalModality(ArrivalModality arrivalModality) {
         this.arrivalModality = arrivalModality;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Booking)) return false;
+        Booking booking = (Booking) o;
+        return Objects.equals(orderDate, booking.orderDate) &&
+                Objects.equals(orderTime, booking.orderTime) &&
+                Objects.equals(from, booking.from) &&
+                Objects.equals(to, booking.to) &&
+                Objects.equals(customer, booking.customer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderDate, orderTime, from, to, customer);
     }
 }
