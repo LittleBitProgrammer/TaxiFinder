@@ -1,10 +1,9 @@
 package com.robertovecchio.controller.dialog;
 
-import com.robertovecchio.model.booking.Booking;
+
 import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.graph.node.Node;
 import com.robertovecchio.model.graph.node.Parking;
-import com.robertovecchio.model.graph.node.WaitingStation;
 import com.robertovecchio.model.user.TaxiDriver;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -12,7 +11,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.util.StringConverter;
-
 import java.io.IOException;
 import java.util.Optional;
 

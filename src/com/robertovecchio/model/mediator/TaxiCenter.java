@@ -100,7 +100,7 @@ public class TaxiCenter implements RadioTaxiCallCenter, Serializable {
             System.out.println("Parcheggio: " + parking.getStationName());
             System.out.println("Lunghezza: " + weight);
 
-            if (weight < minValue){
+            if (weight < minValue && !parking.getTaxis().isEmpty()){
                 min = parking;
                 minValue = weight;
             }
