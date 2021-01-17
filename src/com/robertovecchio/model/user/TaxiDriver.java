@@ -146,6 +146,7 @@ public class TaxiDriver extends UserAccount implements Colleague {
     public String toString() {
         return super.toString() + "\nTaxiDriver{" +
                 "licenseNumber='" + licenseNumber + '\'' +
+                "state='" + state + '\'' +
                 '}';
     }
 

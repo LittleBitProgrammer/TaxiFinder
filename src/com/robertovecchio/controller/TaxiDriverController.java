@@ -1,14 +1,13 @@
 package com.robertovecchio.controller;
 
 import com.robertovecchio.model.db.TaxiFinderData;
+import com.robertovecchio.model.user.TaxiDriver;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 /**
  * Classe che gestisce la main View del Tassista
@@ -48,10 +47,10 @@ public class TaxiDriverController {
     @FXML
     public void initialize() {
         // Aggiungiamo il menuBar al vBox
-        this.vBoxTopContainer.getChildren().addAll(compositeHandlerMEnuBar());
+        this.vBoxTopContainer.getChildren().addAll(compositeHandlerMEnuBar(), compositeToolBar());
     }
 
-    private MenuBar compositeHandlerMEnuBar(){
+    private HBox compositeHandlerMEnuBar(){
 
         // Inizializzo i MenuItem
         MenuItem moveToPerking = new MenuItem("segnala che sei in un altro parcheggio");
@@ -94,6 +93,50 @@ public class TaxiDriverController {
         exitLabel.setOnMouseClicked(actionEvent -> UtilityController.navigateTo(mainControllerFile, "Taxi Finder",
                 "Errore reperimento interfaccia", exitLabel));
 
-        return menuBar;
+        // Inizializziamo un menubar di destra
+        MenuBar rightBar = new MenuBar();
+
+        TaxiDriver user = (TaxiDriver) taxiFinderData.getCurrentUser();
+
+        Circle circle = new Circle(6,6, 6);
+
+        switch (user.getState()){
+            case FREE -> circle.setFill(Color.LIGHTGREEN);
+            case OCCUPIED -> circle.setFill(Color.RED);
+        }
+
+        Menu state = new Menu(user.getState().getTranslation(), circle);
+
+        // Aggiungiamo un nuovo menu al menu bar di destra
+        rightBar.getMenus().addAll(state);
+
+        // Inizializziamo una region
+        Region spacer = new Region();
+
+        // aggiungiamo il foglio di stile
+        spacer.getStyleClass().add("menu-bar");
+
+        // Impostiamo alcune proprietà dell'hbox
+        HBox.setHgrow(spacer, Priority.SOMETIMES);
+
+        // aggiungiamo elementi all'hbox
+        HBox menubars = new HBox(menuBar, spacer, rightBar);
+
+        return menubars;
+    }
+
+    private ToolBar compositeToolBar() {
+
+        // Inizializzo la toolBar
+        ToolBar toolBar = new ToolBar();
+
+        // inizializzo i Button
+        Button orders = new Button("Visualizza ordini effettuattuati");
+        Button newOrder = new Button("Nuovo ordine in pendenza");
+
+        // Aggiungiamo i button alla toolbar
+        toolBar.getItems().addAll(orders, newOrder);
+
+        return toolBar;
     }
 }

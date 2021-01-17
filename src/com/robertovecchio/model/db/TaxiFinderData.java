@@ -702,7 +702,7 @@ public class TaxiFinderData {
         if (this.taxiDrivers.contains(taxiDriver)){
             for (TaxiDriver driver : this.taxiDrivers){
                 if(driver.equals(taxiDriver)){
-                    return taxiDriver;
+                    return driver;
                 }
             }
         }
