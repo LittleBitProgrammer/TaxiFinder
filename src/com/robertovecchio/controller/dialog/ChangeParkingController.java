@@ -85,14 +85,21 @@ public class ChangeParkingController {
         for (Node node : taxiFinderData.getGraph().getVertexes()){
             if (node.equals(changedParking)){
                 Parking parking = (Parking) node;
-                changedParking.getTaxis().poll();
                 parking.getTaxis().offer(taxiDriver.getTaxi());
-                break;
+            }else{
+                if (node instanceof Parking){
+                    Parking parking = (Parking) node;
+                    if (parking.getTaxis().contains(taxiDriver.getTaxi())){
+                        parking.getTaxis().poll();
+                    }
+                }
+
             }
         }
 
         try {
             taxiFinderData.storeGraph();
+            System.out.println(taxiFinderData.getGraph().getVertexes());
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Errore", ButtonType.OK);
             alert.setHeaderText("Errore di memorizzazione");
