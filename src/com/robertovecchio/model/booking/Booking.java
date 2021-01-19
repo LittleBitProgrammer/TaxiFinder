@@ -20,10 +20,11 @@ public class Booking implements Serializable {
     private TaxiDriver driver;
     private ArrivalModality arrivalModality;
     private OrderState orderState;
+    private OrderType orderType;
 
     public Booking(LocalDate orderDate, LocalTime orderTime, Node from, Node to,
                    Customer customer, TaxiDriver driver, ArrivalModality arrivalModality,
-                   OrderState orderState) {
+                   OrderState orderState, OrderType orderType) {
         this.orderDate = orderDate;
         this.orderTime = orderTime;
         this.from = from;
@@ -32,11 +33,12 @@ public class Booking implements Serializable {
         this.driver = driver;
         this.arrivalModality = arrivalModality;
         this.orderState = orderState;
+        this.orderType = orderType;
     }
 
     public Booking(LocalDate orderDate, LocalTime orderTime, Node from, Node to,
-                   Customer customer) {
-        this(orderDate, orderTime, from, to, customer,null, null, OrderState.WAITING);
+                   Customer customer, OrderType orderType) {
+        this(orderDate, orderTime, from, to, customer,null, null, OrderState.WAITING, orderType);
     }
 
     public LocalDate getOrderDate() {
@@ -101,6 +103,14 @@ public class Booking implements Serializable {
 
     public void setOrderState(OrderState orderState) {
         this.orderState = orderState;
+    }
+
+    public OrderType getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(OrderType orderType) {
+        this.orderType = orderType;
     }
 
     @Override

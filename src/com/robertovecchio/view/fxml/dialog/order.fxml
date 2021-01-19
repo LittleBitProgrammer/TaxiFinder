@@ -24,6 +24,5 @@
             <ComboBox fx:id="toComboBox"
                       GridPane.rowIndex="3"
                       GridPane.columnIndex="0"/>
-        </GridPane>
     </content>
 </DialogPane>

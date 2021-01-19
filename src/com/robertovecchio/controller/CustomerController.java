@@ -4,6 +4,7 @@ import com.robertovecchio.controller.dialog.OrderController;
 import com.robertovecchio.model.booking.Booking;
 import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.graph.node.WaitingStation;
+import com.robertovecchio.model.user.TaxiDriver;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -145,13 +146,17 @@ public class CustomerController {
                 e.printStackTrace();
             }
 
+            // Creiamo i bottoni
+            ButtonType sms = new ButtonType("Prenotazione SMS", ButtonBar.ButtonData.OK_DONE);
+            ButtonType email = new ButtonType("Prenotazione Email", ButtonBar.ButtonData.OK_DONE);
+
             // Aggiungiamo il bottone OK e CANCEL al dialogPane
-            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
+            dialog.getDialogPane().getButtonTypes().addAll(sms, email, ButtonType.CANCEL);
 
             OrderController orderController = loader.getController();
 
             // Gestione Errori
-            dialog.getDialogPane().lookupButton(ButtonType.APPLY).addEventFilter(ActionEvent.ACTION,
+            dialog.getDialogPane().lookupButton(sms).addEventFilter(ActionEvent.ACTION,
                     event->{
                 if (orderController.validateField()){
                     Alert alert = new Alert(Alert.AlertType.WARNING, "Campi uguali", ButtonType.OK);
@@ -175,12 +180,39 @@ public class CustomerController {
                 }
             });
 
+            dialog.getDialogPane().lookupButton(email).addEventFilter(ActionEvent.ACTION,
+                    event->{
+                        if (orderController.validateField()){
+                            Alert alert = new Alert(Alert.AlertType.WARNING, "Campi uguali", ButtonType.OK);
+                            alert.setHeaderText("La destinazione è identica");
+                            alert.setContentText("Non puoi scegliere di andare in un luogo in cui sei già locato");
+
+                            Optional<ButtonType> result = alert.showAndWait();
+                            System.out.println(result);
+
+                            event.consume();
+                        }else if (!orderController.validateOrder()){
+                            Alert alert = new Alert(Alert.AlertType.WARNING, "Numero ordini superato", ButtonType.OK);
+                            alert.setHeaderText("Non puoi effettuare altri ordini");
+                            alert.setContentText("Hai già effettuato un ordine per cui sei in attesa, attendi che il taxi si" +
+                                    "rechi sul posto");
+
+                            Optional<ButtonType> result = alert.showAndWait();
+                            System.out.println(result);
+
+                            event.consume();
+                        }
+                    });
+
             // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
             Optional<ButtonType> result = dialog.showAndWait();
+            System.out.println(result);
 
-            // Gestiamo il caso in cui l'utente abbia premuto OK
-            if (result.isPresent() && result.get() == ButtonType.APPLY){
-                orderController.processOrder();
+            // Gestiamo il caso in cui l'utente abbia premuto prenotazione SMS ed EMAIL
+            if (result.isPresent() && result.get() == sms){
+                orderController.handleSmsOrder();
+            }else if (result.isPresent() && result.get() == email){
+                orderController.handleEmailOrder();
             }
         });
 

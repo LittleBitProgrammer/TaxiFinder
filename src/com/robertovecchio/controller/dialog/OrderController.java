@@ -2,6 +2,9 @@ package com.robertovecchio.controller.dialog;
 
 import com.robertovecchio.model.booking.Booking;
 import com.robertovecchio.model.booking.OrderState;
+import com.robertovecchio.model.booking.OrderType;
+import com.robertovecchio.model.booking.strategy.EmailStrategy;
+import com.robertovecchio.model.booking.strategy.SmsStrategy;
 import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.graph.node.Parking;
 import com.robertovecchio.model.graph.node.WaitingStation;
@@ -12,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.util.StringConverter;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -126,17 +128,6 @@ public class OrderController {
                 waitingStation.getStationName());
     }
 
-    public void processOrder(){
-        WaitingStation first = fromComboBox.getSelectionModel().getSelectedItem();
-        WaitingStation second = toComboBox.getSelectionModel().getSelectedItem();
-
-        Booking booking = new Booking(LocalDate.now(), LocalTime.now(), first, second, (Customer) taxiFinderData.getCurrentUser());
-        Customer customer = (Customer) taxiFinderData.getCurrentUser();
-
-        // Mediator Pattern
-        customer.send(booking);
-    }
-
     public boolean validateOrder(){
         for (Booking booking : taxiFinderData.getBookings()){
             if (booking.getCustomer().equals(taxiFinderData.getCurrentUser()) && booking.getOrderState() == OrderState.WAITING){
@@ -149,5 +140,31 @@ public class OrderController {
 
     public boolean validateField(){
         return this.fromComboBox.getValue().equals(this.toComboBox.getValue());
+    }
+
+    public void handleSmsOrder(){
+        WaitingStation first = fromComboBox.getSelectionModel().getSelectedItem();
+        WaitingStation second = toComboBox.getSelectionModel().getSelectedItem();
+
+        Customer user = (Customer) TaxiFinderData.getInstance().getCurrentUser();
+
+        Booking booking = new Booking(LocalDate.now(), LocalTime.now(), first, second,
+                                     user, OrderType.SMS);
+
+        SmsStrategy smsStrategy = new SmsStrategy(user.getPhoneNumber());
+        smsStrategy.book(booking);
+    }
+
+    public void handleEmailOrder(){
+        WaitingStation first = fromComboBox.getSelectionModel().getSelectedItem();
+        WaitingStation second = toComboBox.getSelectionModel().getSelectedItem();
+
+        Customer user = (Customer) TaxiFinderData.getInstance().getCurrentUser();
+
+        Booking booking = new Booking(LocalDate.now(), LocalTime.now(), first, second,
+                user, OrderType.SMS);
+
+        EmailStrategy emailStrategy = new EmailStrategy(user.getEmail());
+        emailStrategy.book(booking);
     }
 }
