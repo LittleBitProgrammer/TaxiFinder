@@ -1,5 +1,5 @@
 /**
- * Package Creato allo scopo di contenere tutte le classi inerenti allo strategy paterrn
+ * Package Creato allo scopo di contenere tutte le classi inerenti allo Strategy Paterrn
  * (Aggiunto al progetto per la diversificazione dell'algoritmo di prenotazione)
  * @author robertovecchio
  * @version 1.0

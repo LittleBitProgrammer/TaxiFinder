@@ -5,15 +5,17 @@ import com.robertovecchio.model.booking.Booking;
 import com.robertovecchio.model.mediator.Colleague;
 import com.robertovecchio.model.mediator.TaxiCenter;
 import com.robertovecchio.model.veichle.builderTaxi.Taxi;
-
 import java.time.LocalDate;
 
 /**
  * Questa classe rappresenta uno degli attori del sistema software Taxi finder e si occupa di astrarre il concetto
- * di TaxiDriver
+ * di Tassista
  * @author robertovecchio
  * @version 1.0
- * @since 7/01/2021*/
+ * @since 7/01/2021
+ * @see UserAccount
+ * @see Colleague
+ * */
 public class TaxiDriver extends UserAccount implements Colleague {
     //==================================================
     //               Variabili d'istanza
@@ -23,7 +25,15 @@ public class TaxiDriver extends UserAccount implements Colleague {
     /**Taxi associato al tassista
      * @see Taxi*/
     private Taxi taxi;
+    /**
+     * Stato del tassista
+     * @see State
+     */
     private State state;
+    /**
+     * Mediator
+     * @see TaxiCenter
+     */
     private final TaxiCenter taxiCenter;
 
     //==================================================
@@ -111,6 +121,11 @@ public class TaxiDriver extends UserAccount implements Colleague {
         this.taxi = taxi;
     }
 
+    /**
+     * Metodo setter dello stato del tassista
+     * @param state Stato del tassista
+     * @see State
+     */
     public void setState(State state) {
         this.state = state;
     }
@@ -134,6 +149,11 @@ public class TaxiDriver extends UserAccount implements Colleague {
         return this.taxi;
     }
 
+    /**
+     * Metodo getter dello stato del tassista
+     * @return Stato del tassista
+     * @see State
+     */
     public State getState() {
         return state;
     }
@@ -142,6 +162,10 @@ public class TaxiDriver extends UserAccount implements Colleague {
     //                Metodi Sovrascritti
     //==================================================
 
+    /**
+     * Metodo che si occupa di restituire una stringa dato un oggetto di tipo TaxiDriver
+     * @return Stringa dell'oggetto
+     */
     @Override
     public String toString() {
         return super.toString() + "\nTaxiDriver{" +
@@ -151,6 +175,11 @@ public class TaxiDriver extends UserAccount implements Colleague {
     }
 
 
+    /**
+     * Metodo che sfrutta il mediator del mediator pattern per comunicare l'aggiornamento della prenotazione con
+     * i parametri di raggiungimento cliente scelti dal tassista
+     * @param booking Prenotazione che ha bisogno di essere aggiornata e comunicata
+     */
     @Override
     public void send(Booking booking) {
         taxiCenter.notifyCustomer(booking);

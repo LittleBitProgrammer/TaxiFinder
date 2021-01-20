@@ -31,7 +31,14 @@ import java.util.TimerTask;
  */
 public class Main extends Application {
 
+    /**
+     * Variabile statica che rappresenta il percorso verso la view principale
+     */
     private static final String rootFilename = "src/com/robertovecchio/view/fxml/main.fxml";
+    /**
+     * Istanza del database
+     * @see TaxiFinderData
+     * */
     private final TaxiFinderData taxiFinderData = TaxiFinderData.getInstance();
 
     /**
@@ -111,6 +118,10 @@ public class Main extends Application {
         System.out.println("Programma in chiusura");
     }
 
+    /**
+     * Metodo che si occupa di attaccare alle diverse strade presenti nel grafo sei sensori che aggiorneranno lo stato
+     * del traffico
+     */
     private void attachSensorToRoad(){
         SensorHandler sensorHandler = new SensorHandler();
 

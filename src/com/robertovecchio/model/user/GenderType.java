@@ -20,7 +20,10 @@ public enum GenderType {
      * */
     OTHER("ALTRO");
 
-    private String translation; // stringa tradotta dell'enum
+    /**
+     * Stringa tradotta dell'enum
+     */
+    private String translation;
 
     /**
      * Metodo costruttore che accetta dei valori default per impostare la stringa dell'enum nella lingua preferita

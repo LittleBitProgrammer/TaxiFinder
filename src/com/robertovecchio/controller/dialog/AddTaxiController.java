@@ -17,7 +17,7 @@ import java.util.EnumSet;
 import java.util.Set;
 
 /**
- * Classe che gestisce la view di aggiunta Taxi
+ * Classe che gestisce la view (dialog) di aggiunta di un Taxi
  * @author robertovecchio
  * @version 1.0
  * @since 11/01/2021
@@ -27,20 +27,45 @@ public class AddTaxiController {
     //==================================================
     //               Variabili d'istanza
     //==================================================
+    /**
+     * Istanza del database
+     * @see TaxiFinderData
+     * */
     private final TaxiFinderData taxiFinderData = TaxiFinderData.getInstance();
 
     //==================================================
     //               Variabili FXML
     //==================================================
 
+    /**
+     * TextField della targa auto
+     * @see TextField
+     * */
     @FXML
     private TextField licensePlateField;
+    /**
+     * ComboBox utile a mostrare la lista dei Brand
+     * @see ComboBox
+     * @see BrandType
+     */
     @FXML
     private ComboBox<BrandType> brandNameField;
+    /**
+     * TextField del modello dell'auto
+     * @see TextField
+     */
     @FXML
     TextField modelNameField;
+    /**
+     * TextField della capacità del veicolo in termini di persone trasportabili
+     * @see TextField
+     */
     @FXML
     TextField capacityField;
+    /**
+     * ComboBox utile a mostrare la lista di tipologie carburante esistenti
+     * @see TextField
+     */
     @FXML
     ComboBox<FuelType> fuelTypeField;
 
@@ -52,7 +77,7 @@ public class AddTaxiController {
      * */
     @FXML
     public void initialize(){
-        // inizializziamo la comboBox con tutti i possibili enum
+        /* inizializziamo la comboBox della lista brand con tutti i possibili casi di BrandType */
         Set<BrandType> brands = EnumSet.of(BrandType.ABARTH,
                                             BrandType.ALFA_ROMEO,
                                             BrandType.AUDI,
@@ -84,11 +109,11 @@ public class AddTaxiController {
 
         this.brandNameField.getItems().addAll(brands);
 
-        // inizializziamo la comboBox con tutti i possibili enum
+        /* inizializziamo la comboBox della tipologia carburante con tutti i possibili casi di FuelType */
         Set<FuelType> fuels = EnumSet.of(FuelType.GASOLINE, FuelType.DIESEL, FuelType.GAS, FuelType.ELECTRIC_ENERGY);
         this.fuelTypeField.getItems().addAll(fuels);
 
-        // Impostiamo che la textfield potrà accettare solo valori numerici
+        /* Impostiamo che la textfield potrà accettare solo valori numerici */
         this.capacityField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
@@ -98,7 +123,7 @@ public class AddTaxiController {
             }
         });
 
-        // Permette di mostrare una stringa personalizzata nell'intestazione del ComboBox
+        /* Permettiamo di mostrare una stringa personalizzata nell'intestazione della ComboBox */
         this.fuelTypeField.setConverter(new StringConverter<>() {
             @Override
             public String toString(FuelType fuelType) {
@@ -137,13 +162,15 @@ public class AddTaxiController {
     }
 
     /**
-     * Metodo che ha lo scopo di buildare un Taxi attraverso i dati inseriti nei cari controlli posti su interfaccia
+     * Metodo che ha lo scopo di buildare un Taxi attraverso i dati inseriti nei vari controlli posti su interfaccia
      * utnte
      * @return Taxi aggiunto
      * @see Taxi*/
     public Taxi processTaxiResult(){
-        // Ricavo l'handler da cui buildare il taxi
+        /* Ricavo l'handler da cui buildare il taxi */
         Handler handler = (Handler) taxiFinderData.getCurrentUser();
+
+        /* Buildiamo il taxi */
         handler.buildTaxi(this.licensePlateField.getText().trim().toUpperCase(),
                           this.brandNameField.getValue(),
                           this.modelNameField.getText().trim().substring(0,1).toUpperCase() +
@@ -151,6 +178,7 @@ public class AddTaxiController {
                           Integer.parseInt(this.capacityField.getText().trim()),
                           this.fuelTypeField.getValue());
 
+        /* Ritorniamo il Taxi Buildato */
         return handler.getTaxiBuilder().getResult();
     }
 }

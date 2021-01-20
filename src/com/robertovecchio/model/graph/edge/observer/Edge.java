@@ -2,7 +2,6 @@ package com.robertovecchio.model.graph.edge.observer;
 
 import com.robertovecchio.model.graph.node.Node;
 import com.robertovecchio.model.graph.node.WaitingStation;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
@@ -95,6 +94,10 @@ public class Edge extends ArchObserver implements Serializable {
         return weight;
     }
 
+    /**
+     * Metodo di aggiornamento per il traffico delle strade, chiamato ogni qual volta lo stato dei sensori cambia
+     * @param trafficState Stato del traffico (attraversamento in termini di minuti)
+     */
     @Override
     void update(int trafficState) {
         Random random = new Random();
@@ -103,6 +106,11 @@ public class Edge extends ArchObserver implements Serializable {
         System.out.println("\n\nedge = " + this.weight + this.toString() );
     }
 
+    /**
+     * MEtodo utile a constatare se due oggetti di tipo prenotazione sono uguali
+     * @param o oggetto con cui lo si vuole confrontare
+     * @return Ritorna true se sono uguali, altrimenti false
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -113,11 +121,19 @@ public class Edge extends ArchObserver implements Serializable {
                 destination.equals(edge.destination);
     }
 
+    /**
+     * Metodo hashcode utile per confrontare l'uguaglianza di due oggetti
+     * @return Il valore intero dell'istanza
+     */
     @Override
     public int hashCode() {
         return Objects.hash(source, destination, weight);
     }
 
+    /**
+     * Metodo utile a stampare a terminale l'oggetto
+     * @return Oggetto sotto forma di stringa
+     */
     @Override
     public String toString() {
         WaitingStation from = (WaitingStation) source;

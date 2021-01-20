@@ -1,5 +1,7 @@
 package com.robertovecchio.model.db.error;
 
+import java.io.Serial;
+
 /**
  * Classe che permette di astrarre un errore quando un customer non viene trovato
  * @author robertovecchio
@@ -9,6 +11,10 @@ package com.robertovecchio.model.db.error;
  * */
 public class CustomerNotFoundException extends Exception{
 
+    /**
+     * Numero seriale utile ai fini della memorizzazione
+     */
+    @Serial
     private final static long serialVersionUID = 4L;
 
     /**

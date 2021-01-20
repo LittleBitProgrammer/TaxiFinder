@@ -1,5 +1,5 @@
 /**
- * Package creato allo scopo di contenere tutte le astrazioni inerenti al sistema di prenotazione
+ * Package creato allo scopo di contenere tutte le astrazioni inerenti al sistema di Prenotazione
  * @author robertovecchio
  * @version 1.0
  * @since 15/01/2021

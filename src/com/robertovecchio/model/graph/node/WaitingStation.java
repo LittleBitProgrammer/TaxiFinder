@@ -1,5 +1,6 @@
 package com.robertovecchio.model.graph.node;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -13,15 +14,21 @@ import java.io.Serializable;
  * */
 public class WaitingStation extends Node implements Serializable {
 
-    // Tipo numerico Long utile alla serializzazione
+    /**
+     * Numero seriale utile ai fini della memorizzazione
+     */
+    @Serial
     private final static long serialVersionUID = 8L;
 
     //==================================================
     //               Variabili d'istanza
     //==================================================
-    private String streetNumber; // numero civico
-    private String stationName;  // nome della stazione di attesa
-    private String streetName;   // nome della strada
+    /**Numero civico*/
+    private String streetNumber;
+    /**Nome della postazione di attesa*/
+    private String stationName;
+    /**nome della strada*/
+    private String streetName;
 
     //==================================================
     //                   Costruttori
@@ -30,6 +37,7 @@ public class WaitingStation extends Node implements Serializable {
     /**
      * Metodo costruttore di Waiting station
      * @param coordinates Coordinate espresse in latitudine e longitudine
+     * @param streetName Nome della strada in cui è locata la postazione
      * @param streetNumber Numero civico della strada
      * @param stationName Nome della stazione di attesa
      * @see Coordinates
@@ -44,6 +52,11 @@ public class WaitingStation extends Node implements Serializable {
         this.stationName = stationName;
     }
 
+    /**
+     * Metodo costruttore di Waiting station
+     * @param coordinates Coordinate espresse in latitudine e longitudine
+     * @see Coordinates
+     * */
     public WaitingStation(Coordinates coordinates){
         super(coordinates);
     }
@@ -68,6 +81,10 @@ public class WaitingStation extends Node implements Serializable {
         this.stationName = stationName;
     }
 
+    /**
+     * Metodo setter della strada in cui è locata la postazione
+     * @param streetName Nome  della strada in cui è locata la postazione
+     */
     public void setStreetName(String streetName) {
         this.streetName = streetName;
     }
@@ -92,10 +109,18 @@ public class WaitingStation extends Node implements Serializable {
         return this.stationName;
     }
 
+    /**
+     * Metodo getter per il nome della strada in cui è locata la postazione
+     * @return Nome della strada in cui è locata la postazione
+     */
     public String getStreetName() {
         return streetName;
     }
 
+    /**
+     * Metodo che si occupa di restituire una stringa dato un oggetto di tipo WaitingStation
+     * @return Stringa dell'oggetto
+     */
     @Override
     public String toString() {
         return super.toString() + "\nWaitingStation{" +

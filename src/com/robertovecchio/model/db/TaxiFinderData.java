@@ -5,10 +5,12 @@ import com.robertovecchio.model.db.error.CustomerNotFoundException;
 import com.robertovecchio.model.db.error.HandlerNotFoundException;
 import com.robertovecchio.model.db.error.TaxiDriverNotFoundException;
 import com.robertovecchio.model.graph.WeightedGraph;
+import com.robertovecchio.model.graph.edge.observer.Edge;
 import com.robertovecchio.model.graph.node.Node;
 import com.robertovecchio.model.graph.node.Parking;
 import com.robertovecchio.model.graph.node.WaitingStation;
 import com.robertovecchio.model.user.*;
+import com.robertovecchio.model.veichle.builderTaxi.Taxi;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.io.*;
@@ -33,13 +35,37 @@ public class TaxiFinderData {
     //==================================================
 
     // Singleton - versione Eager
+    /**
+     * Singleton - versione Eager
+     */
     private final static TaxiFinderData instance = new TaxiFinderData();
+    /**
+     * Variabile statica che rappresenta il percorso verso il file dove saranno memorizzati i clienti
+     */
     private final static String customerFileName = "files/customer.txt";             // Percorso file dei clienti
+    /**
+     * Variabile statica che rappresenta il percorso verso il file dove saranno memorizzati i gestori
+     */
     private final static String handlerFileName = "files/handler.txt";               // Percorso file dei gestori
+    /**
+     * Variabile statica che rappresenta il percorso verso il file dove saranno memorizzati i tassisti
+     */
     private final static String taxiDriverFileName = "files/taxiDriver.txt";         // Percorso file dei tassisti
+    /**
+     * Variabile statica che rappresenta il percorso verso il file dove saranno memorizzati i parcheggi
+     */
     private final static String parkingDriverFileName = "files/parking.txt";         // Percorso file dei parcheggi
+    /**
+     * Variabile statica che rappresenta il percorso verso il file dove saranno memorizzati le postazioni
+     */
     private final static String waitingStationFileName = "files/waitingStation.txt"; // Percorso file delle postazioni
+    /**
+     * Variabile statica che rappresenta il percorso verso il file dove sarà memorizzatoi il grafo
+     */
     private final static String graphFileName = "files/graph.txt";                   // Percorso file del grafo
+    /**
+     * Variabile statica che rappresenta il percorso verso il file dove saranno memorizzate le prenotazioni
+     */
     private final static String bookingFileName = "files/booking.txt";               // Percorso file delle prenotazioni
 
     /**
@@ -57,7 +83,7 @@ public class TaxiFinderData {
      * Formatter per la gestione dell'orario
      * @see DateTimeFormatter
      */
-    private DateTimeFormatter timeFormatter;
+    private final DateTimeFormatter timeFormatter;
     /**
      * lista osservabile di clienti
      * @see ObservableList
@@ -104,6 +130,9 @@ public class TaxiFinderData {
      * @see WeightedGraph
      */
     private WeightedGraph graph;
+    /**
+     * Variabile che rappresenta il grafo con peso su archi dipendente dal traffico
+     */
     private WeightedGraph trafficGraph;
 
     //==================================================
@@ -114,7 +143,7 @@ public class TaxiFinderData {
      * Metodo costruttore privato volto alla realizzazione di un Singleton Pattern - versione Eager
      * */
     private TaxiFinderData(){
-        // Inizializzo le collections
+        /* Inizializzo le collections */
         this.customers = FXCollections.observableArrayList();
         this.taxiDrivers = FXCollections.observableArrayList();
         this.parkings = FXCollections.observableArrayList();
@@ -123,17 +152,17 @@ public class TaxiFinderData {
         this.handlers = new HashSet<>();
         this.genders = new HashMap<>();
 
-        // Inizializzazione grafo
+        /* Inizializzaziamo grafo */
         graph = new WeightedGraph(new ArrayList<>(), new ArrayList<>());
         graph.getVertexes().addAll(this.parkings);
         graph.getVertexes().addAll(this.waitingStations);
 
-        // Popolo l'hasmap
+        /* Popoliamo l'hasmap */
         genders.put("UOMO", GenderType.MALE);
         genders.put("DONNA", GenderType.FEMALE);
         genders.put("ALTRO", GenderType.OTHER);
 
-        // Inizializzo i formatter
+        /* Inizializziamo i formatter */
         this.dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         this.timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
@@ -335,15 +364,19 @@ public class TaxiFinderData {
     }
 
     /**
-     * Metodo gette del grafo
+     * Metodo getter del grafo
      * @return Il grafo corrente
      * @see WeightedGraph
-     * @see Node
      */
     public WeightedGraph getGraph(){
         return this.graph;
     }
 
+    /**
+     * Metodo getter del grafo in cui vi è traffico
+     * @return Grafo con traffico
+     * @see WeightedGraph
+     */
     public WeightedGraph getTrafficGraph(){
         return this.trafficGraph;
     }
@@ -734,5 +767,127 @@ public class TaxiFinderData {
             }
         }
         throw new CustomerNotFoundException();
+    }
+
+    /**
+     * Metodo utile ad inserire un tassista in un determitato parcheggio
+     * @param taxi Taxi da inserire nel parcheggio
+     * @param parking Parcheggio in cui si vuole inserire il tassista
+     * @see Taxi
+     * @see Parking
+     * */
+    public void insertTaxiDriverInParking(Taxi taxi, Parking parking){
+        parking.getTaxis().add(taxi);
+    }
+
+    /**
+     * Metodo utile a reperire una lista di tassisti presenti in un determinato parcheggio
+     * @param parking Parcheggio da cui si vuole reperire la lista di tassisti
+     * @return Lista di tassisti presenti in un determinato parcheggio
+     * @see List
+     * @see TaxiDriver
+     * @see Parking
+     */
+    public List<TaxiDriver> getTaxiDriversFromParking(Parking parking){
+        /* Memorizziamo il parcheggio recuperandolo dalla lista nodi del grafo all'indice del parcheggio fornito come
+         * parametro di input */
+        Parking parking1 = (Parking) this.getGraph().getVertexes().get(this.getGraph().getVertexes().indexOf(parking));
+
+        /* Inizializziamo una lista di tassisti vuota */
+        List<TaxiDriver> taxiDrivers = new ArrayList<>();
+
+        /* Per ogni Taxi nella coda Taxi presente nel parcheggio */
+        for (Taxi taxi : parking1.getTaxis()){
+
+            /* Par ogni tassista nella lista tassisti presente nel db */
+            for (TaxiDriver taxiDriver : this.getTaxiDrivers()){
+
+                /* Se il veicolo del tassista coincide con quello nel parcheggio */
+                if (taxiDriver.getTaxi().equals(taxi)){
+
+                    /* Aggiungilo alla lista da ritornare */
+                    taxiDrivers.add(taxiDriver);
+                }
+            }
+        }
+
+        /* Ritorna la lista di autisti nel parcheggio */
+        return taxiDrivers;
+    }
+
+    /**
+     * Metodo utile a ritornare il Parcheggio in cui è locato un Tassista
+     * @param taxiDriver Tassista di cui si vuole cercare un parcheggio
+     * @return Il parcheggio in cui è òlocato un tassista
+     * @throws Exception Questo metodo potrebbe lanciare un'eccezione nel caso in cui il Tassista non sia locato in
+     * alcun parcheggio
+     * @see Parking
+     * @see TaxiDriver
+     * @see Exception
+     */
+    public Parking getParkingFromTaxiDriver(TaxiDriver taxiDriver) throws Exception {
+        for (Node node : this.getGraph().getVertexes()){
+            if (node instanceof Parking){
+                Parking parking = (Parking) node;
+                if (parking.getTaxis().contains(taxiDriver.getTaxi())){
+                    return parking;
+                }
+            }
+        }
+        throw new Exception("Errore");
+    }
+
+    /**
+     * Metodo utile a ritornare la lista dei parcheggi presenti nel grafo
+     * @return Lista di parcheggi presenti nel grafo
+     * @see List
+     * @see Parking
+     */
+    public List<Parking> getParkingsFromGraph(){
+        List<Parking> parkings = new ArrayList<>();
+        for (Node node : TaxiFinderData.getInstance().getGraph().getVertexes()){
+            if (node instanceof Parking){
+                parkings.add((Parking)node);
+            }
+        }
+        return parkings;
+    }
+
+    /**
+     * Metodo utile a ritornare un tassista dato un Taxi
+     * @param taxi Taxi di cui si vuole conoscere il tassista
+     * @return Il Proprietario del Taxi
+     * @see Taxi
+     * @see TaxiDriver
+     * @throws TaxiDriverNotFoundException Questo metodo potrebbe non trovare un tassista associato
+     */
+    public TaxiDriver takeTaxiDriverFrom(Taxi taxi) throws TaxiDriverNotFoundException {
+        for (TaxiDriver taxiDriver : this.getTaxiDrivers()){
+            if (taxiDriver.getTaxi().equals(taxi)){
+                return taxiDriver;
+            }
+        }
+
+        throw new TaxiDriverNotFoundException();
+    }
+
+    /**
+     * Metodo utile a ritornare la lista dei collegamenti di un nodo presente nel grafo
+     * @param node Nodo di cui di vogliono conoscere i colelgamenti
+     * @return Lista collegamenti
+     * @see List
+     * @see Edge
+     * @see WaitingStation
+     */
+    public List<Edge> getEdgesFromNode(WaitingStation node){
+        List<Edge> edges = new ArrayList<>();
+
+        for (Edge edge : this.getGraph().getEdges()){
+            if (edge.getSource().equals(node) || edge.getDestination().equals(node)){
+                edges.add(edge);
+            }
+        }
+
+        return edges;
     }
 }

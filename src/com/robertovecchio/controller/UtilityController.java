@@ -4,7 +4,6 @@ import com.robertovecchio.controller.dialog.DialogAction;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -105,10 +104,10 @@ public class UtilityController {
     public static boolean isValidEmailAddress(String email) {
         final String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
-        // Inizializzo un PATTERN
+        /* Inizializzo un PATTERN */
         Pattern pattern = Pattern.compile(regex);
 
-        // Inizializzo un Matcher
+        /* Inizializzo un Matcher */
         Matcher matcher = pattern.matcher(email);
 
         System.out.println(matcher.matches());
@@ -126,31 +125,33 @@ public class UtilityController {
      * */
     protected static void showDialog(Window window, String title, String FXMLPath, String error,
                                      DialogAction callable, ButtonType... buttonTypes){
-        // creiamo un nuovo dialog da visualizzare
+        /* creiamo un nuovo dialog da visualizzare */
         Dialog<ButtonType> dialog = new Dialog<>();
 
-        // inizializziamo il proprietario
+        /* inizializziamo il proprietario */
         dialog.initOwner(window);
 
-        // Impostiamo il titolo del dialog
+        /* Impostiamo il titolo del dialog */
         dialog.setTitle(title);
 
-        // Carichiamo il file di iterfaccia per il dialog
+        /* Carichiamo il file di iterfaccia per il dialog */
         FXMLLoader loader = new FXMLLoader();
         try{
+            /* Carichiamo il file FXML */
             Parent root = loader.load(new FileInputStream(FXMLPath));
             dialog.getDialogPane().setContent(root);
         }catch (IOException e){
+            /* In caso di errore stampiamo l'errore a schermo */
             System.out.println(error);
         }
 
-        // Aggiungiamo il bottone OK al dialogPane
+        /* Aggiungiamo il bottone OK al dialogPane */
         dialog.getDialogPane().getButtonTypes().addAll(buttonTypes);
 
-        // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+        /* Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca */
         Optional<ButtonType> result = dialog.showAndWait();
 
-        // Gestiamo il caso in cui l'utente abbia premuto OK
+        /* Gestiamo il caso in cui l'utente abbia premuto OK */
         if (result.isPresent() && result.get() == ButtonType.OK){
             callable.doDialogAction();
         }
@@ -179,6 +180,12 @@ public class UtilityController {
         return !(password.length() < 4 || password.length() > 15);
     }
 
+    /**
+     * Metodo che abilita la visibilità del primo parametro di input e disabilita i successivi
+     * @param visible Node di vui si vuole impostare la visibilità a true
+     * @param invisibles varargs di Node che si vogliono disabilitare
+     * @see Node
+     */
     public static void changeVisibility(Node visible, Node... invisibles){
         visible.setVisible(true);
         for (Node invisible : invisibles){
