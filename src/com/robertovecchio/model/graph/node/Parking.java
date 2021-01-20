@@ -3,6 +3,7 @@ package com.robertovecchio.model.graph.node;
 // import
 import com.robertovecchio.model.veichle.builderTaxi.Taxi;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -18,14 +19,20 @@ import java.util.Queue;
  * */
 public class Parking extends WaitingStation implements Serializable {
 
-    // Tipo numerico Long utile alla serializzazione
+    /**
+     * Numero seriale utile ai fini della memorizzazione
+     */
+    @Serial
     private final static long serialVersionUID = 7L;
 
     //==================================================
     //               Variabili d'istanza
     //==================================================
 
-    private int parkingCapacity; // Capacità del parcheggio (posti auto)
+    /**
+     * Capacità del parcheggio in termini di posti auto
+     */
+    private int parkingCapacity;
     /**
      * @see Queue
      * @see Taxi
@@ -39,6 +46,7 @@ public class Parking extends WaitingStation implements Serializable {
     /**
      * Costruttore della classe Parking
      * @param coordinates Coordinate del parcheggio espresse in latitudine e longitudine
+     * @param streetName  Nome della strada in cui è locato il parcheggio
      * @param streetNumber Numero civico del parcheggio
      * @param stationName Nome del parcheggio
      * @param parkingCapacity Capacità del parcheggio in termini di posti auto
@@ -64,6 +72,7 @@ public class Parking extends WaitingStation implements Serializable {
      * @param streetNumber Numero civico del parcheggio
      * @param stationName Nome del parcheggio
      * @param parkingCapacity Capacità del parcheggio in termini di posti auto
+     * @param streetName  Nome della strada in cui è locato il parcheggio
      * @see Coordinates
      * */
     public Parking(Coordinates coordinates, String streetName, String streetNumber,
@@ -76,6 +85,11 @@ public class Parking extends WaitingStation implements Serializable {
         this.taxis = new LinkedList<>();
     }
 
+    /**
+     * Costruttore della classe Parking
+     * @param coordinates Coordinate del parcheggio espresse in latitudine e longitudine
+     * @see Coordinates
+     * */
     public Parking(Coordinates coordinates){
         super(coordinates);
     }

@@ -5,6 +5,7 @@ import com.robertovecchio.model.booking.Booking;
 import com.robertovecchio.model.mediator.Colleague;
 import com.robertovecchio.model.mediator.TaxiCenter;
 
+import java.io.Serial;
 import java.time.LocalDate;
 
 /**
@@ -17,6 +18,10 @@ import java.time.LocalDate;
  * */
 public class Customer extends UserAccount implements Colleague {
 
+    /**
+     * Numero seriale utile ai fini della memorizzazione
+     */
+    @Serial
     private final static long serialVersionUID = 1L;
 
     //==================================================
@@ -25,6 +30,9 @@ public class Customer extends UserAccount implements Colleague {
 
     /**Numero telefonico utente*/
     private String phoneNumber;
+    /**
+     * Centro taxi con cui comunicherà il cliente
+     */
     private final TaxiCenter taxiCenter = new TaxiCenter();
 
     //==================================================
@@ -97,6 +105,10 @@ public class Customer extends UserAccount implements Colleague {
     //                Metodi Sovrascritti
     //==================================================
 
+    /**
+     * Metodo che restituisce una stringa dell'oggetto corrente
+     * @return Ritorna l'oggeto sotto forma di stringa
+     */
     @Override
     public String toString() {
         return super.toString() + "\nCustomer{" +
@@ -104,6 +116,11 @@ public class Customer extends UserAccount implements Colleague {
                 '}';
     }
 
+    /**
+     * Metodo che sfrutta il mediator del mediator pattern per comunicare l'aggiornamento della prenotazione con
+     * i parametri scelti dal tassista.
+     * @param booking Prenotazione che ha bisogno di essere aggiornata e comunicata
+     */
     @Override
     public void send(Booking booking) {
         taxiCenter.sendTaxiDriver(booking);

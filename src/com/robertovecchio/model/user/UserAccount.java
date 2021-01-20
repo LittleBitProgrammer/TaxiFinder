@@ -1,6 +1,7 @@
 package com.robertovecchio.model.user;
 
 //Import
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -14,6 +15,10 @@ import java.util.Objects;
  * */
 public abstract class UserAccount implements Serializable {
 
+    /**
+     * Numero seriale utile ai fini della memorizzazione
+     */
+    @Serial
     private final static long serialVersionUID = 2L;
 
     //==================================================

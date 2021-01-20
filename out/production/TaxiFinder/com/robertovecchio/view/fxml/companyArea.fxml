@@ -189,7 +189,6 @@
                                 <Font name="helvetica bold" size="15"/>
                             </font>
                         </Label>
-
                     </GridPane>
                 </VBox>
             </GridPane>

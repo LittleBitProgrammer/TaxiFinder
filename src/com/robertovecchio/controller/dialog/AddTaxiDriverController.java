@@ -24,7 +24,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 /**
- * Classe che gestisce la view di aggiunta Tassista
+ * Classe che gestisce la view (dialog) di aggiunta Tassista
  * @author robertovecchio
  * @version 1.0
  * @since 10/01/2021
@@ -36,51 +36,140 @@ public class AddTaxiDriverController {
     //==================================================
 
     // TableView
+    /**
+     * TableView utile a mostrate il Taxi Aggiunto
+     * @see TableView
+     * @see Taxi
+     * */
     private TableView<Taxi> tableTaxi;
 
     // TableColumn
+    /**
+     * TableColumn (colonna) utile a mostrare la targa del Taxi
+     * @see TableColumn
+     * @see Taxi
+     */
     private TableColumn<Taxi,String> licensePlateColumn;
+    /**
+     * TableColumn (colonna) utile a mostrare il nomi del brand del Taxi
+     * @see TableColumn
+     * @see Taxi
+     */
     private TableColumn<Taxi,String> brandNameColumn;
+    /**
+     * TableColumn (colonna) utile a mostrare il modello del Taxi
+     * @see TableColumn
+     * @see Taxi
+     */
     private TableColumn<Taxi,String> modelNameColumn;
+    /**
+     * TableColumn (colonna) utile a mostrare la capacità del taxi in termini di persone trasportabili
+     * @see TableColumn
+     * @see Taxi
+     * */
     private TableColumn<Taxi,String> capacityColumn;
+    /**
+     * TableColumn (colonna) utile a mostrare il tipo del carburante del taxi
+     * @see TableColumn
+     * @see Taxi
+     */
     private TableColumn<Taxi,String> fuelTypeColumn;
 
     // Taxi
+    /**
+     * Taxi da mostrare nella TableView
+     * @see Taxi
+     */
     private Taxi newTaxi;
 
     // DB
+    /**
+     * Istanza del database
+     * @see TaxiFinderData
+     * */
     TaxiFinderData taxiFinderData = TaxiFinderData.getInstance();
 
     //==================================================
     //               Variabili Statiche
     //==================================================
 
+    /**
+     * Variabile statica che rappresenta il percorso al dialog dell'aggiunta taxi
+     * */
     private final static String addTaxiControllerFile = "src/com/robertovecchio/view/fxml/dialog/addTaxi.fxml";
 
     //==================================================
     //               Variabili FXML
     //==================================================
 
+    /**
+     * GridPane della view associata
+     * @see GridPane
+     */
     @FXML
     GridPane gridContainer;
+    /**
+     * TextField utile alla composizione del codice fiscale
+     * @see TextField
+     */
     @FXML
     TextField fiscalCodeField;
+    /**
+     * TextField utile alla composizione del cognome
+     * @see TextField
+     */
     @FXML
     TextField surnameField;
+    /**
+     * ComboBox utile a mostrare i generi sessuali (Uomo, Donna) possibili
+     * @see ComboBox
+     * @see GenderType
+     */
     @FXML
     ComboBox<GenderType> genreField;
+    /**
+     * TextField utile alla composizione dell'username, Da notare bene che su questo TextField è disabilitata la
+     * modifica di default, in quanto l'username coinciderà con il corrispettivo codice fiscale. Quindi questo campo
+     * verrà riempito automaticamente attraverso il riempimento della TextField del codice fiscale
+     * @see TextField
+     */
     @FXML
     TextField usernameField;
+    /**
+     * TextField utile alla composizione del nome
+     * @see TextField
+     */
     @FXML
     TextField nameField;
+    /**
+     * TextField utile alla composizione della data di nascita
+     * @see TextField
+     */
     @FXML
     DatePicker dateOfBirthField;
+    /**
+     * TextField utile alla composizione dell'email
+     * @see TextField
+     */
     @FXML
     TextField emailField;
+    /**
+     * TextField utile alla composizione della password
+     * @see TextField
+     */
     @FXML
     PasswordField passwordField;
+    /**
+     * TextField utile alla composizione del numero di licenza del tassista
+     * @see TextField
+     */
     @FXML
     TextField licenseField;
+    /**
+     * Bottone che gestirà l'aggiunta / modifica di un'auto durante l'aggiunta di un tassista. Questo potrà aprire un
+     * dialog dove è possibile inserire opportunamente un Taxi associato al tassista
+     * @see Button
+     */
     @FXML
     Button addAutoButton;
 
@@ -92,11 +181,13 @@ public class AddTaxiDriverController {
      * */
     @FXML
     public void initialize(){
-        // inizializziamo la comboBox con tutti i possibili enum
+        /* inizializziamo la comboBox con tutti i possibili casi dell'enum GenderType (Uomo, Donna,
+         * Altro non viene consentito perchè stiamo assumendo una persona, per cui sono necessari dati di genere
+         * e non di identità */
         Set<GenderType> genders = EnumSet.of(GenderType.MALE, GenderType.FEMALE);
         genreField.getItems().addAll(genders);
 
-        // Permette di mostrare una stringa personalizzata nell'intestazione del ComboBox
+        /* Permette di mostrare una stringa personalizzata nell'intestazione del ComboBox */
         genreField.setConverter(new StringConverter<>() {
             @Override
             public String toString(GenderType genderType) {
@@ -113,23 +204,23 @@ public class AddTaxiDriverController {
             }
         });
 
-        // Impostiamo un dominio di base
+        /* Impostiamo un dominio di base */
         this.emailField.setText("@taxifinder.com");
 
-        // Impostiamo l'username non editabile
+        /* Impostiamo l'username non editabile */
         this.usernameField.setEditable(false);
 
 
-        // Aggiungiamo un listner al fiscalCodeField
+        /* Aggiungiamo un listner al fiscalCodeField */
         this.fiscalCodeField.setOnKeyReleased(keyEvent -> this.usernameField.setText(this.fiscalCodeField.getText()));
 
-        // Creiamo la TableView
+        /* Creiamo la TableView */
         tableTaxi = createTableView();
 
-        // aggiungiamo la tableView al gridContainer
+        /* aggiungiamo la tableView al gridContainer */
         this.gridContainer.add(tableTaxi,0,6,4,1);
 
-        // Rendiamo la tableview invisibile
+        /* Rendiamo la tableview invisibile */
         this.tableTaxi.setVisible(false);
     }
 
@@ -172,6 +263,7 @@ public class AddTaxiDriverController {
      * @return Tassista aggiunto
      * @see TaxiDriver*/
     public TaxiDriver processAddTaxiDriver(){
+        /* Inizializziamo i valori delle varie TextField / ComboBox / DatePicker */
         String fiscalCode = fiscalCodeField.getText().trim().toUpperCase();
         String name = nameField.getText().trim().substring(0,1).toUpperCase() + nameField.getText().trim().substring(1);
         String surname = surnameField.getText().trim().substring(0,1).toUpperCase() + surnameField.getText().trim().substring(1);
@@ -182,26 +274,54 @@ public class AddTaxiDriverController {
         String password = passwordField.getText().trim();
         String licenseNumber = licenseField.getText().trim().toUpperCase();
 
+        /* Creiamo una nuova istanza di TaxiDriver con i valori reperiti da interfaccia */
         TaxiDriver newTaxiDriver = new TaxiDriver(fiscalCode, name, surname,
                                                   dateOfBirth, genderType,
                                                   email, username,
                                                   password, licenseNumber, newTaxi);
+
         try {
+            /* Impostiamo una variabile booleana a true che ci sarà utile durante l'iterazione */
             boolean isFull = true;
+
+            /* Iteriamo tutti i nodi del grafo */
             for (Node parking : taxiFinderData.getGraph().getVertexes()){
+
+                /* Prendiamo in considerazione solo le istanze di parcheggio*/
                 if (parking instanceof Parking){
+                    /* In questo caso siamo sicuri che il nodo corrente è un parcheggio, per cui viene effettuata
+                     * Un'operazione di casting*/
                     Parking park = (Parking) parking;
-                    if (park.getFreeParkingSpaces() > 0)
-                    taxiFinderData.addTaxiDriver(newTaxiDriver);
-                    taxiFinderData.storeTaxiDrivers();
-                    this.insertTaxiDriverIn(newTaxi, park);
-                    taxiFinderData.storeGraph();
-                    isFull = false;
-                    break;
+
+                    /*Se lo spazio libero in parcheggio, in termini di posti auto, è maggiore di 0*/
+                    if (park.getFreeParkingSpaces() > 0) {
+
+                        /* Aggiungiamo un tassista (Quello creato attraverso i dati recuperati da interfaccia utente)
+                         * alla lista tassisti*/
+                        taxiFinderData.addTaxiDriver(newTaxiDriver);
+
+                        /* Memorizziamo permanentemente i tassisti */
+                        taxiFinderData.storeTaxiDrivers();
+
+                        /* Inseriamo il nuovo tassista nel parcheggio */
+                        taxiFinderData.insertTaxiDriverInParking(newTaxi, park);
+
+                        /* Memorizziamo permanentemente il grafo*/
+                        taxiFinderData.storeGraph();
+
+                        /* Impostiamo is false a true */
+                        isFull = false;
+
+                        /* In questo caso non serve continuare oltre l'iterazione, quindi interrompiamola */
+                        break;
+                    }
                 }
             }
 
+            /* Se dopo l'iterazione isFull è ancora a true allora tutti i parcheggi appartenenti all'azienda sono
+             * Pieni, per cui bisogna gestire l'eventualità*/
             if (isFull){
+                /* Nel caso fosse presente un errore, lo mostriamo a schermo attraverso un alert */
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Parcheggi pieni", ButtonType.OK);
                 alert.setHeaderText("Assunzione impossibile");
                 alert.setContentText("Non puoi assumere altri dipendenti, i tuoi parcheggi sono pieni");
@@ -210,9 +330,11 @@ public class AddTaxiDriverController {
                 System.out.println(result);
             }
         }catch (IOException e){
+            /* In caso di errore verrà stampato a terminale */
             e.printStackTrace();
         }
 
+        /* Ritorniamo il nuovo Taxi Creato */
         return newTaxiDriver;
     }
 
@@ -234,6 +356,7 @@ public class AddTaxiDriverController {
 
     /**
      * Metodo che ha lo scopo di verificare se un utente ha già inserito quel taxi (Stessa targa)
+     * @param taxiDriver Tassista di cui cerchiamo l'esistenza
      * @return Se esiste già un taxi con targa uguale ritorna true, altrimenti false
      * */
     private boolean existTaxi(TaxiDriver taxiDriver){
@@ -276,20 +399,25 @@ public class AddTaxiDriverController {
     //                  Metodi FXML
     //==================================================
 
+    /**
+     * Questo metodo gestisce associazione tra una nuova auto ed il tassista che si sta creando, lanciando un dialog
+     * che gestirà l'inserimento di una nuova auto
+     */
     @FXML
     private void handleInsertAuto(){
-        // creiamo un nuovo dialog da visualizzare
+        /* creiamo un nuovo dialog da visualizzare */
         Dialog<ButtonType> dialog = new Dialog<>();
 
-        // inizializziamo il proprietario
+        /* inizializziamo il proprietario */
         dialog.initOwner(this.addAutoButton.getScene().getWindow());
 
-        // Impostiamo il titolo del dialog
+        /* Impostiamo il titolo del dialog */
         dialog.setTitle("Aggiunun Taxi");
 
-        // Carichiamo il file di iterfaccia per il dialog
+        /* Carichiamo il file di iterfaccia per il dialog é */
         FXMLLoader loader = new FXMLLoader();
 
+        /* Impostiamo il contenuto del dialog */
         try{
             Parent root = loader.load(new FileInputStream(addTaxiControllerFile));
             dialog.getDialogPane().setContent(root);
@@ -298,59 +426,80 @@ public class AddTaxiDriverController {
             e.printStackTrace();
         }
 
+        /* Carichiamo il controller del dialog */
         AddTaxiController addTaxiController = loader.getController();
 
-        // Aggiungiamo il bottone OK al dialogPane
+        /* Aggiungiamo il bottone Applica e Cancella al dialogPane */
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.APPLY, ButtonType.CANCEL);
         dialog.getDialogPane().lookupButton(ButtonType.APPLY).disableProperty().bind(addTaxiController.invalidInputProperty());
 
-        // Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca
+        /* Gestiamo il controller mostrandolo e aspettando che l'utente vi interagisca */
         Optional<ButtonType> result = dialog.showAndWait();
 
-        // Gestiamo il caso in cui l'utente abbia premuto OK
+        /* Gestiamo il caso in cui l'utente abbia premuto Applica */
         if (result.isPresent() && result.get() == ButtonType.APPLY){
-            // Inizializziamo il nuovo taxi
-            // Taxi
+            /* Inizializziamo il nuovo Taxi */
             this.newTaxi = addTaxiController.processTaxiResult();
 
-            // modifichiamo il testo del botton
+            /* Modifichiamo il testo del bottone */
             this.addAutoButton.setText("Modifica Auto");
 
-            // Modifichiamo la grandezza del Button
+            /* Modifichiamo la grandezza del Button */
             this.addAutoButton.setPrefWidth(150D);
 
-            // Creiamo una lista per popolare la tableview
+            /* Creiamo una lista per popolare la tableview */
             List<Taxi> taxi = new ArrayList<>();
+
+            /* Carichiamo il nuovo taxi nella lista appena creata */
             taxi.add(newTaxi);
 
-            // Impostiamo gli item da visualizzare, nel nostro casoil singolo taxi
+            /* Impostiamo gli item da visualizzare, nel nostro caso il singolo taxi */
             this.tableTaxi.setItems(FXCollections.observableList(taxi));
 
-            // rendiamo la tableView Visibile
+            /* Rendiamo la tableView Visibile */
             this.tableTaxi.setVisible(true);
         }
     }
 
+    /**
+     * Metoodo utile alla creazione della TableView del Taxi, visibile un volta che il Taxi è stato opportunamente
+     * creato o modificato
+     * @return Una TableView di Taxi
+     * @see TableView
+     * @see Taxi
+     * */
     private TableView<Taxi> createTableView(){
 
-        // Creiamo le colonne della tableView
+        /* Creiamo le colonne della tableView */
+
+        /* Targa Taxi */
         this.licensePlateColumn = new TableColumn<>("Targa");
+        /* Brand Taxi */
         this.brandNameColumn = new TableColumn<>("Marchio");
+        /* Modello Taxi */
         this.modelNameColumn = new TableColumn<>("Modello");
+        /* Capacità Taxi */
         this.capacityColumn = new TableColumn<>("Capacità");
+        /* Carburante Taxi */
         this.fuelTypeColumn = new TableColumn<>("Carburante");
 
-        // Inizializziamo la TableView
+        /* Inizializziamo la TableView */
         this.tableTaxi = new TableView<>();
 
-        // Aggiungiamo le colonne alla tabella
+        /* Aggiungiamo le colonne alla tabella */
+
+        /* Targa Taxi */
         this.tableTaxi.getColumns().add(licensePlateColumn);
+        /* Brand Taxi */
         this.tableTaxi.getColumns().add(brandNameColumn);
+        /* Modello Taxi */
         this.tableTaxi.getColumns().add(modelNameColumn);
+        /* Capacità Taxi */
         this.tableTaxi.getColumns().add(capacityColumn);
+        /* Carburante Taxi */
         this.tableTaxi.getColumns().add(fuelTypeColumn);
 
-        // Impostiamo la grandezza massima della tabella per ogni colonna
+        /* Impostiamo la grandezza massima della tabella per ogni colonna */
         this.tableTaxi.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         this.licensePlateColumn.setMaxWidth(Integer.MAX_VALUE * 20D);  // 20%
         this.brandNameColumn.setMaxWidth(Integer.MAX_VALUE * 20D);     // 20%
@@ -358,33 +507,49 @@ public class AddTaxiDriverController {
         this.capacityColumn.setMaxWidth(Integer.MAX_VALUE * 20D);      // 20%
         this.fuelTypeColumn.setMaxWidth(Integer.MAX_VALUE * 20D);      // 20%
 
-        // Impostiamo le colonne a non ordinabili
+        /* Impostiamo le colonne a non ordinabili */
+
+        /* Targa Taxi */
         this.licensePlateColumn.setSortable(false);
+        /* Brand Taxi */
         this.brandNameColumn.setSortable(false);
+        /* Modello Taxi */
         this.modelNameColumn.setSortable(false);
+        /* Capacità Taxi */
         this.capacityColumn.setSortable(false);
+        /* Carburante Taxi */
         this.fuelTypeColumn.setSortable(false);
 
-        // Impediamo che le tabelle possano essere riordinate dall'utente
+        /* Impediamo che le tabelle possano essere riordinate dall'utente */
         this.tableTaxi.skinProperty().addListener((observableValue, oldWidth, newWidth) ->{
             final TableHeaderRow header = (TableHeaderRow) tableTaxi.lookup("TableHeaderRow");
 
             header.reorderingProperty().addListener((obs, oldValue, newValue) -> header.setReordering(false));
         });
 
-        // Rendiamo la tableView non editabile
+        /* Rendiamo la tableView non editabile */
         this.tableTaxi.setEditable(false);
 
-        // Impostiamo le proprietà delle colonne
+        /* Impostiamo le proprietà delle colonne */
+
+        /* Targa Taxi */
         setLicensePlateColumnProperty();
+        /* Brand Taxi */
         setBrandNameColumnProperty();
+        /* Modello Taxi */
         setModelNameColumnProperty();
+        /* Capacità Taxi */
         setCapacityColumnProperty();
+        /* Carburante Taxi */
         setFuelTypeColumnProperty();
 
+        /* Ritorniamo la TableView*/
         return tableTaxi;
     }
 
+    /**
+     * Metodo utile ad impostare le proprietà della colonna della targa del taxi
+     * */
     private void setLicensePlateColumnProperty(){
         this.licensePlateColumn.setCellValueFactory(taxiStringCellDataFeatures -> new SimpleStringProperty(
                 taxiStringCellDataFeatures.getValue().getLicensePlate()));
@@ -403,6 +568,9 @@ public class AddTaxiDriverController {
         });
     }
 
+    /**
+     * Metodo utile ad impostare le proprietà della colonna del brand del taxi
+     * */
     private void setBrandNameColumnProperty(){
         this.brandNameColumn.setCellValueFactory(taxiStringCellDataFeatures -> new SimpleStringProperty(
                 taxiStringCellDataFeatures.getValue().getBrandType().toString()));
@@ -421,6 +589,9 @@ public class AddTaxiDriverController {
         });
     }
 
+    /**
+     * Metodo utile ad impostare le proprietà della colonna del modello del taxi
+     * */
     private void setModelNameColumnProperty(){
         this.modelNameColumn.setCellValueFactory(taxiStringCellDataFeatures -> new SimpleStringProperty(
                 taxiStringCellDataFeatures.getValue().getModelName()));
@@ -439,6 +610,9 @@ public class AddTaxiDriverController {
         });
     }
 
+    /**
+     * Metodo utile ad impostare le proprietà della colonna della capacità del taxi
+     * */
     private void setCapacityColumnProperty(){
         this.capacityColumn.setCellValueFactory(taxiStringCellDataFeatures -> new SimpleStringProperty(
                 String.valueOf(taxiStringCellDataFeatures.getValue().getCapacity())));
@@ -457,6 +631,9 @@ public class AddTaxiDriverController {
         });
     }
 
+    /**
+     * Metodo utile ad impostare le proprietà della colonna della tipologia carburante del taxi
+     * */
     private void setFuelTypeColumnProperty(){
         this.fuelTypeColumn.setCellValueFactory(taxiStringCellDataFeatures -> new SimpleStringProperty(
                 taxiStringCellDataFeatures.getValue().getFuelType().getTranslation()));
@@ -473,10 +650,5 @@ public class AddTaxiDriverController {
                 }
             }
         });
-    }
-
-    private void insertTaxiDriverIn(Taxi taxi, Parking parking){
-        parking.setTaxis(new LinkedList<>());
-        parking.getTaxis().add(taxi);
     }
 }
