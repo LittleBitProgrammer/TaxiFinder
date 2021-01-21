@@ -49,7 +49,7 @@ import java.util.*;
  *     foreach destinationNode that can be reached via an edge from evaluationNode AND is not in settledNodes{
  *         edgeDistance = getDistance(edge(evaluationNode, destinationNode))
  *         newDistance = distance [evaluationNode] + edgeDistance
- *         if(distance[destinationNode] > bew distance){
+ *         if(distance[destinationNode] > new distance){
  *             distance[destinationNode] = newDistance
  *             add destinationNode to unsettledNodes
  *         }
