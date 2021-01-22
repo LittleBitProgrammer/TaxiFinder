@@ -1,0 +1,4 @@
+#termAndCondition:hover{
+    -fx-underline: true;
+    -fx-cursor: hand;
+}

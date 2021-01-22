@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Label?>
+<DialogPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:id="pane"
+            fx:controller="com.robertovecchio.controller.dialog.VehicleController"
+            prefHeight="400.0"
+            prefWidth="600.0">
+    <content>
+        <GridPane alignment="CENTER" hgap="10" vgap="10">
+            <Label text="Nr. Targa: "
+                   GridPane.rowIndex="0"
+                   GridPane.columnIndex="0"/>
+
+            <TextField GridPane.rowIndex="0"
+                       editable="false"
+                       fx:id="licensePlateField"
+                       GridPane.columnIndex="1"/>
+
+            <Label text="Brand: "
+                   GridPane.rowIndex="1"
+                   GridPane.columnIndex="0"/>
+
+            <TextField GridPane.rowIndex="1"
+                      editable="false"
+                      fx:id="brandNameField"
+                      GridPane.columnIndex="1"/>
+
+            <Label text="Nome modello: "
+                   GridPane.rowIndex="2"
+                   GridPane.columnIndex="0"/>
+
+            <TextField GridPane.rowIndex="2"
+                       editable="false"
+                       fx:id="modelNameField"
+                       GridPane.columnIndex="1"/>
+
+            <Label text="Capacità di trasporto: "
+                   GridPane.rowIndex="3"
+                   GridPane.columnIndex="0"/>
+
+            <TextField GridPane.rowIndex="3"
+                       editable="false"
+                       fx:id="capacityField"
+                       GridPane.columnIndex="1"/>
+
+            <Label text="Tipo Carburante: "
+                   GridPane.rowIndex="4"
+                   GridPane.columnIndex="0"/>
+
+            <TextField GridPane.rowIndex="4"
+                       editable="false"
+                       fx:id="fuelTypeField"
+                       GridPane.columnIndex="1"/>
+        </GridPane>
+    </content>
+</DialogPane>

@@ -1,0 +1,17 @@
+module:TaxiFinder
+com.robertovecchio.controller
+com.robertovecchio.controller.dialog
+com.robertovecchio.model.booking
+com.robertovecchio.model.booking.strategy
+com.robertovecchio.model.db
+com.robertovecchio.model.db.error
+com.robertovecchio.model.dijkstra
+com.robertovecchio.model.graph
+com.robertovecchio.model.graph.edge
+com.robertovecchio.model.graph.edge.observer
+com.robertovecchio.model.graph.node
+com.robertovecchio.model.mediator
+com.robertovecchio.model.user
+com.robertovecchio.model.veichle
+com.robertovecchio.model.veichle.builderTaxi
+com.robertovecchio.view

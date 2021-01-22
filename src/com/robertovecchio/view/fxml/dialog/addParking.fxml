@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.GridPane?>
+<DialogPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.robertovecchio.controller.dialog.AddParkingController"
+            headerText="Riempi i campi per aggiungere un Parcheggio"
+            prefHeight="400.0"
+            prefWidth="600.0">
+    <content>
+        <GridPane alignment="CENTER" vgap="10" hgap="10" fx:id="GridContainer">
+            <Label text="Nome Strada: "
+                   GridPane.rowIndex="0"
+                   GridPane.columnIndex="0"/>
+
+            <TextField fx:id="streetNameField"
+                       promptText="es. Via Chiaia"
+                       GridPane.rowIndex="0"
+                       GridPane.columnIndex="1"/>
+
+            <Label text="Nr. Civico: "
+                   GridPane.rowIndex="1"
+                   GridPane.columnIndex="0"/>
+
+            <TextField fx:id="streetNumberField"
+                       promptText="es. 12A"
+                       GridPane.rowIndex="1"
+                       GridPane.columnIndex="1"/>
+
+            <Label text="latitudine: "
+                   GridPane.rowIndex="2"
+                   GridPane.columnIndex="0"/>
+
+            <TextField fx:id="latitudeField"
+                       promptText="es. 12.1234"
+                       GridPane.rowIndex="2"
+                       GridPane.columnIndex="1"/>
+
+            <Label text="Longitudine: "
+                   GridPane.rowIndex="3"
+                   GridPane.columnIndex="0"/>
+
+            <TextField fx:id="longitudeField"
+                       promptText="es. 14.5678"
+                       GridPane.rowIndex="3"
+                       GridPane.columnIndex="1"/>
+
+            <Label text="Nome Parcheggio: "
+                   GridPane.rowIndex="4"
+                   GridPane.columnIndex="0"/>
+
+            <TextField fx:id="parkingNameField"
+                       promptText="es. Quick"
+                       GridPane.rowIndex="4"
+                       GridPane.columnIndex="1"/>
+
+            <Label text="Posti auto: "
+                   GridPane.rowIndex="5"
+                   GridPane.columnIndex="0"/>
+
+            <TextField fx:id="capacityField"
+                       promptText="es. 55"
+                       GridPane.rowIndex="5"
+                       GridPane.columnIndex="1"/>
+        </GridPane>
+    </content>
+</DialogPane>
