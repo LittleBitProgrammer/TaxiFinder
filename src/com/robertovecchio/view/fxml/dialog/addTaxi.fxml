@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.GridPane?>
+<DialogPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.robertovecchio.controller.dialog.AddTaxiController"
+            headerText="Riempi i campi per aggiungere un Taxi"
+            prefHeight="400.0"
+            prefWidth="600.0">
+    <content>
+        <GridPane alignment="CENTER" vgap="10">
+            <Label text="Nr. Targa: "
+                   GridPane.rowIndex="0"
+                   GridPane.columnIndex="0"/>
+
+            <TextField promptText="es.FSE434DHH"
+                       GridPane.rowIndex="0"
+                       fx:id="licensePlateField"
+                       GridPane.columnIndex="1"/>
+
+            <Label text="Brand: "
+                   GridPane.rowIndex="1"
+                   GridPane.columnIndex="0"/>
+
+            <ComboBox promptText="es.KIA"
+                       GridPane.rowIndex="1"
+                       fx:id="brandNameField"
+                       GridPane.columnIndex="1"/>
+
+            <Label text="Nome modello: "
+                   GridPane.rowIndex="2"
+                   GridPane.columnIndex="0"/>
+
+            <TextField promptText="es.FSE434DHH"
+                       GridPane.rowIndex="2"
+                       fx:id="modelNameField"
+                       GridPane.columnIndex="1"/>
+
+            <Label text="Capacità di trasporto: "
+                   GridPane.rowIndex="3"
+                   GridPane.columnIndex="0"/>
+
+            <TextField promptText="es.3"
+                       GridPane.rowIndex="3"
+                       fx:id="capacityField"
+                       GridPane.columnIndex="1"/>
+
+            <Label text="Tipo Carburante: "
+                   GridPane.rowIndex="4"
+                   GridPane.columnIndex="0"/>
+
+            <ComboBox promptText="es.Diesel"
+                       GridPane.rowIndex="4"
+                       fx:id="fuelTypeField"
+                       GridPane.columnIndex="1"/>
+        </GridPane>
+    </content>
+</DialogPane>

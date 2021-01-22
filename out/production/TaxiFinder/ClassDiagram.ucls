@@ -1,0 +1,1165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.4" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <enumeration id="1" language="java" name="com.robertovecchio.model.booking.ArrivalModality" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/booking/ArrivalModality.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="388" y="111"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="2" language="java" name="com.robertovecchio.model.booking.Booking" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/booking/Booking.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="966" y="369"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="3" language="java" name="com.robertovecchio.model.booking.OrderState" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/booking/OrderState.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="380" y="288"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="4" language="java" name="com.robertovecchio.model.booking.OrderType" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/booking/OrderType.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="384" y="471"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="5" language="java" name="com.robertovecchio.model.booking.strategy.EmailStrategy" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/booking/strategy/EmailStrategy.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2148" y="1327"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="6" language="java" name="com.robertovecchio.model.booking.strategy.OrderStrategy" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/booking/strategy/OrderStrategy.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2302" y="1080"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="7" language="java" name="com.robertovecchio.model.booking.strategy.SmsStrategy" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/booking/strategy/SmsStrategy.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2476" y="1332"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="com.robertovecchio.model.dijkstra.DijkstraAlgorithm" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/dijkstra/DijkstraAlgorithm.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="482" y="1394"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="9" language="java" name="com.robertovecchio.model.graph.Graphable" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/graph/Graphable.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1684" y="836"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="10" language="java" name="com.robertovecchio.model.graph.WeightedGraph" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/graph/WeightedGraph.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1692" y="1150"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="com.robertovecchio.model.graph.edge.DistanceHandler" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/graph/edge/DistanceHandler.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-114" y="1866"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="com.robertovecchio.model.graph.edge.observer.ArchObserver" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/graph/edge/observer/ArchObserver.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="804" y="1338"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="com.robertovecchio.model.graph.edge.observer.Edge" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/graph/edge/observer/Edge.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="438" y="1914"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="14" language="java" name="com.robertovecchio.model.graph.edge.observer.Sensorable" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/graph/edge/observer/Sensorable.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1312" y="1324"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="15" language="java" name="com.robertovecchio.model.graph.edge.observer.SensorHandler" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/graph/edge/observer/SensorHandler.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1308" y="1728"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="com.robertovecchio.model.graph.node.Coordinates" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/graph/node/Coordinates.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-118" y="1524"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="com.robertovecchio.model.graph.node.Node" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/graph/node/Node.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-110" y="1098"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="com.robertovecchio.model.graph.node.Parking" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/graph/node/Parking.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-480" y="1552"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="com.robertovecchio.model.graph.node.WaitingStation" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/graph/node/WaitingStation.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-498" y="1104"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="20" language="java" name="com.robertovecchio.model.mediator.Colleague" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/mediator/Colleague.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1592" y="-108"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="21" language="java" name="com.robertovecchio.model.mediator.RadioTaxiCallCenter" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/mediator/RadioTaxiCallCenter.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1938" y="-548"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="22" language="java" name="com.robertovecchio.model.mediator.TaxiCenter" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/mediator/TaxiCenter.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1938" y="-336"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="com.robertovecchio.model.user.UserAccount" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/user/UserAccount.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1998" y="-986"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="com.robertovecchio.model.user.Customer" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/user/Customer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2454" y="94"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="com.robertovecchio.model.user.Handler" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/user/Handler.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="298" y="-2222"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="26" language="java" name="com.robertovecchio.model.user.State" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/user/State.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="296" y="-1080"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="27" language="java" name="com.robertovecchio.model.user.TaxiDriver" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/user/TaxiDriver.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="990" y="-1014"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="28" language="java" name="com.robertovecchio.model.user.GenderType" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/user/GenderType.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2720" y="-1074"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="29" language="java" name="com.robertovecchio.model.veichle.BrandType" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/veichle/BrandType.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-536" y="-668"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="30" language="java" name="com.robertovecchio.model.veichle.FuelType" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/veichle/FuelType.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-292" y="-890"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="31" language="java" name="com.robertovecchio.model.veichle.builderTaxi.ConcreteTaxiBuilder" 
+    project="TaxiFinder" file="/TaxiFinder/src/com/robertovecchio/model/veichle/builderTaxi/ConcreteTaxiBuilder.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-906" y="-1510"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="com.robertovecchio.model.veichle.builderTaxi.Taxi" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/veichle/builderTaxi/Taxi.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="356" y="-592"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="33" language="java" name="com.robertovecchio.model.veichle.builderTaxi.TaxiBuilder" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/veichle/builderTaxi/TaxiBuilder.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-906" y="-2014"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="34" language="java" name="com.robertovecchio.view.Main" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/view/Main.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-4904" y="2010"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="35" language="java" name="com.robertovecchio.controller.CompanyAreaController" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/controller/CompanyAreaController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-3730" y="-1384"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="36" language="java" name="com.robertovecchio.controller.Controller" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/controller/Controller.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-5548" y="396"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="37" language="java" name="com.robertovecchio.controller.CustomerController" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/controller/CustomerController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-4934" y="100"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="38" language="java" name="com.robertovecchio.controller.CustomerLoginController" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/controller/CustomerLoginController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-4950" y="-586"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="39" language="java" name="com.robertovecchio.controller.CustomerRegistrationController" 
+    project="TaxiFinder" file="/TaxiFinder/src/com/robertovecchio/controller/CustomerRegistrationController.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-4948" y="632"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="40" language="java" name="com.robertovecchio.controller.HandlerController" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/controller/HandlerController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-3152" y="-1632"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="41" language="java" name="com.robertovecchio.controller.TaxiDriverController" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/controller/TaxiDriverController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-1306" y="2486"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="42" language="java" name="com.robertovecchio.controller.UtilityController" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/controller/UtilityController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-4332" y="-1316"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="43" language="java" name="com.robertovecchio.controller.dialog.AddEdgeController" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/controller/dialog/AddEdgeController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-4872" y="1322"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="44" language="java" name="com.robertovecchio.controller.dialog.AddParkingController" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/controller/dialog/AddParkingController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-4886" y="2264"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="45" language="java" name="com.robertovecchio.controller.dialog.AddTaxiController" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/controller/dialog/AddTaxiController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-4880" y="1582"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="46" language="java" name="com.robertovecchio.controller.dialog.RemoveEdgeController" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/controller/dialog/RemoveEdgeController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-4896" y="1808"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="47" language="java" name="com.robertovecchio.controller.dialog.ShowTaxisController" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/controller/dialog/ShowTaxisController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-2269" y="-1158"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="48" language="java" name="com.robertovecchio.controller.dialog.TermsAndConditionsController" 
+    project="TaxiFinder" file="/TaxiFinder/src/com/robertovecchio/controller/dialog/TermsAndConditionsController.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-5411" y="625"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="49" language="java" name="com.robertovecchio.controller.dialog.VehicleController" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/controller/dialog/VehicleController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-3108" y="-2351"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="50" language="java" name="com.robertovecchio.controller.dialog.OrderController" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/controller/dialog/OrderController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-4493" y="2291"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="51" language="java" name="com.robertovecchio.controller.dialog.ShowPathController" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/controller/dialog/ShowPathController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-1981" y="2407"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="52" language="java" name="com.robertovecchio.controller.dialog.RemoveParkingController" 
+    project="TaxiFinder" file="/TaxiFinder/src/com/robertovecchio/controller/dialog/RemoveParkingController.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-3716" y="2292"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="53" language="java" name="com.robertovecchio.controller.dialog.AddTaxiDriverController" 
+    project="TaxiFinder" file="/TaxiFinder/src/com/robertovecchio/controller/dialog/AddTaxiDriverController.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-429" y="-1440"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="54" language="java" name="com.robertovecchio.controller.dialog.DialogAction" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/controller/dialog/DialogAction.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-4325" y="-1671"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="55" language="java" name="com.robertovecchio.controller.dialog.ShowConnectionsController" 
+    project="TaxiFinder" file="/TaxiFinder/src/com/robertovecchio/controller/dialog/ShowConnectionsController.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-1886" y="-1191"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="56" language="java" name="com.robertovecchio.controller.dialog.AddWaitingStationController" 
+    project="TaxiFinder" file="/TaxiFinder/src/com/robertovecchio/controller/dialog/AddWaitingStationController.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-3309" y="2279"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="57" language="java" name="com.robertovecchio.controller.dialog.RemoveTaxiDriverController" 
+    project="TaxiFinder" file="/TaxiFinder/src/com/robertovecchio/controller/dialog/RemoveTaxiDriverController.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-4094" y="2307"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="58" language="java" name="com.robertovecchio.controller.dialog.ShowWaitingParkingController" 
+    project="TaxiFinder" file="/TaxiFinder/src/com/robertovecchio/controller/dialog/ShowWaitingParkingController.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-1505" y="-1207"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="59" language="java" name="com.robertovecchio.controller.dialog.ChangeParkingController" 
+    project="TaxiFinder" file="/TaxiFinder/src/com/robertovecchio/controller/dialog/ChangeParkingController.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-4898" y="-259"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="60" language="java" name="com.robertovecchio.controller.dialog.RemoveWaitingStationController" 
+    project="TaxiFinder" file="/TaxiFinder/src/com/robertovecchio/controller/dialog/RemoveWaitingStationController.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-4873" y="1053"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="61" language="java" name="com.robertovecchio.model.db.error.HandlerNotFoundException" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/db/error/HandlerNotFoundException.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-2086" y="1126"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="62" language="java" name="com.robertovecchio.model.db.error.TaxiDriverNotFoundException" 
+    project="TaxiFinder" file="/TaxiFinder/src/com/robertovecchio/model/db/error/TaxiDriverNotFoundException.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-1829" y="1126"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="63" language="java" name="com.robertovecchio.model.db.error.CustomerNotFoundException" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/db/error/CustomerNotFoundException.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-1449" y="1126"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="64" language="java" name="com.robertovecchio.model.db.TaxiFinderData" project="TaxiFinder" 
+    file="/TaxiFinder/src/com/robertovecchio/model/db/TaxiFinderData.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-1845" y="155"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="65">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="66" name="settledNode"/>      
+      <multiplicity id="67" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="68">    
+    <bendpoint x="1992" y="2368"/>    
+    <bendpoint x="1916" y="404"/>    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="69" name="currentOrder"/>      
+      <multiplicity id="70" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <realization id="71">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="14"/>  
+  </realization>  
+  <association id="72">    
+    <bendpoint x="-904" y="1552"/>    
+    <bendpoint x="-876" y="582"/>    
+    <bendpoint x="-72" y="564"/>    
+    <bendpoint x="-86" y="-204"/>    
+    <bendpoint x="364" y="-212"/>    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="73" name="taxis"/>      
+      <multiplicity id="74" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <realization id="75">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="20"/>  
+  </realization>  
+  <association id="76">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="77" name="arrivalModality"/>      
+      <multiplicity id="78" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="79">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="80" name="coordinatesTwo"/>      
+      <multiplicity id="81" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="82">    
+    <end type="SOURCE" refId="43" navigable="false">      
+      <attribute id="83" name="taxiFinderData"/>      
+      <multiplicity id="84" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <dependency id="85">    
+    <bendpoint x="-1910" y="-1602"/>    
+    <end type="SOURCE" refId="40"/>    
+    <end type="TARGET" refId="55"/>  
+  </dependency>  
+  <association id="86">    
+    <end type="SOURCE" refId="44" navigable="false">      
+      <attribute id="87" name="taxiFinderData"/>      
+      <multiplicity id="88" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="89">    
+    <end type="SOURCE" refId="50" navigable="false">      
+      <attribute id="90" name="taxiFinderData"/>      
+      <multiplicity id="91" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="92">    
+    <bendpoint x="-1236" y="-1196"/>    
+    <bendpoint x="-1192" y="-2336"/>    
+    <bendpoint x="2164" y="-2372"/>    
+    <end type="SOURCE" refId="64" navigable="false">      
+      <attribute id="93" name="currentUser"/>      
+      <multiplicity id="94" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="95">    
+    <end type="SOURCE" refId="52" navigable="false">      
+      <attribute id="96" name="taxiFinderData"/>      
+      <multiplicity id="97" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="98">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="99" name="customer"/>      
+      <multiplicity id="100" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="101">    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="102" name="brandType"/>      
+      <multiplicity id="103" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="104">    
+    <end type="SOURCE" refId="47" navigable="false">      
+      <attribute id="105" name="taxiFinderData"/>      
+      <multiplicity id="106" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="107">    
+    <bendpoint x="-1156" y="-1184"/>    
+    <bendpoint x="-1092" y="-2284"/>    
+    <end type="SOURCE" refId="64" navigable="false">      
+      <attribute id="108" name="handlers"/>      
+      <multiplicity id="109" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="25" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <dependency id="110">    
+    <end type="SOURCE" refId="64"/>    
+    <end type="TARGET" refId="63"/>  
+  </dependency>  
+  <association id="111">    
+    <end type="SOURCE" refId="37" navigable="false">      
+      <attribute id="112" name="taxiFinderData"/>      
+      <multiplicity id="113" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <generalization id="114">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="17"/>  
+  </generalization>  
+  <association id="115">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="116" name="source"/>      
+      <multiplicity id="117" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="118">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="119" name="state"/>      
+      <multiplicity id="120" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="121">    
+    <end type="SOURCE" refId="60" navigable="false">      
+      <attribute id="122" name="taxiFinderData"/>      
+      <multiplicity id="123" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <realization id="124">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="9"/>  
+  </realization>  
+  <realization id="125">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="6"/>  
+  </realization>  
+  <dependency id="126">    
+    <end type="SOURCE" refId="40"/>    
+    <end type="TARGET" refId="49"/>  
+  </dependency>  
+  <association id="127">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="128" name="taxiCenter"/>      
+      <multiplicity id="129" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <dependency id="130">    
+    <end type="SOURCE" refId="35"/>    
+    <end type="TARGET" refId="42"/>  
+  </dependency>  
+  <association id="131">    
+    <end type="SOURCE" refId="64" navigable="false">      
+      <attribute id="132" name="instance"/>      
+      <multiplicity id="133" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="134">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <association id="135">    
+    <end type="SOURCE" refId="55" navigable="false">      
+      <attribute id="136" name="taxiFinderData"/>      
+      <multiplicity id="137" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="138">    
+    <bendpoint x="-3704" y="-992"/>    
+    <end type="SOURCE" refId="35" navigable="false">      
+      <attribute id="139" name="taxiFinderData"/>      
+      <multiplicity id="140" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="141">    
+    <end type="SOURCE" refId="59" navigable="false">      
+      <attribute id="142" name="taxiFinderData"/>      
+      <multiplicity id="143" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <dependency id="144">    
+    <bendpoint x="-2308" y="-1580"/>    
+    <end type="SOURCE" refId="40"/>    
+    <end type="TARGET" refId="47"/>  
+  </dependency>  
+  <association id="145">    
+    <bendpoint x="-888" y="-2220"/>    
+    <end type="SOURCE" refId="25" navigable="false">      
+      <attribute id="146" name="taxiBuilder"/>      
+      <multiplicity id="147" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="148">    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="149" name="fuelType"/>      
+      <multiplicity id="150" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="30" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="151">    
+    <end type="SOURCE" refId="53" navigable="false">      
+      <attribute id="152" name="newTaxi"/>      
+      <multiplicity id="153" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <dependency id="154">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="54"/>  
+  </dependency>  
+  <association id="155">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="156" name="driver"/>      
+      <multiplicity id="157" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <dependency id="158">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="51"/>  
+  </dependency>  
+  <dependency id="159">    
+    <end type="SOURCE" refId="64"/>    
+    <end type="TARGET" refId="61"/>  
+  </dependency>  
+  <association id="160">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="161" name="vertexes"/>      
+      <multiplicity id="162" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="163">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="164" name="coordinates"/>      
+      <multiplicity id="165" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <generalization id="166">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="19"/>  
+  </generalization>  
+  <generalization id="167">    
+    <bendpoint x="2004" y="-2172"/>    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <realization id="168">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="20"/>  
+  </realization>  
+  <generalization id="169">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <association id="170">    
+    <end type="SOURCE" refId="56" navigable="false">      
+      <attribute id="171" name="taxiFinderData"/>      
+      <multiplicity id="172" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="173">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="174" name="taxiCenter"/>      
+      <multiplicity id="175" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="176">    
+    <bendpoint x="-2704" y="1692"/>    
+    <bendpoint x="-2928" y="2944"/>    
+    <bendpoint x="2782" y="2848"/>    
+    <end type="SOURCE" refId="64" navigable="false">      
+      <attribute id="177" name="genders"/>      
+      <multiplicity id="178" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="179">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="180" name="orderType"/>      
+      <multiplicity id="181" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="182">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="183" name="to"/>      
+      <multiplicity id="184" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="185">    
+    <end type="SOURCE" refId="64"/>    
+    <end type="TARGET" refId="62"/>  
+  </dependency>  
+  <association id="186">    
+    <bendpoint x="12" y="-1992"/>    
+    <bendpoint x="160" y="-948"/>    
+    <end type="SOURCE" refId="33" navigable="false">      
+      <attribute id="187" name="taxi"/>      
+      <multiplicity id="188" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="189">    
+    <end type="SOURCE" refId="38" navigable="false">      
+      <attribute id="190" name="taxiFinderData"/>      
+      <multiplicity id="191" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="192">    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="193" name="taxiFinderData"/>      
+      <multiplicity id="194" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="195">    
+    <bendpoint x="-1040" y="160"/>    
+    <bendpoint x="-1112" y="2148"/>    
+    <bendpoint x="1836" y="2120"/>    
+    <end type="SOURCE" refId="64" navigable="false">      
+      <attribute id="196" name="graph"/>      
+      <multiplicity id="197" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="198">    
+    <bendpoint x="1704" y="1913"/>    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="199" name="edges"/>      
+      <multiplicity id="200" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <realization id="201">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <association id="202">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="203" name="taxi"/>      
+      <multiplicity id="204" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="205">    
+    <end type="SOURCE" refId="57" navigable="false">      
+      <attribute id="206" name="taxiFinderData"/>      
+      <multiplicity id="207" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="208">    
+    <end type="SOURCE" refId="46" navigable="false">      
+      <attribute id="209" name="taxiFinderData"/>      
+      <multiplicity id="210" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="211">    
+    <end type="SOURCE" refId="45" navigable="false">      
+      <attribute id="212" name="taxiFinderData"/>      
+      <multiplicity id="213" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="214">    
+    <end type="SOURCE" refId="53" navigable="false">      
+      <attribute id="215" name="taxiFinderData"/>      
+      <multiplicity id="216" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="217">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="218" name="edges"/>      
+      <multiplicity id="219" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <generalization id="220">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <association id="221">    
+    <end type="SOURCE" refId="40" navigable="false">      
+      <attribute id="222" name="taxiFinderData"/>      
+      <multiplicity id="223" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="224">    
+    <bendpoint x="-1660" y="1300"/>    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="225" name="taxiFinderData"/>      
+      <multiplicity id="226" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="227">    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="228" name="genderType"/>      
+      <multiplicity id="229" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="230">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="231" name="observers"/>      
+      <multiplicity id="232" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <realization id="233">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="6"/>  
+  </realization>  
+  <association id="234">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="235" name="sensorable"/>      
+      <multiplicity id="236" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <generalization id="237">    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="33"/>  
+  </generalization>  
+  <association id="238">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="239" name="orderState"/>      
+      <multiplicity id="240" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <dependency id="241">    
+    <bendpoint x="-1476" y="-1616"/>    
+    <end type="SOURCE" refId="40"/>    
+    <end type="TARGET" refId="58"/>  
+  </dependency>  
+  <association id="242">    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="243" name="taxiFinderData"/>      
+      <multiplicity id="244" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="245">    
+    <end type="SOURCE" refId="58" navigable="false">      
+      <attribute id="246" name="taxiFinderData"/>      
+      <multiplicity id="247" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="64" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

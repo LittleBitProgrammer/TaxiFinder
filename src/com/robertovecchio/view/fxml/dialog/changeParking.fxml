@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.GridPane?>
+<DialogPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.robertovecchio.controller.dialog.ChangeParkingController"
+            headerText="Segnala Cambio parcheggio"
+            prefHeight="400.0" prefWidth="600.0">
+    <content>
+        <GridPane alignment="CENTER">
+            <ComboBox fx:id="parkingComboBox"/>
+        </GridPane>
+    </content>
+</DialogPane>
