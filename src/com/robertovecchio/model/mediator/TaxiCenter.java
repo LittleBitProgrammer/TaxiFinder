@@ -46,18 +46,13 @@ public class TaxiCenter implements RadioTaxiCallCenter, Serializable {
         new Thread(()->{
             try {
                 // Riorniamo il taxi driver/ taxi più vicino alla postazione selezionata
-                System.out.println("hey");
                 TaxiDriver driver = this.retrieveNearestTaxiDriver(TaxiFinderData.getInstance().getParkingsFromGraph(), booking);
-                System.out.println("yo");
                 booking.setDriver(driver);
                 driver.setState(State.OCCUPIED);
 
-                System.out.println("ciao");
                 // Aggiungo in memoria la prenotazione
                 TaxiFinderData.getInstance().addBooking(booking);
-                System.out.println("cacca");
                 memorizeBooking();
-                System.out.println("bello");
 
                 System.out.println("Prenotazione avvenuta con successo");
             } catch (TaxiDriverNotFoundException e) {
@@ -104,7 +99,6 @@ public class TaxiCenter implements RadioTaxiCallCenter, Serializable {
      * @throws TaxiDriverNotFoundException Questo metodo potrebbe non trovare un tassista disponibile
      */
     private TaxiDriver retrieveNearestTaxiDriver(List<Parking> parkings, Booking booking) throws TaxiDriverNotFoundException {
-        System.out.println(booking);
         // Inializzo la classe per l'algoritmo di Dijkstra
         DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(TaxiFinderData.getInstance().getGraph());
 
@@ -133,9 +127,9 @@ public class TaxiCenter implements RadioTaxiCallCenter, Serializable {
                 minValue = weight;
             }
         }
-        System.out.println(min);
 
         assert min != null;
-        return TaxiFinderData.getInstance().takeTaxiDriverFrom(min.getTaxis().peek());
+        Parking parking = (Parking) TaxiFinderData.getInstance().getGraph().getVertexes().get(TaxiFinderData.getInstance().getGraph().getVertexes().indexOf(min));
+        return TaxiFinderData.getInstance().takeTaxiDriverFrom(parking.getTaxis().peek());
     }
 }

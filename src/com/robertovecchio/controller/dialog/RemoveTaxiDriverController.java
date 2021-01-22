@@ -1,6 +1,8 @@
 package com.robertovecchio.controller.dialog;
 
 import com.robertovecchio.model.db.TaxiFinderData;
+import com.robertovecchio.model.graph.node.Node;
+import com.robertovecchio.model.graph.node.Parking;
 import com.robertovecchio.model.user.TaxiDriver;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -174,9 +176,20 @@ public class RemoveTaxiDriverController {
 
         /* Rimuoviamo il tassista dalla lista dei tasisti */
         taxiFinderData.removeTaxiDriver(taxiDriver);
+
+        for (Node node : taxiFinderData.getGraph().getVertexes()){
+            if (node instanceof Parking){
+                Parking parking = (Parking) node;
+                taxiFinderData.getParkings().get(taxiFinderData.getParkings().indexOf(parking)).getTaxis().remove(taxiDriver.getTaxi());
+                parking.getTaxis().remove(taxiDriver.getTaxi());
+            }
+        }
+
         try {
             /* Memorizziamo permanentemente i tassisti */
             taxiFinderData.storeTaxiDrivers();
+            taxiFinderData.storeParkings();
+            taxiFinderData.storeGraph();
         } catch (IOException e) {
             /* Nel caso fosse presente un errore, lo mostriamo a schermo attraverso un alert */
             Alert alert = new Alert(Alert.AlertType.ERROR, "Operazione impossibile", ButtonType.OK);

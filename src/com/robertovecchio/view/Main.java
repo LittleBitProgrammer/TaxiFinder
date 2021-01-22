@@ -4,6 +4,8 @@ package com.robertovecchio.view;
 import com.robertovecchio.model.db.TaxiFinderData;
 import com.robertovecchio.model.graph.edge.observer.Edge;
 import com.robertovecchio.model.graph.edge.observer.SensorHandler;
+import com.robertovecchio.model.graph.node.Node;
+import com.robertovecchio.model.graph.node.Parking;
 import javafx.application.Application; // Gestisce il lifecycle di un'applicazione
 import javafx.fxml.FXMLLoader; // Loader di fxml
 import javafx.scene.Parent; // Nodo Primario
