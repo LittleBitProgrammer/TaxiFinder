@@ -705,6 +705,24 @@ public class TaxiDriverController {
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
+        }else {
+            this.circle.setFill(Color.LIGHTGREEN);
+            this.currentOrder.getDriver().setState(State.FREE);
+
+            assert currentParking != null;
+            currentParking.getTaxis().poll();
+            currentParking.getTaxis().add(user.getTaxi());
+
+            UtilityController.changeVisibility(this.bookingTableView, this.gridContainer, this.newOrder);
+            state.setText(user.getState().getTranslation());
+
+            try {
+                TaxiFinderData.getInstance().storeGraph();
+                TaxiFinderData.getInstance().storeTaxiDrivers();
+                TaxiFinderData.getInstance().loadBookings();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 

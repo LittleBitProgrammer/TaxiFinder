@@ -134,7 +134,7 @@ public class Main extends Application {
 
                     @Override
                     public void run() {
-                        System.out.println("=============================");
+                       // System.out.println("=============================");
                         Random random = new Random();
                         sensorHandler.setTrafficState(random.nextInt(101));
                     }

@@ -329,4 +329,19 @@ public class Booking implements Serializable {
     public int hashCode() {
         return Objects.hash(orderDate, orderTime, from, to, customer);
     }
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "orderDate=" + orderDate +
+                ", orderTime=" + orderTime +
+                ", from=" + from +
+                ", to=" + to +
+                ", customer=" + customer +
+                ", driver=" + driver +
+                ", arrivalModality=" + arrivalModality +
+                ", orderState=" + orderState +
+                ", orderType=" + orderType +
+                '}';
+    }
 }

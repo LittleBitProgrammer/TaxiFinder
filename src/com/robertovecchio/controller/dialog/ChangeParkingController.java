@@ -138,11 +138,8 @@ public class ChangeParkingController {
 
                     /* Nel caso in cui contenga il taxi dell'utente allora dobbiamo rimuoverlo affinchè lo spostamento
                      * Possa andare a buon fine */
-                    if (parking.getTaxis().contains(taxiDriver.getTaxi())){
-
-                        /* Rimuoviamo il taxi dalla "testa" della coda */
-                        parking.getTaxis().poll();
-                    }
+                    /* Rimuoviamo il taxi dalla "testa" della coda */
+                    parking.getTaxis().remove(taxiDriver.getTaxi());
                 }
 
             }

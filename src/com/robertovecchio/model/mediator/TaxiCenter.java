@@ -46,13 +46,18 @@ public class TaxiCenter implements RadioTaxiCallCenter, Serializable {
         new Thread(()->{
             try {
                 // Riorniamo il taxi driver/ taxi più vicino alla postazione selezionata
+                System.out.println("hey");
                 TaxiDriver driver = this.retrieveNearestTaxiDriver(TaxiFinderData.getInstance().getParkingsFromGraph(), booking);
+                System.out.println("yo");
                 booking.setDriver(driver);
                 driver.setState(State.OCCUPIED);
 
+                System.out.println("ciao");
                 // Aggiungo in memoria la prenotazione
                 TaxiFinderData.getInstance().addBooking(booking);
+                System.out.println("cacca");
                 memorizeBooking();
+                System.out.println("bello");
 
                 System.out.println("Prenotazione avvenuta con successo");
             } catch (TaxiDriverNotFoundException e) {
@@ -99,7 +104,7 @@ public class TaxiCenter implements RadioTaxiCallCenter, Serializable {
      * @throws TaxiDriverNotFoundException Questo metodo potrebbe non trovare un tassista disponibile
      */
     private TaxiDriver retrieveNearestTaxiDriver(List<Parking> parkings, Booking booking) throws TaxiDriverNotFoundException {
-
+        System.out.println(booking);
         // Inializzo la classe per l'algoritmo di Dijkstra
         DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(TaxiFinderData.getInstance().getGraph());
 
@@ -111,6 +116,7 @@ public class TaxiCenter implements RadioTaxiCallCenter, Serializable {
 
         // Iteriamo l'algoritmo per trovare il percorso, corrispettivamente per i diversi parcheggi
         for (Parking parking : parkings){
+
             LinkedList<Node> path = dijkstraAlgorithm.getPath(parking);
             double weight = 0;
 
@@ -127,6 +133,7 @@ public class TaxiCenter implements RadioTaxiCallCenter, Serializable {
                 minValue = weight;
             }
         }
+        System.out.println(min);
 
         assert min != null;
         return TaxiFinderData.getInstance().takeTaxiDriverFrom(min.getTaxis().peek());

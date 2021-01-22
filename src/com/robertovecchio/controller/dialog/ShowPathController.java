@@ -31,19 +31,28 @@ public class ShowPathController {
      * @see Node
      * */
     public void init(LinkedList<Node> nodes){
-
-        /* Per ogni nodo nella linkedList */
-        for (Node node : nodes){
-
-            /* Essendo WaitingStation direttamente dipendente da Node, posssiamo effettuare un'operazine di Casting */
-            WaitingStation waitingStation = (WaitingStation) node;
+        if (nodes.size() == 1){
 
             /* Istanziamo opportunamente una Label con relativo padding */
-            Label label = new Label("Prosegui per: "  + waitingStation.getStreetName() + ", " +  waitingStation.getStreetNumber());
+            Label label = new Label("Il cliente è nel tuo parcheggio !");
             label.setPadding(new Insets(10,0,10,0));
 
             /* Aggiungiamo al VBox la label appena creata */
             vBoxContainer.getChildren().add(label);
+        }else{
+            /* Per ogni nodo nella linkedList */
+            for (Node node : nodes){
+
+                /* Essendo WaitingStation direttamente dipendente da Node, posssiamo effettuare un'operazine di Casting */
+                WaitingStation waitingStation = (WaitingStation) node;
+
+                /* Istanziamo opportunamente una Label con relativo padding */
+                Label label = new Label("Prosegui per: "  + waitingStation.getStreetName() + ", " +  waitingStation.getStreetNumber());
+                label.setPadding(new Insets(10,0,10,0));
+
+                /* Aggiungiamo al VBox la label appena creata */
+                vBoxContainer.getChildren().add(label);
+            }
         }
     }
 }

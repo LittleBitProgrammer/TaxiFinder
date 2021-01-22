@@ -862,8 +862,13 @@ public class TaxiFinderData {
      * @throws TaxiDriverNotFoundException Questo metodo potrebbe non trovare un tassista associato
      */
     public TaxiDriver takeTaxiDriverFrom(Taxi taxi) throws TaxiDriverNotFoundException {
+        System.out.println("forse dentro");
+        System.out.println("Taxi = " + taxi);
+        System.out.println("TAXIS ====== " + this.getTaxiDrivers());
         for (TaxiDriver taxiDriver : this.getTaxiDrivers()){
+            System.out.println("sto iterando");
             if (taxiDriver.getTaxi().equals(taxi)){
+                System.out.println("dentro");
                 return taxiDriver;
             }
         }

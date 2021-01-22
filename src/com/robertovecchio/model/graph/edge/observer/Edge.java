@@ -103,7 +103,7 @@ public class Edge extends ArchObserver implements Serializable {
         Random random = new Random();
 
         this.weight = (double) trafficState + random.nextInt(21);
-        System.out.println("\n\nedge = " + this.weight + this.toString() );
+        //System.out.println("\n\nedge = " + this.weight + this.toString() );
     }
 
     /**

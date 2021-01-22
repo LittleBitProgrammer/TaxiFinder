@@ -24,7 +24,7 @@ public class DistanceHandler {
     /**
      * Costante del raggio terrestre
      */
-    private static final int R = 6371;
+    private static final double R = 6371;
 
     /**
      * Costruttore di DistanceHandler
@@ -51,7 +51,7 @@ public class DistanceHandler {
         latAlfa = Math.PI * this.coordinatesOne.getLatitude() / 180;
         latBeta = Math.PI * this.coordinatesTwo.getLatitude() / 180;
         lonAlfa = Math.PI * this.coordinatesOne.getLongitude() / 180;
-        lonBeta = Math.PI * this.coordinatesTwo.getLongitude() / 180;
+        lonBeta = Math.PI* this.coordinatesTwo.getLongitude() / 180;
 
         // Calcola l'angolo compreso fi
         fi = Math.abs(lonAlfa - lonBeta);

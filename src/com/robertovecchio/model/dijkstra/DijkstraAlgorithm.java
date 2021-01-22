@@ -290,7 +290,8 @@ public class DijkstraAlgorithm {
 
         // Controlliamo se un path esiste
         if (predecessors.get(step) == null){
-            return null;
+            path.add(target);
+            return path;
         }
 
         // Aggiungiamo al path il nostro target
